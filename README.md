@@ -1,5 +1,7 @@
 # Yahoo Finance Script 
-Scripts for pulling data from yahoo finance module. 
+Scripts for pulling data from yahoo finance module. Data is pulled using Yahoo Finance, minor cleaning then undertaken 
+before sending to SQL database.
+
 
 ### Current Data Used
 historical stock data, major shareholders, earnings, quarterly earnings and news.
