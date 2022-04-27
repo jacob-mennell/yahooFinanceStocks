@@ -108,9 +108,14 @@ def companies_returned(companies):
     # create master table
     stock_df = pd.DataFrame(columns=['stock'])
     stock_df['stock'] = [x for x in companies]
+
+    #path to SQL database stored as environment variable
+    postgres_path = os.getenv('postgres_path')
+    # dialect+driver://username:password@host:port/database
+    engine = sqlalchemy.create_engine(postgres_path)
     stock_df.to_sql('stocks_master', engine, if_exists='replace', index=False)
 
     # get tables for each individual stock
     # [stock_sql_send(item) for item in companies]
     list(map(stock_sql_send, companies))
-    return 'SQL Updated'
+    return print('\nSQL Updated')

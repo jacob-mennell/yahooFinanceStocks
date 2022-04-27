@@ -1,5 +1,7 @@
 #import libs
 from extractFunctions import companies_returned
+import os
+import sqlalchemy
 
 #get data and send to SQL - specify three airline stocks
 
