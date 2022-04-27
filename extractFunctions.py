@@ -35,6 +35,7 @@ def stock_sql_send(stock):
     stock_history = msft.history(period="max").reset_index()
     # minor cleaning
     stock_history = stock_history.rename(str.lower, axis='columns')
+    stock_history['stock'] = stock
     # send to SQL with SQL Alchemy
     stock_history.to_sql(f'{stock}_history', engine, if_exists='replace', index=False)
     print(f'historical {stock} data sent to sql')
@@ -43,6 +44,7 @@ def stock_sql_send(stock):
     major_share_holders = msft.major_holders
     # minor cleaning
     major_share_holders = major_share_holders.rename(columns={0: "percent", 1: "detail"})
+    major_share_holders['stock'] = stock
     # send to SQL with SQL Alchemy
     major_share_holders.to_sql(f'{stock}_major_share_holders', engine, if_exists='replace', index=False)
     print(f'major share holders {stock} data sent to sql')
@@ -51,6 +53,7 @@ def stock_sql_send(stock):
     stock_financials = msft.financials.reset_index()
     # minor cleaning
     stock_financials = major_share_holders.rename(columns={0: "metric"})
+    stock_financials['stock'] = stock
     # send to SQL with SQL Alchemy
     stock_financials.to_sql(f'{stock}_financials', engine, if_exists='replace', index=False)
     print(f'stock financials {stock} data sent to sql')
@@ -59,6 +62,7 @@ def stock_sql_send(stock):
     stock_earnings = msft.earnings.reset_index()
     # minor cleaning
     stock_earnings = stock_earnings.rename(str.lower, axis='columns')
+    stock_earnings['stock'] = stock
     # send to SQL with SQL Alchemy
     stock_earnings.to_sql(f'{stock}_earnings', engine, if_exists='replace', index=False)
     print(f'{stock} earnings data sent to sql')
@@ -67,13 +71,14 @@ def stock_sql_send(stock):
     stock_quarterly_earnings = msft.quarterly_earnings.reset_index()
     # minor cleaning
     stock_quarterly_earnings = stock_quarterly_earnings.rename(str.lower, axis='columns')
+    stock_quarterly_earnings['stock'] = stock
     # send to SQL with SQL Alchemy
     stock_quarterly_earnings.to_sql(f'{stock}_quarterly_earnings', engine, if_exists='replace', index=False)
     print(f'{stock} quarterly earnings data sent to sql')
 
-    #return news and send to postgres
+    # return news and send to postgres
     news_list = msft.news
-    column_names = ["uuid", "title", "publisher", "link", "provider_publish_time", "type"]
+    column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
     news_df = pd.DataFrame(columns=column_names)
     news_df['uuid'] = [x['uuid'] for x in news_list]
     news_df['title'] = [x['title'] for x in news_list]
@@ -88,25 +93,24 @@ def stock_sql_send(stock):
     news_df['provider_publish_time'] = [datetime.utcfromtimestamp(x).strftime('%Y-%m-%d %H:%M:%S') for x in dates]
     # type
     news_df['type'] = [x['type'] for x in news_list]
+    news_df['stock'] = stock
     # send to SQL with SQL Alchemy
     news_df.to_sql(f'{stock}_news', engine, if_exists='replace', index=False)
     print(f'{stock} news sent to sql')
 
-    #end of function
+    # end of function
     end = time.time()
-    print(f'{stock} extracted in {"{:.2f}".format(end-start)} seconds')
+    print(f'{stock} extracted in {"{:.2f}".format(end - start)} seconds')
+
 
 # function to extract data for multiple companies for comparison
 def companies_returned(companies):
-    '''
-    Function to apply stock_sql_send to multiple stocks.
+    # create master table
+    stock_df = pd.DataFrame(columns=['stock'])
+    stock_df['stock'] = [x for x in companies]
+    stock_df.to_sql('stocks_master', engine, if_exists='replace', index=False)
 
-    Arguments:
-        # companies - takes a list of stocks e.g. ['IAG.L', '0293.HK', 'AF.PA']
-
-    Return:
-        # string - indicates that the data has been extracted and sent to SQL.
-    '''
+    # get tables for each individual stock
     # [stock_sql_send(item) for item in companies]
     list(map(stock_sql_send, companies))
-    return print('\n SQL Updated')
+    return 'SQL Updated'
