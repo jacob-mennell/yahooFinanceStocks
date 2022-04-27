@@ -131,7 +131,7 @@ def combined_stock_sql_send(stock):
         # stock: individual stock in which user wnats to return data for.
 
     Return:
-        # returns strings to confirm data has been sent to postgres SQL database
+        # returns string to confirm data has been sent to postgres SQL database
     '''
 
     #start of time function

@@ -7,7 +7,7 @@ before sending to SQL database.
 historical stock data, major shareholders, earnings, quarterly earnings and news.
 
 ### All Data Available 
-As listed on: https://pypi.org/project/yfinance/
+As listed on: https://pypi.org/project/yfinance
 
 #### Set stock where MSFT is stock
 msft = yf.Ticker("MSFT")

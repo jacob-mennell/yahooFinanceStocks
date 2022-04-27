@@ -3,7 +3,7 @@ from extractFunctions import individualTables, combinedTables
 import os
 import sqlalchemy
 
-#get data and send to SQL - specify three airline stocks
+#get data and send to SQL - specify three airline stocks.
 
 # IAG.L = International Consolidated Airlines Group, S.A.
 # 0293.HK = Cathay Pacific Airways Ltd
