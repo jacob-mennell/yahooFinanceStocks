@@ -25,7 +25,7 @@ msft.splits
 msft.financials
 msft.quarterly_financials
 #### show major holders
-msft.major_holders
+msft.major_holders 
 #### show institutional holders
 msft.institutional_holders
 #### show balance sheet
