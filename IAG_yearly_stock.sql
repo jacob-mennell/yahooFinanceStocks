@@ -7,9 +7,10 @@ FROM public."IAG.L_history"
 )
 SELECT
 year
+,stock
 , AVG(open) AS avg_open
 , AVG(close) AS avg_close
 , AVG(high) AS avg_high
 , AVG(low) AS avg_low
 FROM temp_IAG_history
-group by(year);
+group by(year,stock);
