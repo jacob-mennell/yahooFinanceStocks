@@ -231,7 +231,7 @@ def combinedTables(companies):
     # create master table
     stock_df = pd.DataFrame(columns=['stock'])
     stock_df['stock'] = [x for x in companies]
-    stock_df.to_sql('stocks_master', engine, if_exists='replace', index=False)
+    stock_df.to_sql('stocks_master', engine, if_exists='append', index=False)
 
     # get tables for each individual stock
     # [stock_sql_send(item) for item in companies]

@@ -4,19 +4,23 @@ import numpy as np
 from datetime import datetime
 import yfinance as yf
 import sqlalchemy
+import bamboolib as bam
 #import psycopg2
 import time
 import plotly.express as px
 import re
 import logging
+from prophet import Prophet
+from prophet.plot import plot_plotly, plot_components_plotly
 logger = logging.getLogger(__name__)
-
 
 class ExploreStocks:
 
-    def __init__(self, stock_list):
+    def __init__(self, stock_list, period):
         self.stock_list = stock_list
+        self.period = period
 
+        # download stock initial stock info
         try:
             stocks_df = yf.download(self.stock_list, group_by='Ticker', period='max')
             stocks_df = stocks_df.stack(level=0).rename_axis(['Date', 'Ticker']).reset_index(level=1)
@@ -27,9 +31,10 @@ class ExploreStocks:
 
         print('Initial Stock Information Downloaded')
 
+        # next get currency code for each stock
+
         # create empty dict
         currency_code = {}
-
         # loop to extract currency for each ticker using .info method
         for ticker in self.stock_list:
             try:
@@ -38,27 +43,24 @@ class ExploreStocks:
             except Exception as e:
                 print("Error getting currency symbol", e)
                 return
-
         # make dataframe
         currency_code_df = pd.DataFrame(list(currency_code.items()), columns=['Ticker', 'currency_code'])
-
         # merge with master dataset
         df = pd.merge(stocks_df, currency_code_df, how='left', left_on=['Ticker'], right_on=['Ticker'])
-
         df['currency_code'] = df['currency_code'].apply(
             lambda x: x.upper())
-
         # create unique field to join exchange rates later
         df['currency_id'] = (df['Date'].apply(
             lambda x: x.strftime("%m%d%Y"))) + (df['currency_code'])
 
         print('Currency Extracted and Merged')
 
-        # function to get exchange rates to GBP
+        # function to get exchange rates to GBP table
+
         # Create a Datafame with Yahoo Finance Module
         currencylist = [x.upper() for x in (list(df.currency_code.unique()))]  # choose currencies
-        period = (input("Enter a period e.g. 25y y=years: "))
         interval = '1d'
+        # period = (input("Enter a period e.g. 25y y=years: "))
 
         meta_df = pd.DataFrame(
             {
@@ -96,46 +98,42 @@ class ExploreStocks:
             except Exception as e:
                 print("Error getting exchange rates", e)
                 return
-
         currency_df = currency_df.reset_index()
-
         print('Exchange Rates Obtained')
 
         # split date
         # could average exchange rate by week in year to account for missing vlaues
         currency_df['week_number_of_year'] = currency_df['Date'].dt.week
         currency_df['year'] = currency_df['Date'].dt.year
-
         # create unique id to merge on
         currency_df['currency_iden'] = (currency_df.Date.apply(
             lambda x: x.strftime("%m%d%Y"))) + (currency_df['FromCurrency'])
-
         # rename columns
         currency_df.rename(columns={
             'Close': 'currency_close'
         }, inplace=True)
 
+        self.currency_df = currency_df
+
         # merge exchange rates with master dataframe
         master_df = pd.merge(df, currency_df[['currency_iden', 'currency_close']], how='left', left_on=['currency_id'],
                              right_on=['currency_iden'])
 
+        # check we are only looking at weekdays
+        master_df['weekday'] = master_df['Date'].dt.weekday
+        master_df = master_df.loc[~((master_df['weekday'] == 6) & (master_df['weekday'] == 7))]
+
+        # look for na values
         df_na = master_df.loc[master_df['currency_close'].isna()]
-
         df_na = df_na.loc[~(df_na['currency_code'].str.contains('GBP', case=False, regex=False, na=False))]
-
         df_na = df_na.groupby(['currency_code']).agg(currency_code_size=('currency_code', 'size')).reset_index()
-
-        print('The number of values that exchange rate could not be found: \n', df_na)
-
         na_count = df_na['currency_code'].count() / master_df['currency_code'].count() * 100
         print(f'\n% of NaN values in calculated GBP column : {"{:.2f}".format(na_count)}')
 
         # We know the value of misisng GBP ot GBP currency is 1 so we can change this manually
         master_df.loc[master_df['currency_code'].isin(['GBP']), 'currency_close'] = 1
-
         # confirm still numeric data type
         master_df['currency_close'] = pd.to_numeric(master_df['currency_close'], downcast='float', errors='coerce')
-
         # now we can calculate calculated currency
         master_df['GBP_calculated close'] = master_df['Close'] * master_df['currency_close']
 
@@ -143,9 +141,13 @@ class ExploreStocks:
 
         print('Data Retrieved - access via the stock_hitory attribute ')
 
-    def plot_stock_price(self):
+    def return_df(self):
+        ''' Function to return dataframe, can also return by calling self.stock_history '''
+        return self.stock_history
 
-        # plot the stock prices in GBP over time
+    def plot_stock_price(self, log=False):
+        """ Function to plot the stock price for each stock over time"""
+
         fig = px.line(
             self.stock_history.sort_values(by=['Date'], ascending=[True]).dropna(subset=['GBP_calculated close']),
             x='Date', y='GBP_calculated close', color='Ticker', title='Stock Price Over Time')
@@ -159,4 +161,112 @@ class ExploreStocks:
         ]))
         fig.update_layout(xaxis_rangeslider_visible=True)
         fig.update_yaxes(title_text='GBP Calculated Close')
+
+        if log == True:
+            fig.update_yaxes(type='log', tickformat='.1e')
         return fig
+
+    def plot_trade_volume(self):
+        """ Function to plot the volume traded for each stock over time"""
+
+        fig = px.line(self.stock_history.sort_values(by=['Date'], ascending=[True]),
+                      x='Date', y='Volume', color='Ticker', facet_col='Ticker', title='Volume Traded Over Time')
+        return fig
+
+    def plot_volatility(self):
+        """ Function to plot the volatility of each stock (daily close % change)"""
+
+        # compute daily percent change in closing price
+        self.stock_history['returns'] = self.stock_history.groupby("Ticker")['Close'].pct_change()
+
+        # get title
+        title = (' '.join([str(item) for item in self.stock_list])) + ' Daily Volatility Comparison'
+
+        # plot histogram
+        fig = px.histogram(self.stock_history.dropna(subset=['returns']), x='returns', title=title, color='Ticker',
+                           nbins=200)
+        fig.update_yaxes(title_text='Count')
+        fig.update_xaxes(title_text='Return Bins')
+        return fig
+
+    def plot_cumulative_returns(self):
+        """ Function to plot the cumulative return of each stock over time """
+        cum_returns = self.stock_history[['Date', 'Close', 'Ticker']]
+        cum_returns = pd.pivot_table(cum_returns, columns=['Ticker'], index=['Date'])
+
+        daily_pct_change = cum_returns.pct_change()
+        daily_pct_change.fillna(0, inplace=True)
+        cumprod_daily_pct_change = (1 + daily_pct_change).cumprod()
+
+        cumprod_daily_pct_change.columns = ["_".join([str(index) for index in multi_index]) for multi_index in
+                                            cumprod_daily_pct_change.columns.ravel()]
+        cumprod_daily_pct_change = cumprod_daily_pct_change.reset_index()
+
+        # get title
+        title = (' '.join([str(item) for item in self.stock_list])) + ' Cumulative Returns'
+
+        fig = px.line(cumprod_daily_pct_change.sort_values(by=['Date'], ascending=[True]), x='Date',
+                      y=['Close_0293.HK', 'Close_AF.PA', 'Close_IAG.L'], title=title)
+        fig.update_yaxes(title_text='Cumulative Returns')
+        fig.update_layout(xaxis_rangeslider_visible=True)
+        fig.update_layout(legend_title_text='Ticker')
+        return fig
+
+    def plot_rolling_average(self):
+        """ Function to plot the rolling average of each stock over time """
+
+        # compute several rolling means
+        gbp_df = self.stock_history.copy()
+
+        gbp_df['MA50'] = gbp_df.groupby('Ticker')['GBP_calculated close'].transform(lambda x: x.rolling(50, 25).mean())
+        gbp_df['MA200'] = gbp_df.groupby('Ticker')['GBP_calculated close'].transform(
+            lambda x: x.rolling(200, 100).mean())
+        gbp_df['MA365'] = gbp_df.groupby('Ticker')['GBP_calculated close'].transform(
+            lambda x: x.rolling(365, 182).mean())
+        gbp_df['MA1000'] = gbp_df.groupby('Ticker')['GBP_calculated close'].transform(
+            lambda x: x.rolling(1000, 500).mean())
+
+        # Visualise the rolling mean over time
+        fig = px.line(gbp_df.sort_values(by=['Date'], ascending=[True]).dropna(
+            subset=['MA1000', 'GBP_calculated close', 'MA200']), x='Date',
+                      y=['MA1000', 'MA200', 'GBP_calculated close'], facet_row='Ticker',
+                      title='Rolling Mean Stock Price Over Time')
+
+        # add custom y axis for each facet
+        #         for k in fig.layout:
+        #             if re.search('yaxis[1-9]+', k):
+        #                 fig.layout[k].update(matches=None)
+        fig.update_yaxes(matches=None)
+
+        # Add Date slider
+        fig.update_layout(xaxis_rangeselector_buttons=list([
+            dict(label="1m", count=1, step="month", stepmode="backward"),
+            dict(label="6m", count=6, step="month", stepmode="backward"),
+            dict(label="YTD", count=1, step="year", stepmode="todate"),
+            dict(label="1y", count=1, step="year", stepmode="backward"),
+            dict(step="all")
+        ]))
+        fig.update_layout(xaxis_rangeslider_visible=True)
+        fig.update_layout(legend_title_text='Average')
+        fig.update_yaxes(title_text=f'Stock Value')
+
+        return fig
+
+    def plot_future_trend(self, stock, start_date='2021-05-01', periods=90):
+        """ Function to predict the future trend of a stock. Currently only takes one stock at a time.
+        User to input stock as string, start date for prediction and the number of days to predict"""
+
+        post_covid_df = self.stock_history.loc[~(self.stock_history['Date'] <= start_date)]
+        predict_df = post_covid_df[['Date', 'Ticker', 'Close']]
+        predict_df = predict_df.loc[predict_df['Ticker'].isin([stock])][['Date', 'Close']]
+
+        # rename columns to fit model
+        df = predict_df.rename(columns={'Date': 'ds', 'Close': 'y'})
+
+        m = Prophet(daily_seasonality=True)
+        m.fit(df)
+
+        future = m.make_future_dataframe(periods)
+        forecast = m.predict(future)
+
+        return plot_plotly(m, forecast)

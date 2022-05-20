@@ -10,7 +10,7 @@ import sqlalchemy
 # AF.PA = Air France-KLM SA
 
 #send individual tables to sql for each stock
-individualTables(['IAG.L', '0293.HK', 'AF.PA'])
+#individualTables(['IAG.L', '0293.HK', 'AF.PA'])
 
 #combine tables and send to sql
 combinedTables(['IAG.L', '0293.HK', 'AF.PA'])
