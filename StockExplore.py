@@ -1,19 +1,3 @@
-#import relevant libs
-import pandas as pd
-import numpy as np
-from datetime import datetime
-import yfinance as yf
-import sqlalchemy
-import bamboolib as bam
-#import psycopg2
-import time
-import plotly.express as px
-import re
-import logging
-from prophet import Prophet
-from prophet.plot import plot_plotly, plot_components_plotly
-logger = logging.getLogger(__name__)
-
 class ExploreStocks:
 
     def __init__(self, stock_list, period):
@@ -32,8 +16,6 @@ class ExploreStocks:
         print('Initial Stock Information Downloaded')
 
         # next get currency code for each stock
-
-        # create empty dict
         currency_code = {}
         # loop to extract currency for each ticker using .info method
         for ticker in self.stock_list:
@@ -252,21 +234,53 @@ class ExploreStocks:
 
         return fig
 
-    def plot_future_trend(self, stock, start_date='2021-05-01', periods=90):
+    def plot_future_trend(self, stock, start_date='2021-05-01', periods=90, country_name='US',
+                          changepoints=True, trend=True, cap=1000, floor=0, growth='logistic'):
         """ Function to predict the future trend of a stock. Currently only takes one stock at a time.
-        User to input stock as string, start date for prediction and the number of days to predict"""
+        User to input stock as string, start date for prediction and the number of days to predict
+        self - dataframe
+        stock - string
+        start_date - string
+        periods - days as int"""
 
-        post_covid_df = self.stock_history.loc[~(self.stock_history['Date'] <= start_date)]
-        predict_df = post_covid_df[['Date', 'Ticker', 'Close']]
-        predict_df = predict_df.loc[predict_df['Ticker'].isin([stock])][['Date', 'Close']]
+        post_date_df = self.stock_history.loc[~(self.stock_history['Date'] <= start_date)]
+        predict_df = post_date_df.loc[post_date_df['Ticker'].isin([stock])]
 
         # rename columns to fit model
         df = predict_df.rename(columns={'Date': 'ds', 'Close': 'y'})
+        df = df[['ds', 'y']]
+        df['cap'] = cap
+        df['floor'] = floor
 
-        m = Prophet(daily_seasonality=True)
+        m = Prophet(yearly_seasonality=True, growth=growth)
+
+        # get currency code for stock
+        currency_code = predict_df['currency_code'].values[0]
+
+        # HOLIDAYS - default is US
+        if currency_code == 'GBP':
+            m.add_country_holidays(country_name="GB")
+        elif currency_code == 'HKD':
+            m.add_country_holidays(country_name="HK")
+        else:
+            m.add_country_holidays(country_name=country_name)
+
         m.fit(df)
 
         future = m.make_future_dataframe(periods)
+
+        # Eliminate weekend from future dataframe
+        future['day'] = future['ds'].dt.weekday
+        future = future[future['day'] <= 4]
+
+        future['cap'] = cap
+        future['floor'] = floor
+
         forecast = m.predict(future)
 
-        return plot_plotly(m, forecast)
+        # format graph
+        fig = plot_plotly(m, forecast, trend=trend, changepoints=changepoints)
+        fig.update_layout(title=f'{stock} {periods} days forecast')
+        output = fig.show()
+
+        return output
