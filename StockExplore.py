@@ -1,3 +1,20 @@
+#import relevant libs
+import pandas as pd
+import numpy as np
+from datetime import datetime
+import yfinance as yf
+import sqlalchemy
+import bamboolib as bam
+#import psycopg2
+import time
+import plotly.express as px
+import re
+import logging
+from prophet import Prophet
+from prophet.plot import plot_plotly, plot_components_plotly, add_changepoints_to_plot
+logger = logging.getLogger(__name__)
+
+
 class ExploreStocks:
 
     def __init__(self, stock_list, period):
