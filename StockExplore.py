@@ -5,14 +5,18 @@ from datetime import datetime
 import yfinance as yf
 import sqlalchemy
 import bamboolib as bam
-#import psycopg2
 import time
 import plotly.express as px
-import re
 import logging
 from prophet import Prophet
+from prophet.diagnostics import cross_validation
+from prophet.diagnostics import performance_metrics
 from prophet.plot import plot_plotly, plot_components_plotly, add_changepoints_to_plot
 logger = logging.getLogger(__name__)
+from sklearn.metrics import mean_absolute_percentage_error
+from sklearn.metrics import mean_absolute_error
+from dask.distributed import Client
+import itertools
 
 
 class ExploreStocks:
@@ -118,9 +122,9 @@ class ExploreStocks:
         master_df = pd.merge(df, currency_df[['currency_iden', 'currency_close']], how='left', left_on=['currency_id'],
                              right_on=['currency_iden'])
 
-        # check we are only looking at weekdays
-        master_df['weekday'] = master_df['Date'].dt.weekday
-        master_df = master_df.loc[~((master_df['weekday'] == 6) & (master_df['weekday'] == 7))]
+        # Eliminate weekend from future dataframe
+        master_df['day'] = master_df['Date'].dt.weekday
+        master_df = master_df[master_df['day'] <= 4]
 
         # look for na values
         df_na = master_df.loc[master_df['currency_close'].isna()]
@@ -252,13 +256,12 @@ class ExploreStocks:
         return fig
 
     def plot_future_trend(self, stock, start_date='2021-05-01', periods=90, country_name='US',
-                          changepoints=True, trend=True, cap=1000, floor=0, growth='logistic'):
-        """ Function to predict the future trend of a stock. Currently only takes one stock at a time.
-        User to input stock as string, start date for prediction and the number of days to predict
-        self - dataframe
+                          changepoints=True, trend=True, cap=1000, floor=0, growth='logistic', interval_width=0.95):
+
+        ''' Function to predict the future trend of a stock. Currently only takes one stock at a time.
+        User to input stock as string, start date for prediction and the number of days to predictself - dataframe
         stock - string
-        start_date - string
-        periods - days as int"""
+        start_date - string periods - days as int '''
 
         post_date_df = self.stock_history.loc[~(self.stock_history['Date'] <= start_date)]
         predict_df = post_date_df.loc[post_date_df['Ticker'].isin([stock])]
@@ -269,7 +272,7 @@ class ExploreStocks:
         df['cap'] = cap
         df['floor'] = floor
 
-        m = Prophet(yearly_seasonality=True, growth=growth)
+        m = Prophet(yearly_seasonality=True, growth=growth, interval_width=interval_width)
 
         # get currency code for stock
         currency_code = predict_df['currency_code'].values[0]
@@ -299,5 +302,68 @@ class ExploreStocks:
         fig = plot_plotly(m, forecast, trend=trend, changepoints=changepoints)
         fig.update_layout(title=f'{stock} {periods} days forecast')
         output = fig.show()
+
+        return output
+
+    def plot_future_trend_grid_search(self, stock, start_date='2021-05-01', periods=90, country_name='US',
+                                      changepoints=True, trend=True, cap=1000, floor=0, growth='logistic',
+                                      interval_width=0.95):
+
+        ''' Function to predict the future trend of a stock. Currently only takes one stock at a time.
+        User to input stock as string, start date for prediction and the number of days to predictself - dataframe
+        stock - string
+        start_date - string periods - days as int '''
+
+        post_date_df = self.stock_history.loc[~(self.stock_history['Date'] <= start_date)]
+        predict_df = post_date_df.loc[post_date_df['Ticker'].isin([stock])]
+
+        # rename columns to fit model
+        df = predict_df.rename(columns={'Date': 'ds', 'Close': 'y'})
+        df = df[['ds', 'y']]
+        df['cap'] = cap
+        df['floor'] = floor
+
+        m = Prophet(yearly_seasonality=True, growth=growth, interval_width=interval_width)
+
+        # get currency code for stock
+        currency_code = predict_df['currency_code'].values[0]
+
+        # HOLIDAYS - default is US
+        if currency_code == 'GBP':
+            m.add_country_holidays(country_name="GB")
+        elif currency_code == 'HKD':
+            m.add_country_holidays(country_name="HK")
+        else:
+            m.add_country_holidays(country_name=country_name)
+
+        m.fit(df)
+
+        future = m.make_future_dataframe(periods)
+
+        # Eliminate weekend from future dataframe
+        future['day'] = future['ds'].dt.weekday
+        future = future[future['day'] <= 4]
+
+        future['cap'] = cap
+        future['floor'] = floor
+
+        forecast = m.predict(future)
+
+        # format graph
+        fig = plot_plotly(m, forecast, trend=trend, changepoints=changepoints)
+        fig.update_layout(title=f'{stock} {periods} days forecast')
+        output = fig.show()
+
+        # get Mean Absolute Error
+        df_merge = pd.merge(df, forecast[['ds', 'yhat_lower', 'yhat_upper', 'yhat']], on='ds')
+        df_merge = df_merge[['ds', 'yhat_lower', 'yhat_upper', 'yhat', 'y']]
+        # calculate MAE between observed and predicted values
+        y_true = df_merge['y'].values
+        y_pred = df_merge['yhat'].values
+        mae = mean_absolute_error(y_true, y_pred)
+        mape = mean_absolute_percentage_error(y_true, y_pred)
+
+        print(
+            f'The Mean Absolute Eror is: {"{:.2f}".format(mae)} \nThe Mean Absolute Percentage Eror is: {"{:.2f}".format(mape)} ')
 
         return output
