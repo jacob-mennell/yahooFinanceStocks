@@ -1,10 +1,8 @@
-#import relevant libs
 import pandas as pd
 import numpy as np
 from datetime import datetime
 import yfinance as yf
 import sqlalchemy
-import bamboolib as bam
 import time
 import plotly.express as px
 import logging
