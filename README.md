@@ -7,6 +7,8 @@ Data is pulled using Yahoo Finance, minor cleaning is then undertaken before sen
 Data used from the Yahoo Finance module includes: historical stock data, major shareholders, earnings, 
 quarterly earnings and news.
 
+The SQL database was then connected to Tableau to produce the included dashboard.
+
 ## StockExplore Module. 
 This provides the following methods to analyse a list of stocks: plot_stock_price(), plot_trade_volume(), 
 plot_volatility(), plot_rolling_average(), plot_cumulative_returns(), plot_future_trend(stock). 
