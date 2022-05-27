@@ -14,7 +14,7 @@ The SQL database was then connected to Tableau to produce the included dashboard
 ## StockExplore Module. 
 This provides the following methods to analyse a list of stocks: plot_stock_price(), plot_trade_volume(), 
 plot_volatility(), plot_rolling_average(), plot_cumulative_returns(), plot_future_trend(stock). These are
-listed in the StockExplore.py script and called in the analysis.py script.
+listed in the StockExplore.py script and called in the analysis.py and predictive_analysis.ipynb script.
 Plotting of the future trend uses the Facebook Prophet Model.
 
 Facebook Prophet Model: https://facebook.github.io/prophet/
