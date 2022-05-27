@@ -14,6 +14,9 @@ Extraction functions are listed in the dataExtract.py script and called in the d
 
 The SQL database was then connected to Tableau to produce the dashboard included in the folder.
 
+### Required modules:
+pandas, datetime, time, yfinance, sqlalchemy, os
+
 ## StockExplore Module. 
 ### Stored in the python-class-analysis_project file
 This provides the StockExplore class with the following methods to analyse a list of stocks:
@@ -26,3 +29,6 @@ Plotting of the future trend uses the Facebook Prophet Model.
 Facebook Prophet Model: https://facebook.github.io/prophet/
 " a modular regression model with interpretable parameters that can be intuitively adjusted 
 by analysts with domain knowledge about the time series"
+
+### Required modules: 
+pandas, datetime, time, yfinance, sqlalchemy, os, plotly, logging, prophet, sklearn.metrics, dask.distributed, itertools
