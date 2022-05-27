@@ -5,12 +5,14 @@ The project contains two parts:
 ## Scripts for pulling data from yahoo finance module and sending to PostGreSQL Database
 ### Stored in the python-sql-tableau_project file
 Data is pulled using Yahoo Finance, minor cleaning is then undertaken before sending to a SQL database 
-using sqlalchemy.
+using sqlalchemy. In this instance, a PostGreSQL database is used with credentials stored as environment variables 
+accessed through the os module. 
+
 Data used is from the Yahoo Finance module includes: historical stock data, major shareholders, earnings, 
 quarterly earnings and news.
 Extraction functions are listed in the dataExtract.py script and called in the dataExtract.py script.
 
-The SQL database was then connected to Tableau to produce the included dashboard.
+The SQL database was then connected to Tableau to produce the dashboard included in the folder.
 
 ## StockExplore Module. 
 ### Stored in the python-class-analysis_project file
