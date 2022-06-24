@@ -23,15 +23,22 @@ class ExploreStocks:
         self.stock_list = stock_list
         self.period = period
 
+        #initialise log file
+        logging.basicConfig(filename='ExploreStocks.log', encoding='utf-8', level=logging.DEBUG)
+
         # download stock initial stock info
         try:
-            stocks_df = yf.download(self.stock_list, group_by='Ticker', period='max')
-            stocks_df = stocks_df.stack(level=0).rename_axis(['Date', 'Ticker']).reset_index(level=1)
+            stocks_df = yf.download(self.stock_list,
+                                    group_by='Ticker',
+                                    period='max')
+            stocks_df = stocks_df.stack(level=0).rename_axis(['Date',
+                                                              'Ticker']).reset_index(level=1)
             stocks_df = stocks_df.reset_index()
         except Exception as e:
-            print("Error getting stock data", e)
+            logging.error("Error getting stock data", e)
             return
 
+        logging.info('Initial Stock Information Downloaded')
         print('Initial Stock Information Downloaded')
 
         # next get currency code for each stock
@@ -42,18 +49,26 @@ class ExploreStocks:
                 tick = yf.Ticker(ticker)
                 currency_code[ticker] = tick.info['currency']
             except Exception as e:
+                logging.error("Error getting currency symbol", e)
                 print("Error getting currency symbol", e)
                 return
         # make dataframe
-        currency_code_df = pd.DataFrame(list(currency_code.items()), columns=['Ticker', 'currency_code'])
+        currency_code_df = pd.DataFrame(list(currency_code.items()), columns=['Ticker',
+                                                                              'currency_code'])
         # merge with master dataset
-        df = pd.merge(stocks_df, currency_code_df, how='left', left_on=['Ticker'], right_on=['Ticker'])
+        df = pd.merge(stocks_df,
+                      currency_code_df,
+                      how='left',
+                      left_on=['Ticker'],
+                      right_on=['Ticker'])
+
         df['currency_code'] = df['currency_code'].apply(
             lambda x: x.upper())
         # create unique field to join exchange rates later
         df['currency_id'] = (df['Date'].apply(
             lambda x: x.strftime("%m%d%Y"))) + (df['currency_code'])
 
+        logging.info('Currency Extracted and Merged')
         print('Currency Extracted and Merged')
 
         # function to get exchange rates to GBP table
@@ -100,6 +115,7 @@ class ExploreStocks:
                 print("Error getting exchange rates", e)
                 return
         currency_df = currency_df.reset_index()
+        logging.info('Exchange Rates Obtained')
         print('Exchange Rates Obtained')
 
         # split date
@@ -117,7 +133,10 @@ class ExploreStocks:
         self.currency_df = currency_df
 
         # merge exchange rates with master dataframe
-        master_df = pd.merge(df, currency_df[['currency_iden', 'currency_close']], how='left', left_on=['currency_id'],
+        master_df = pd.merge(df, currency_df[['currency_iden',
+                                              'currency_close']],
+                             how='left',
+                             left_on=['currency_id'],
                              right_on=['currency_iden'])
 
         # Eliminate weekend from future dataframe
@@ -140,18 +159,23 @@ class ExploreStocks:
 
         self.stock_history = master_df.copy()
 
-        print('Data Retrieved - access via the stock_hitory attribute ')
+        logging.info('All data retrieved')
+        print('Data Retrieved - access via the stock_history attribute ')
 
     def return_df(self):
         ''' Function to return dataframe, can also return by calling self.stock_history '''
         return self.stock_history
 
-    def plot_stock_price(self, log=False):
+    def plot_stock_price(self, log=False, **kwargs):
         """ Function to plot the stock price for each stock over time"""
 
         fig = px.line(
-            self.stock_history.sort_values(by=['Date'], ascending=[True]).dropna(subset=['GBP_calculated close']),
-            x='Date', y='GBP_calculated close', color='Ticker', title='Stock Price Over Time')
+            self.stock_history.sort_values(by=['Date'],
+            ascending=[True]).dropna(subset=['GBP_calculated close']),
+            x='Date',
+            y='GBP_calculated close',
+            color='Ticker',
+            title='Stock Price Over Time',**kwargs )
 
         fig.update_layout(xaxis_rangeselector_buttons=list([
             dict(label="1m", count=1, step="month", stepmode="backward"),
@@ -167,14 +191,19 @@ class ExploreStocks:
             fig.update_yaxes(type='log', tickformat='.1e')
         return fig
 
-    def plot_trade_volume(self):
+    def plot_trade_volume(self,**kwargs):
         """ Function to plot the volume traded for each stock over time"""
 
-        fig = px.line(self.stock_history.sort_values(by=['Date'], ascending=[True]),
-                      x='Date', y='Volume', color='Ticker', facet_col='Ticker', title='Volume Traded Over Time')
+        fig = px.line(self.stock_history.sort_values(by=['Date'],ascending=[True]),
+                      x='Date',
+                      y='Volume',
+                      color='Ticker',
+                      facet_col='Ticker',
+                      title='Volume Traded Over Time'
+                      ,**kwargs)
         return fig
 
-    def plot_volatility(self):
+    def plot_volatility(self,**kwargs):
         """ Function to plot the volatility of each stock (daily close % change)"""
 
         # compute daily percent change in closing price
@@ -184,13 +213,17 @@ class ExploreStocks:
         title = (' '.join([str(item) for item in self.stock_list])) + ' Daily Volatility Comparison'
 
         # plot histogram
-        fig = px.histogram(self.stock_history.dropna(subset=['returns']), x='returns', title=title, color='Ticker',
+        fig = px.histogram(self.stock_history.dropna(subset=['returns']),
+                           x='returns',
+                           title=title,
+                           color='Ticker',
+                           **kwargs,
                            nbins=200)
         fig.update_yaxes(title_text='Count')
         fig.update_xaxes(title_text='Return Bins')
         return fig
 
-    def plot_cumulative_returns(self):
+    def plot_cumulative_returns(self,**kwargs):
         """ Function to plot the cumulative return of each stock over time """
         cum_returns = self.stock_history[['Date', 'Close', 'Ticker']]
         cum_returns = pd.pivot_table(cum_returns, columns=['Ticker'], index=['Date'])
@@ -206,14 +239,18 @@ class ExploreStocks:
         # get title
         title = (' '.join([str(item) for item in self.stock_list])) + ' Cumulative Returns'
 
-        fig = px.line(cumprod_daily_pct_change.sort_values(by=['Date'], ascending=[True]), x='Date',
-                      y=['Close_0293.HK', 'Close_AF.PA', 'Close_IAG.L'], title=title)
+        fig = px.line(cumprod_daily_pct_change.sort_values(by=['Date'],ascending=[True]),
+                      x='Date',
+                      y=['Close_0293.HK', 'Close_AF.PA', 'Close_IAG.L'],
+                      title=title,
+                      **kwargs)
+
         fig.update_yaxes(title_text='Cumulative Returns')
         fig.update_layout(xaxis_rangeslider_visible=True)
         fig.update_layout(legend_title_text='Ticker')
         return fig
 
-    def plot_rolling_average(self):
+    def plot_rolling_average(self,,**kwargs):
         """ Function to plot the rolling average of each stock over time """
 
         # compute several rolling means
@@ -229,9 +266,11 @@ class ExploreStocks:
 
         # Visualise the rolling mean over time
         fig = px.line(gbp_df.sort_values(by=['Date'], ascending=[True]).dropna(
-            subset=['MA1000', 'GBP_calculated close', 'MA200']), x='Date',
-                      y=['MA1000', 'MA200', 'GBP_calculated close'], facet_row='Ticker',
-                      title='Rolling Mean Stock Price Over Time')
+            subset=['MA1000', 'GBP_calculated close', 'MA200']),
+            x='Date',
+            y=['MA1000', 'MA200', 'GBP_calculated close'],
+            facet_row='Ticker',
+            title='Rolling Mean Stock Price Over Time', **kwargs)
 
         # add custom y axis for each facet
         #         for k in fig.layout:
@@ -254,7 +293,8 @@ class ExploreStocks:
         return fig
 
     def plot_future_trend(self, stock, start_date='2021-05-01', periods=90, country_name='US',
-                          changepoints=True, trend=True, cap=1000, floor=0, growth='logistic', interval_width=0.95):
+                          changepoints=True, trend=True, cap=1000, floor=0, growth='logistic',
+                          interval_width=0.95,,**kwargs):
 
         ''' Function to predict the future trend of a stock. Currently only takes one stock at a time.
         User to input stock as string, start date for prediction and the number of days to predictself - dataframe
@@ -297,15 +337,24 @@ class ExploreStocks:
         forecast = m.predict(future)
 
         # format graph
-        fig = plot_plotly(m, forecast, trend=trend, changepoints=changepoints)
+        fig = plot_plotly(m, forecast, trend=trend, changepoints=changepoints, **kwargs)
         fig.update_layout(title=f'{stock} {periods} days forecast')
         output = fig.show()
 
         return output
 
-    def plot_future_trend_grid_search(self, stock, start_date='2021-05-01', periods=90, country_name='US',
-                                      changepoints=True, trend=True, cap=1000, floor=0, growth='logistic',
-                                      interval_width=0.95):
+    def plot_future_trend_grid_search(self,
+                                      stock,
+                                      start_date='2021-05-01',
+                                      periods=90,
+                                      country_name='US',
+                                      changepoints=True,
+                                      trend=True,
+                                      cap=1000,
+                                      floor=0,
+                                      growth='logistic',
+                                      interval_width=0.95,
+                                      **kwargs):
 
         ''' Function to predict the future trend of a stock. Currently only takes one stock at a time.
         User to input stock as string, start date for prediction and the number of days to predictself - dataframe
@@ -348,7 +397,12 @@ class ExploreStocks:
         forecast = m.predict(future)
 
         # format graph
-        fig = plot_plotly(m, forecast, trend=trend, changepoints=changepoints)
+        fig = plot_plotly(m,
+                          forecast,
+                          trend=trend,
+                          changepoints=changepoints,
+                          **kwargs)
+
         fig.update_layout(title=f'{stock} {periods} days forecast')
         output = fig.show()
 
@@ -362,6 +416,7 @@ class ExploreStocks:
         mape = mean_absolute_percentage_error(y_true, y_pred)
 
         print(
-            f'The Mean Absolute Eror is: {"{:.2f}".format(mae)} \nThe Mean Absolute Percentage Eror is: {"{:.2f}".format(mape)} ')
+            f'The Mean Absolute Eror is: {"{:.2f}".format(mae)} '
+            f'\nThe Mean Absolute Percentage Eror is: {"{:.2f}".format(mape)} ')
 
         return output
