@@ -250,7 +250,7 @@ class ExploreStocks:
         fig.update_layout(legend_title_text='Ticker')
         return fig
 
-    def plot_rolling_average(self,,**kwargs):
+    def plot_rolling_average(self,**kwargs):
         """ Function to plot the rolling average of each stock over time """
 
         # compute several rolling means
@@ -294,7 +294,7 @@ class ExploreStocks:
 
     def plot_future_trend(self, stock, start_date='2021-05-01', periods=90, country_name='US',
                           changepoints=True, trend=True, cap=1000, floor=0, growth='logistic',
-                          interval_width=0.95,,**kwargs):
+                          interval_width=0.95,**kwargs):
 
         ''' Function to predict the future trend of a stock. Currently only takes one stock at a time.
         User to input stock as string, start date for prediction and the number of days to predictself - dataframe
