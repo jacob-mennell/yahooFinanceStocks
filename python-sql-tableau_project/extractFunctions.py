@@ -135,6 +135,9 @@ def blank_sql():
     # dialect+driver://username:password@host:port/database
     engine = sqlalchemy.create_engine(postgres_path)
 
+    # Look at using the below instead or the .drop() method on individual tables
+    #sqlalchemy.schema.MetaData.drop_all(bind=None, tables=None, checkfirst=True)¶
+
     #earnings
     column_names = ["year", "revenue", "earnings", "stock"]
     earnings = pd.DataFrame(columns=column_names)
