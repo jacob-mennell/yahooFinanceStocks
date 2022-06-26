@@ -200,14 +200,15 @@ def blank_sql():
 
     # financials
     column_names = ['date', 'Research Development', 'Effect Of Accounting Charges',
-     'Income Before Tax', 'Minority Interest', 'Net Income',
-     'Selling General Administrative', 'Gross Profit', 'Ebit',
-     'Operating Income', 'Other Operating Expenses', 'Interest Expense',
-     'Extraordinary Items', 'Non Recurring', 'Other Items',
-     'Income Tax Expense', 'Total Revenue', 'Total Operating Expenses',
-     'Cost Of Revenue', 'Total Other Income Expense Net',
-     'Discontinued Operations', 'Net Income From Continuing Ops',
-     'Net Income Applicable To Common Shares', 'stock']
+                    'Income Before Tax', 'Minority Interest', 'Net Income',
+                    'Selling General Administrative', 'Gross Profit', 'Ebit',
+                    'Operating Income', 'Other Operating Expenses', 'Interest Expense',
+                    'Extraordinary Items', 'Non Recurring', 'Other Items',
+                    'Income Tax Expense', 'Total Revenue', 'Total Operating Expenses',
+                    'Cost Of Revenue', 'Total Other Income Expense Net',
+                    'Discontinued Operations', 'Net Income From Continuing Ops',
+                    'Net Income Applicable To Common Shares', 'stock'
+                    ]
     financials = pd.DataFrame(columns=column_names)
     financials.to_sql('financials', engine, if_exists='replace', index=False)
 
@@ -260,88 +261,84 @@ def exchange_rate_table(stock_list, period, interval='1d'):
     currency_code = {}
     # loop to extract currency for each ticker using .info method
     for ticker in stock_list:
-      try:
-          tick = yf.Ticker(ticker)
-          currency_code[ticker] = tick.info['currency']
-      except Exception as e:
-          logging.error("Error getting currency symbol", e)
+        try:
+            tick = yf.Ticker(ticker)
+            currency_code[ticker] = tick.info['currency']
+        except Exception as e:
+            logging.error("Error getting currency symbol", e)
 
     # make dataframe
     df = pd.DataFrame(list(currency_code.items()), columns=['Ticker', 'currency_code'])
     df['currency_code'] = df['currency_code'].apply(
         lambda x: x.upper())
 
-      # Create a Datafame with Yahoo Finance Module
-      currencylist = [x.upper() for x in (list(df.currency_code.unique()))]  # choose currencies
-      meta_df = pd.DataFrame(
-          {
-              'FromCurrency': [a for a in currencylist],
-              'ToCurrency': ['GBP' for a in currencylist],
-              'YahooTickers': [f'{a}GBP=X' for a in currencylist]
-          }
-      )
+    # Create a Datafame with Yahoo Finance Module
+    currencylist = [x.upper() for x in (list(df.currency_code.unique()))]  # choose currencies
+    meta_df = pd.DataFrame(
+        {
+            'FromCurrency': [a for a in currencylist],
+            'ToCurrency': ['GBP' for a in currencylist],
+            'YahooTickers': [f'{a}GBP=X' for a in currencylist]
+        }
+    )
 
-      currency_df = pd.DataFrame(
-          yf.download(
-              tickers=meta_df['YahooTickers'].values[0],
-              period=period,
-              interval=interval
-          )
-          , columns=['Open', 'Close', 'Low', 'High']
-      ).assign(
-          FromCurrency=meta_df['FromCurrency'].values[0],
-          ToCurrency=meta_df['ToCurrency'].values[0]
-      )
-      for i in range(1, len(meta_df)):
-          try:
-              currency_help_df = pd.DataFrame(
-                  yf.download(
-                      tickers=meta_df['YahooTickers'].values[i],
-                      period=period,
-                      interval=interval
-                  )
-                  , columns=['Open', 'Close', 'Low', 'High']
-              ).assign(
-                  FromCurrency=meta_df['FromCurrency'].values[i],
-                  ToCurrency=meta_df['ToCurrency'].values[i]
-              )
-              currency_df = pd.concat([currency_df, currency_help_df])
-          except Exception as e:
-              logging.error("Error getting exchange rates", e)
-              return
+    currency_df = pd.DataFrame(
+        yf.download(
+            tickers=meta_df['YahooTickers'].values[0],
+            period=period,
+            interval=interval)
+        , columns=['Open', 'Close', 'Low', 'High']
+    ).assign(
+        FromCurrency=meta_df['FromCurrency'].values[0],
+        ToCurrency=meta_df['ToCurrency'].values[0]
+    )
+    for i in range(1, len(meta_df)):
+        try:
+            currency_help_df = pd.DataFrame(
+                yf.download(
+                    tickers=meta_df['YahooTickers'].values[i],
+                    period=period,
+                    interval=interval)
+                , columns=['Open', 'Close', 'Low', 'High']).assign(
+                FromCurrency=meta_df['FromCurrency'].values[i],
+                ToCurrency=meta_df['ToCurrency'].values[i])
 
-      currency_df = currency_df.reset_index()
-      logging.info('Exchange Rates Obtained')
+            currency_df = pd.concat([currency_df, currency_help_df])
+            currency_df = currency_df.reset_index()
+            logging.info('Exchange Rates Obtained')
 
-      # use exchange rates table with daily increments to crate date dimension table
-      date_df = pd.DataFrame()
-      date_df['date_key'] = currency_df['Date'].dt.strftime('%m%d%Y')
-      date_df['year'] = currency_df['Date'].dt.year
-      date_df['quarter'] = currency_df['Date'].dt.quarter
-      date_df['month'] = currency_df['Date'].dt.month
-      date_df['week_number_of_year'] = currency_df['Date'].dt.week
-      date_df.to_sql('date_dimension', engine, if_exists='replace', index=False)
+        except Exception as e:
+            logging.error("Error getting exchange rates", e)
 
-      # create unique id
-      currency_df['exchange_id'] = (currency_df.Date.apply(
-          lambda x: x.strftime("%m%d%Y"))) + (currency_df['FromCurrency'])
-      currency_df['currency_date_key'] = (currency_df.Date.apply(
-          lambda x: x.strftime("%m%d%Y")))
+    # use exchange rates table with daily increments to crate date dimension table
+    date_df = pd.DataFrame()
+    date_df['date_key'] = currency_df['Date'].dt.strftime('%m%d%Y')
+    date_df['year'] = currency_df['Date'].dt.year
+    date_df['quarter'] = currency_df['Date'].dt.quarter
+    date_df['month'] = currency_df['Date'].dt.month
+    date_df['week_number_of_year'] = currency_df['Date'].dt.week
+    date_df.to_sql('date_dimension', engine, if_exists='replace', index=False)
 
-      # rename columns
-      currency_df.rename(columns={
-          'Close': 'currency_close'
-      }, inplace=True)
+    # create unique id
+    currency_df['exchange_id'] = (currency_df.Date.apply(
+        lambda x: x.strftime("%m%d%Y"))) + (currency_df['FromCurrency'])
+    currency_df['currency_date_key'] = (currency_df.Date.apply(
+        lambda x: x.strftime("%m%d%Y")))
 
-      # merge exchange rates with master dataframe
-      exchange_df = pd.merge(df, currency_df,
-                             how='right',
-                             left_on=['currency_code'],
-                             right_on=['FromCurrency'])
-      exchange_df.to_sql('stocks_master', engine, if_exists='replace', index=False)
-      return logger.info('Exchange rate table created in PostGreSQL database')
+    # rename columns
+    currency_df.rename(columns={
+        'Close': 'currency_close'}
+        , inplace=True)
 
-################# OLD CODE CAN BE REUSED IF NEEDED STOCKS IN SEPERATE TABLES #################
+    # merge exchange rates with master dataframe
+    exchange_df = pd.merge(df, currency_df,
+                           how='right',
+                           left_on=['currency_code'],
+                           right_on=['FromCurrency'])
+    exchange_df.to_sql('stocks_master', engine, if_exists='replace', index=False)
+    return logger.info('Exchange rate table created in PostGreSQL database')
+
+# -------------------- OLD CODE CAN BE REUSED IF NEEDED STOCKS IN SEPERATE TABLES --------------------
 
 # def stock_sql_send(stock):
 #     '''
@@ -455,4 +452,3 @@ def exchange_rate_table(stock_list, period, interval='1d'):
 #     # [stock_sql_send(item) for item in companies]
 #     list(map(stock_sql_send, companies))
 #     return print('\nSQL Updated')
-
