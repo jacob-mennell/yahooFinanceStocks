@@ -10,7 +10,6 @@ from prophet import Prophet
 from prophet.diagnostics import cross_validation
 from prophet.diagnostics import performance_metrics
 from prophet.plot import plot_plotly, plot_components_plotly, add_changepoints_to_plot
-logger = logging.getLogger(__name__)
 from sklearn.metrics import mean_absolute_percentage_error
 from sklearn.metrics import mean_absolute_error
 from dask.distributed import Client
@@ -23,7 +22,7 @@ class ExploreStocks:
         self.stock_list = stock_list
         self.period = period
 
-        #initialise log file
+        # initialise log file
         logger = logging.getLogger()
         logger.setLevel(logging.NOTSET)
 
@@ -161,7 +160,7 @@ class ExploreStocks:
         na_count = df_na['currency_code'].count() / master_df['currency_code'].count() * 100
         print(f'\n% of NaN values in calculated GBP column : {"{:.2f}".format(na_count)}')
 
-        # We know the value of misisng GBP ot GBP currency is 1 so we can change this manually
+        # We know the value of missing GBP ot GBP currency is 1, so we can change this manually
         master_df.loc[master_df['currency_code'].isin(['GBP']), 'currency_close'] = 1
         # confirm still numeric data type
         master_df['currency_close'] = pd.to_numeric(master_df['currency_close'], downcast='float', errors='coerce')
@@ -174,11 +173,17 @@ class ExploreStocks:
         print('Data Retrieved - access via the stock_history attribute ')
 
     def return_df(self):
-        ''' Function to return dataframe, can also return by calling self.stock_history '''
+        """ Returns: dataframe - also return by calling self.stock_history """
         return self.stock_history
 
     def plot_stock_price(self, log=False, **kwargs):
-        """ Function to plot the stock price for each stock over time"""
+        """
+        Args:
+            log:
+            **kwargs:
+
+        Returns: plotly plot of the stock price for each stock over time
+         """
 
         fig = px.line(
             self.stock_history.sort_values(by=['Date'],
@@ -198,12 +203,16 @@ class ExploreStocks:
         fig.update_layout(xaxis_rangeslider_visible=True)
         fig.update_yaxes(title_text='GBP Calculated Close')
 
-        if log == True:
+        if log:
             fig.update_yaxes(type='log', tickformat='.1e')
         return fig
 
     def plot_trade_volume(self,**kwargs):
-        """ Function to plot the volume traded for each stock over time"""
+        """
+        Args:
+            **kwargs:
+
+        Returns: Plot of the volume traded for each stock over time """
 
         fig = px.line(self.stock_history.sort_values(by=['Date'],ascending=[True]),
                       x='Date',
@@ -215,7 +224,12 @@ class ExploreStocks:
         return fig
 
     def plot_volatility(self,**kwargs):
-        """ Function to plot the volatility of each stock (daily close % change)"""
+        """
+        Args:
+            **kwargs:
+
+        Returns: plot of the volatility of each stock (daily close % change)
+         """
 
         # compute daily percent change in closing price
         self.stock_history['returns'] = self.stock_history.groupby("Ticker")['Close'].pct_change()
@@ -235,7 +249,12 @@ class ExploreStocks:
         return fig
 
     def plot_cumulative_returns(self,**kwargs):
-        """ Function to plot the cumulative return of each stock over time """
+        """
+        Args:
+            **kwargs:
+
+        Returns: plot of the cumulative return of each stock over time
+        """
 
         cum_returns = self.stock_history[['Date', 'Close', 'Ticker']]
         cum_returns = pd.pivot_table(cum_returns, columns=['Ticker'], index=['Date'])
@@ -263,7 +282,12 @@ class ExploreStocks:
         return fig
 
     def plot_rolling_average(self,**kwargs):
-        """ Function to plot the rolling average of each stock over time """
+        """
+        Args:
+            **kwargs:
+
+        Returns: plot of the rolling average of each stock over time
+        """
 
         # compute several rolling means
         gbp_df = self.stock_history.copy()
@@ -284,7 +308,7 @@ class ExploreStocks:
             facet_row='Ticker',
             title='Rolling Mean Stock Price Over Time', **kwargs)
 
-        # add custom y axis for each facet
+        # add custom y-axis for each facet
         #         for k in fig.layout:
         #             if re.search('yaxis[1-9]+', k):
         #                 fig.layout[k].update(matches=None)
@@ -307,11 +331,24 @@ class ExploreStocks:
     def plot_future_trend(self, stock, start_date='2021-05-01', periods=90, country_name='US',
                           changepoints=True, trend=True, cap=1000, floor=0, growth='logistic',
                           interval_width=0.95,**kwargs):
+        """
+        Function to predict the future trend of a stock.
 
-        ''' Function to predict the future trend of a stock. Currently only takes one stock at a time.
-        User to input stock as string, start date for prediction and the number of days to predictself - dataframe
-        stock - string
-        start_date - string periods - days as int '''
+        Args:
+            stock:
+            start_date:
+            periods:
+            country_name:
+            changepoints:
+            trend:
+            cap:
+            floor:
+            growth:
+            interval_width:
+            **kwargs:
+
+        Returns: plotly figure of future trend.
+        """
 
         post_date_df = self.stock_history.loc[~(self.stock_history['Date'] <= start_date)]
         predict_df = post_date_df.loc[post_date_df['Ticker'].isin([stock])]
@@ -352,83 +389,99 @@ class ExploreStocks:
         fig = plot_plotly(m, forecast, trend=trend, changepoints=changepoints, **kwargs)
         fig.update_layout(title=f'{stock} {periods} days forecast')
         output = fig.show()
-
         return output
 
-    def plot_future_trend_grid_search(self,
-                                      stock,
-                                      start_date='2021-05-01',
-                                      periods=90,
-                                      country_name='US',
-                                      changepoints=True,
-                                      trend=True,
-                                      cap=1000,
-                                      floor=0,
-                                      growth='logistic',
-                                      interval_width=0.95,
-                                      **kwargs):
+   def plot_future_trend_grid_search(self,
+                                     stock,
+                                     start_date='2021-05-01',
+                                     periods=90,
+                                     country_name='US',
+                                     changepoints=True,
+                                     trend=True,
+                                     cap=1000,
+                                     floor=0,
+                                     growth='logistic',
+                                     interval_width=0.95,
+                                     **kwargs):
 
-        ''' Function to predict the future trend of a stock. Currently only takes one stock at a time.
-        User to input stock as string, start date for prediction and the number of days to predictself - dataframe
-        stock - string
-        start_date - string periods - days as int '''
+       """
+       Function to predict the future trend of a stock using grid search.
+       Note takes significantly greater compute power than plot_future_trend() function.
 
-        post_date_df = self.stock_history.loc[~(self.stock_history['Date'] <= start_date)]
-        predict_df = post_date_df.loc[post_date_df['Ticker'].isin([stock])]
+       Args:
+           self:
+           stock:
+           start_date:
+           periods:
+           country_name:
+           changepoints:
+           trend:
+           cap:
+           floor:
+           growth:
+           interval_width:
+           **kwargs:
 
-        # rename columns to fit model
-        df = predict_df.rename(columns={'Date': 'ds', 'Close': 'y'})
-        df = df[['ds', 'y']]
-        df['cap'] = cap
-        df['floor'] = floor
+       Returns: plotly figure of future trend and mean absolute error and mean absolute percentage error
 
-        m = Prophet(yearly_seasonality=True, growth=growth, interval_width=interval_width)
+       """
 
-        # get currency code for stock
-        currency_code = predict_df['currency_code'].values[0]
+       post_date_df = self.stock_history.loc[~(self.stock_history['Date'] <= start_date)]
+       predict_df = post_date_df.loc[post_date_df['Ticker'].isin([stock])]
 
-        # HOLIDAYS - default is US
-        if currency_code == 'GBP':
-            m.add_country_holidays(country_name="GB")
-        elif currency_code == 'HKD':
-            m.add_country_holidays(country_name="HK")
-        else:
-            m.add_country_holidays(country_name=country_name)
+       # rename columns to fit model
+       df = predict_df.rename(columns={'Date': 'ds', 'Close': 'y'})
+       df = df[['ds', 'y']]
+       df['cap'] = cap
+       df['floor'] = floor
 
-        m.fit(df)
+       m = Prophet(yearly_seasonality=True, growth=growth, interval_width=interval_width)
 
-        future = m.make_future_dataframe(periods)
+       # get currency code for stock
+       currency_code = predict_df['currency_code'].values[0]
 
-        # Eliminate weekend from future dataframe
-        future['day'] = future['ds'].dt.weekday
-        future = future[future['day'] <= 4]
+       # HOLIDAYS - default is US
+       if currency_code == 'GBP':
+           m.add_country_holidays(country_name="GB")
+       elif currency_code == 'HKD':
+           m.add_country_holidays(country_name="HK")
+       else:
+           m.add_country_holidays(country_name=country_name)
 
-        future['cap'] = cap
-        future['floor'] = floor
+       m.fit(df)
 
-        forecast = m.predict(future)
+       future = m.make_future_dataframe(periods)
 
-        # format graph
-        fig = plot_plotly(m,
-                          forecast,
-                          trend=trend,
-                          changepoints=changepoints,
-                          **kwargs)
+       # Eliminate weekend from future dataframe
+       future['day'] = future['ds'].dt.weekday
+       future = future[future['day'] <= 4]
 
-        fig.update_layout(title=f'{stock} {periods} days forecast')
-        output = fig.show()
+       future['cap'] = cap
+       future['floor'] = floor
 
-        # get Mean Absolute Error
-        df_merge = pd.merge(df, forecast[['ds', 'yhat_lower', 'yhat_upper', 'yhat']], on='ds')
-        df_merge = df_merge[['ds', 'yhat_lower', 'yhat_upper', 'yhat', 'y']]
-        # calculate MAE between observed and predicted values
-        y_true = df_merge['y'].values
-        y_pred = df_merge['yhat'].values
-        mae = mean_absolute_error(y_true, y_pred)
-        mape = mean_absolute_percentage_error(y_true, y_pred)
+       forecast = m.predict(future)
 
-        print(
-            f'The Mean Absolute Eror is: {"{:.2f}".format(mae)} '
-            f'\nThe Mean Absolute Percentage Eror is: {"{:.2f}".format(mape)} ')
+       # format graph
+       fig = plot_plotly(m,
+                         forecast,
+                         trend=trend,
+                         changepoints=changepoints,
+                         **kwargs)
 
-        return output
+       fig.update_layout(title=f'{stock} {periods} days forecast')
+       output = fig.show()
+
+       # get Mean Absolute Error
+       df_merge = pd.merge(df, forecast[['ds', 'yhat_lower', 'yhat_upper', 'yhat']], on='ds')
+       df_merge = df_merge[['ds', 'yhat_lower', 'yhat_upper', 'yhat', 'y']]
+       # calculate MAE between observed and predicted values
+       y_true = df_merge['y'].values
+       y_pred = df_merge['yhat'].values
+       mae = mean_absolute_error(y_true, y_pred)
+       mape = mean_absolute_percentage_error(y_true, y_pred)
+
+       print(
+           f'The Mean Absolute Error is: {"{:.2f}".format(mae)} '
+           f'\nThe Mean Absolute Percentage Error is: {"{:.2f}".format(mape)} ')
+
+       return output
