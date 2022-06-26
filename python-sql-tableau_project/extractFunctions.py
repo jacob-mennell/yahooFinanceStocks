@@ -242,12 +242,12 @@ def blank_sql():
 
 def exchange_rate_table(stock_list, period, interval='1d'):
     '''
-          Function to create exchange rate table in PostGreSQL database
+          Function to create exchange rate table and date dimension table in PostGreSQL database
 
           Arguments:
               # stock list: list of stocks to return exchange rate to GBP for
               # period of time to return data
-              # interval - default set to 1 day
+              # interval - default set to 1 day. Needs to be one day for date dimension table.
 
           Return:
               # returns note in log file to confirm data has been sent to postgres SQL database
@@ -314,12 +314,16 @@ def exchange_rate_table(stock_list, period, interval='1d'):
         currency_df = currency_df.reset_index()
         logging.info('Exchange Rates Obtained')
 
-        # split date
-        # could average exchange rate by week in year to account for missing vlaues
-        currency_df['week_number_of_year'] = currency_df['Date'].dt.week
-        currency_df['year'] = currency_df['Date'].dt.year
+        # use exchange rates table with daily increments to crate date dimension table
+        date_df = pd.DataFrame()
+        date_df['date_key'] = currency_df['Date'].dt.strftime('m%d%Y')
+        date_df['year'] = currency_df['Date'].dt.year
+        date_df['quarter'] = currency_df['Date'].dt.quarter
+        date_df['month'] = currency_df['Date'].dt.month
+        date_df['week_number_of_year'] = currency_df['Date'].dt.week
+        date_df.to_sql('date_dimension', engine, if_exists='replace', index=False)
 
-        # create unique id to merge on
+        # create unique id
         currency_df['currency_iden'] = (currency_df.Date.apply(
             lambda x: x.strftime("%m%d%Y"))) + (currency_df['FromCurrency'])
 
@@ -329,13 +333,11 @@ def exchange_rate_table(stock_list, period, interval='1d'):
         }, inplace=True)
 
         # merge exchange rates with master dataframe
-        exchange_df = pd.merge(df, currency_df[['currency_iden',
-                                                'currency_close']],
+        exchange_df = pd.merge(df, currency_df,
                                how='right',
                                left_on=['currency_code'],
                                right_on=['FromCurrency'])
-        exchange_df.to_sql('stocks_master', engine, if_exists='replace', index=False)
-
+        exchange_df.to_sql('stocks_master', engine, if_exists='replace', index=False
         return logger.info('Exchange rate table created in PostGreSQL database')
 
 ################# OLD CODE CAN BE REUSED IF WANT STOCKS IN SEPERATE TABLES #################

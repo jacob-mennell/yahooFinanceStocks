@@ -24,7 +24,22 @@ class ExploreStocks:
         self.period = period
 
         #initialise log file
-        logging.basicConfig(filename='ExploreStocks.log', encoding='utf-8', level=logging.DEBUG)
+        logger = logging.getLogger()
+        logger.setLevel(logging.NOTSET)
+
+        # return error and critical logs to console
+        console = logging.StreamHandler()
+        console.setLevel(logging.ERROR)
+        console_format = '%(asctime)s | %(levelname)s: %(message)s'
+        console.setFormatter(logging.Formatter(console_format))
+        logger.addHandler(console)
+
+        # create log file to capture all logging
+        file_handler = logging.FileHandler('ExploreStocks.log')
+        file_handler.setLevel(logging.INFO)
+        file_handler_format = '%(asctime)s | %(levelname)s | %(lineno)d: %(message)s'
+        file_handler.setFormatter(logging.Formatter(file_handler_format))
+        logger.addHandler(file_handler)
 
         # download stock initial stock info
         try:
@@ -39,7 +54,6 @@ class ExploreStocks:
             return
 
         logging.info('Initial Stock Information Downloaded')
-        print('Initial Stock Information Downloaded')
 
         # next get currency code for each stock
         currency_code = {}
@@ -50,7 +64,6 @@ class ExploreStocks:
                 currency_code[ticker] = tick.info['currency']
             except Exception as e:
                 logging.error("Error getting currency symbol", e)
-                print("Error getting currency symbol", e)
                 return
         # make dataframe
         currency_code_df = pd.DataFrame(list(currency_code.items()), columns=['Ticker',
@@ -69,7 +82,6 @@ class ExploreStocks:
             lambda x: x.strftime("%m%d%Y"))) + (df['currency_code'])
 
         logging.info('Currency Extracted and Merged')
-        print('Currency Extracted and Merged')
 
         # function to get exchange rates to GBP table
 
@@ -112,11 +124,10 @@ class ExploreStocks:
                 )
                 currency_df = pd.concat([currency_df, currency_help_df])
             except Exception as e:
-                print("Error getting exchange rates", e)
+                logging.error("Error getting exchange rates", e)
                 return
         currency_df = currency_df.reset_index()
         logging.info('Exchange Rates Obtained')
-        print('Exchange Rates Obtained')
 
         # split date
         # could average exchange rate by week in year to account for missing vlaues
@@ -159,7 +170,7 @@ class ExploreStocks:
 
         self.stock_history = master_df.copy()
 
-        logging.info('All data retrieved')
+        logging.info('Data Retrieved - dataframe with exchange rates initialised')
         print('Data Retrieved - access via the stock_history attribute ')
 
     def return_df(self):
@@ -225,6 +236,7 @@ class ExploreStocks:
 
     def plot_cumulative_returns(self,**kwargs):
         """ Function to plot the cumulative return of each stock over time """
+
         cum_returns = self.stock_history[['Date', 'Close', 'Ticker']]
         cum_returns = pd.pivot_table(cum_returns, columns=['Ticker'], index=['Date'])
 
