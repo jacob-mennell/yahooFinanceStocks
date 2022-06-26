@@ -179,6 +179,7 @@ def combined_tables(stock_list):
 def blank_sql():
     """
     Function to clear PostGreSQL database prior to new batch import.
+    To be replaced with drop() or drop_all() method.
 
     Arguments:
         # empty
@@ -191,9 +192,6 @@ def blank_sql():
     postgres_path = os.getenv('postgres_path')
     # dialect+driver://username:password@host:port/database
     engine = sqlalchemy.create_engine(postgres_path)
-
-    # Look at using the below instead or the .drop() method on individual tables
-    # sqlalchemy.schema.MetaData.drop_all(bind=None, tables=None, checkfirst=True)¶
 
     # earnings
     column_names = ["year", "revenue", "earnings", "stock"]
