@@ -2,10 +2,10 @@
 
 The project contains two parts:
 
-## Scripts for pulling data from yahoo finance module and sending to PostGreSQL Database
+## Scripts for pulling data from yahoo finance module and sending to PostgreSQL Database
 ### Stored in the python-sql-tableau_project file
 Data is pulled using Yahoo Finance, minor cleaning is then undertaken before sending to a SQL database 
-using sqlalchemy. In this instance, a PostsreSQL database is used with credentials stored as environment variables 
+using sqlalchemy. In this instance, a PostgreSQL database is used with credentials stored as environment variables 
 accessed through the os module. 
 
 Data used is from the Yahoo Finance module includes: historical stock data, major shareholders, earnings, 
