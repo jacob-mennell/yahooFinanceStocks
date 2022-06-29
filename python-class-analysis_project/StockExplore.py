@@ -312,6 +312,9 @@ class ExploreStocks:
         #         for k in fig.layout:
         #             if re.search('yaxis[1-9]+', k):
         #                 fig.layout[k].update(matches=None)
+        fig['layout']['yaxis1']['title']['text'] = ''
+        fig['layout']['yaxis2']['title']['text'] = 'Stock Value in GBP'
+        fig['layout']['yaxis3']['title']['text'] = ''
         fig.update_yaxes(matches=None)
 
         # Add Date slider
@@ -324,7 +327,6 @@ class ExploreStocks:
         ]))
         fig.update_layout(xaxis_rangeslider_visible=True)
         fig.update_layout(legend_title_text='Average')
-        fig.update_yaxes(title_text=f'Stock Value')
 
         return fig
 
@@ -391,97 +393,88 @@ class ExploreStocks:
         output = fig.show()
         return output
 
-   def plot_future_trend_grid_search(self,
-                                     stock,
-                                     start_date='2021-05-01',
-                                     periods=90,
-                                     country_name='US',
-                                     changepoints=True,
-                                     trend=True,
-                                     cap=1000,
-                                     floor=0,
-                                     growth='logistic',
-                                     interval_width=0.95,
-                                     **kwargs):
+    def plot_future_trend_grid_search(self,stock,start_date='2021-05-01',periods=90,country_name='US',
+                                     changepoints=True,trend=True,cap=1000,floor=0,growth='logistic',
+                                     interval_width=0.95,**kwargs):
 
-       """
-       Function to predict the future trend of a stock using grid search.
-       Note takes significantly greater compute power than plot_future_trend() function.
 
-       Args:
-           self:
-           stock:
-           start_date:
-           periods:
-           country_name:
-           changepoints:
-           trend:
-           cap:
-           floor:
-           growth:
-           interval_width:
-           **kwargs:
+        """
+           Function to predict the future trend of a stock using grid search.
+           Note takes significantly greater compute power than plot_future_trend() function.
 
-       Returns: plotly figure of future trend and mean absolute error and mean absolute percentage error
+           Args:
+               self:
+               stock:
+               start_date:
+               periods:
+               country_name:
+               changepoints:
+               trend:
+               cap:
+               floor:
+               growth:
+               interval_width:
+               **kwargs:
 
-       """
+           Returns: plotly figure of future trend and mean absolute error and mean absolute percentage error
 
-       post_date_df = self.stock_history.loc[~(self.stock_history['Date'] <= start_date)]
-       predict_df = post_date_df.loc[post_date_df['Ticker'].isin([stock])]
+           """
+        post_date_df = self.stock_history.loc[~(self.stock_history['Date'] <= start_date)]
+        predict_df = post_date_df.loc[post_date_df['Ticker'].isin([stock])]
 
-       # rename columns to fit model
-       df = predict_df.rename(columns={'Date': 'ds', 'Close': 'y'})
-       df = df[['ds', 'y']]
-       df['cap'] = cap
-       df['floor'] = floor
+        # rename columns to fit model
+        df = predict_df.rename(columns={'Date': 'ds', 'Close': 'y'})
+        df = df[['ds', 'y']]
+        df['cap'] = cap
+        df['floor'] = floor
 
-       m = Prophet(yearly_seasonality=True, growth=growth, interval_width=interval_width)
+        m = Prophet(yearly_seasonality=True, growth=growth, interval_width=interval_width)
 
-       # get currency code for stock
-       currency_code = predict_df['currency_code'].values[0]
+        # get currency code for stock
+        currency_code = predict_df['currency_code'].values[0]
 
-       # HOLIDAYS - default is US
-       if currency_code == 'GBP':
-           m.add_country_holidays(country_name="GB")
-       elif currency_code == 'HKD':
-           m.add_country_holidays(country_name="HK")
-       else:
-           m.add_country_holidays(country_name=country_name)
+        # HOLIDAYS - default is US
+        if currency_code == 'GBP':
+            m.add_country_holidays(country_name="GB")
+        elif currency_code == 'HKD':
+            m.add_country_holidays(country_name="HK")
+        else:
+            m.add_country_holidays(country_name=country_name)
 
-       m.fit(df)
+        m.fit(df)
 
-       future = m.make_future_dataframe(periods)
+        future = m.make_future_dataframe(periods)
 
-       # Eliminate weekend from future dataframe
-       future['day'] = future['ds'].dt.weekday
-       future = future[future['day'] <= 4]
+        # Eliminate weekend from future dataframe
+        future['day'] = future['ds'].dt.weekday
+        future = future[future['day'] <= 4]
 
-       future['cap'] = cap
-       future['floor'] = floor
+        future['cap'] = cap
+        future['floor'] = floor
 
-       forecast = m.predict(future)
+        forecast = m.predict(future)
 
-       # format graph
-       fig = plot_plotly(m,
-                         forecast,
-                         trend=trend,
-                         changepoints=changepoints,
-                         **kwargs)
+           # format graph
+        fig = plot_plotly(m,
+                          forecast,
+                          trend=trend,
+                          changepoints=changepoints,
+                          **kwargs)
 
-       fig.update_layout(title=f'{stock} {periods} days forecast')
-       output = fig.show()
+        fig.update_layout(title=f'{stock} {periods} days forecast')
+        output = fig.show()
 
-       # get Mean Absolute Error
-       df_merge = pd.merge(df, forecast[['ds', 'yhat_lower', 'yhat_upper', 'yhat']], on='ds')
-       df_merge = df_merge[['ds', 'yhat_lower', 'yhat_upper', 'yhat', 'y']]
-       # calculate MAE between observed and predicted values
-       y_true = df_merge['y'].values
-       y_pred = df_merge['yhat'].values
-       mae = mean_absolute_error(y_true, y_pred)
-       mape = mean_absolute_percentage_error(y_true, y_pred)
+        # get Mean Absolute Error
+        df_merge = pd.merge(df, forecast[['ds', 'yhat_lower', 'yhat_upper', 'yhat']], on='ds')
+        df_merge = df_merge[['ds', 'yhat_lower', 'yhat_upper', 'yhat', 'y']]
+        # calculate MAE between observed and predicted values
+        y_true = df_merge['y'].values
+        y_pred = df_merge['yhat'].values
+        mae = mean_absolute_error(y_true, y_pred)
+        mape = mean_absolute_percentage_error(y_true, y_pred)
 
-       print(
-           f'The Mean Absolute Error is: {"{:.2f}".format(mae)} '
-           f'\nThe Mean Absolute Percentage Error is: {"{:.2f}".format(mape)} ')
+        print(
+            f'The Mean Absolute Error is: {"{:.2f}".format(mae)} '
+            f'\nThe Mean Absolute Percentage Error is: {"{:.2f}".format(mape)} ')
 
-       return output
+        return output
