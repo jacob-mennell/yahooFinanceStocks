@@ -1,0 +1,734 @@
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/IAG.L?period1=-631159200&period2=1656156362&interval=1d&includePrePost=False&events=div%2Csplits HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/AF.PA?period1=-631159200&period2=1656156362&interval=1d&includePrePost=False&events=div%2Csplits HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/0293.HK?period1=-631159200&period2=1656156362&interval=1d&includePrePost=False&events=div%2Csplits HTTP/1.1" 200 None
+INFO:root:Initial Stock Information Downloaded
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/IAG.L HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/IAG.L/holders HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/IAG.L/financials HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/IAG.L/analysis HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/IAG.L/key-statistics?p=IAG.L HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/0293.HK HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/0293.HK/holders HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/0293.HK/financials HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/0293.HK/analysis HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/0293.HK/key-statistics?p=0293.HK HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/AF.PA HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/AF.PA/holders HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/AF.PA/financials HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/AF.PA/analysis HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/AF.PA/key-statistics?p=AF.PA HTTP/1.1" 200 None
+INFO:root:Currency Extracted and Merged
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/EURGBP=X?range=25y&interval=1d&includePrePost=False&events=div%2Csplits HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/HKDGBP=X?range=25y&interval=1d&includePrePost=False&events=div%2Csplits HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/GBPGBP=X?range=25y&interval=1d&includePrePost=False&events=div%2Csplits HTTP/1.1" 200 798
+INFO:root:Exchange Rates Obtained
+INFO:root:All data retrieved
+INFO:prophet:Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+INFO:prophet:Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+INFO:prophet:Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/IAG.L?period1=-631159200&period2=1656157084&interval=1d&includePrePost=False&events=div%2Csplits HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/0293.HK?period1=-631159200&period2=1656157084&interval=1d&includePrePost=False&events=div%2Csplits HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/AF.PA?period1=-631159200&period2=1656157084&interval=1d&includePrePost=False&events=div%2Csplits HTTP/1.1" 200 None
+INFO:root:Initial Stock Information Downloaded
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/IAG.L HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/IAG.L/holders HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/IAG.L/financials HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/IAG.L/analysis HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/IAG.L/key-statistics?p=IAG.L HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/0293.HK HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/0293.HK/holders HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/0293.HK/financials HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/0293.HK/analysis HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/0293.HK/key-statistics?p=0293.HK HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/AF.PA HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/AF.PA/holders HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/AF.PA/financials HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/AF.PA/analysis HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://finance.yahoo.com:443 "GET /quote/AF.PA/key-statistics?p=AF.PA HTTP/1.1" 200 None
+INFO:root:Currency Extracted and Merged
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/EURGBP=X?range=25y&interval=1d&includePrePost=False&events=div%2Csplits HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/HKDGBP=X?range=25y&interval=1d&includePrePost=False&events=div%2Csplits HTTP/1.1" 200 None
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): query2.finance.yahoo.com:443
+DEBUG:urllib3.connectionpool:https://query2.finance.yahoo.com:443 "GET /v8/finance/chart/GBPGBP=X?range=25y&interval=1d&includePrePost=False&events=div%2Csplits HTTP/1.1" 200 798
+INFO:root:Exchange Rates Obtained
+INFO:root:All data retrieved
+2022-06-29 08:21:41,537 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:21:51,792 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:21:52,402 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:21:52,538 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:23:23,695 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:23:23,695 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:23:34,107 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:23:34,107 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:23:34,867 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:23:34,867 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:23:35,041 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:23:35,041 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:28:54,661 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:28:54,661 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:28:54,661 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:29:05,566 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:29:05,566 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:29:05,566 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:29:06,248 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:29:06,248 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:29:06,248 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:29:06,382 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:29:06,382 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:29:06,382 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:31:44,258 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:31:44,258 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:31:44,258 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:31:44,258 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:31:55,252 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:31:55,252 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:31:55,252 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:31:55,252 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:31:55,992 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:31:55,992 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:31:55,992 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:31:55,992 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:31:56,126 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:31:56,126 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:31:56,126 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:31:56,126 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:34:32,269 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:34:32,269 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:34:32,269 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:34:32,269 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:34:32,269 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:34:43,166 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:34:43,166 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:34:43,166 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:34:43,166 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:34:43,166 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:34:43,823 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:34:43,823 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:34:43,823 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:34:43,823 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:34:43,823 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:34:43,980 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:34:43,980 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:34:43,980 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:34:43,980 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:34:43,980 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:36:53,639 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:36:53,639 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:36:53,639 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:36:53,639 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:36:53,639 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:36:53,639 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:37:03,866 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:37:03,866 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:37:03,866 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:37:03,866 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:37:03,866 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:37:03,866 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:37:04,633 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:37:04,633 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:37:04,633 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:37:04,633 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:37:04,633 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:37:04,633 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:37:04,790 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:37:04,790 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:37:04,790 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:37:04,790 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:37:04,790 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:37:04,790 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:42:32,291 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:42:32,291 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:42:32,291 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:42:32,291 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:42:32,291 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:42:32,291 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:42:32,291 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:42:42,588 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:42:42,588 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:42:42,588 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:42:42,588 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:42:42,588 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:42:42,588 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:42:42,588 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:42:43,391 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:42:43,391 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:42:43,391 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:42:43,391 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:42:43,391 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:42:43,391 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:42:43,391 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:42:43,570 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:42:43,570 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:42:43,570 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:42:43,570 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:42:43,570 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:42:43,570 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:42:43,570 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:44:18,348 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:44:18,348 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:44:18,348 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:44:18,348 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:44:18,348 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:44:18,348 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:44:18,348 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:44:18,348 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:44:29,005 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:44:29,005 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:44:29,005 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:44:29,005 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:44:29,005 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:44:29,005 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:44:29,005 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:44:29,005 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:44:29,751 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:44:29,751 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:44:29,751 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:44:29,751 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:44:29,751 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:44:29,751 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:44:29,751 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:44:29,751 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:44:29,896 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:44:29,896 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:44:29,896 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:44:29,896 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:44:29,896 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:44:29,896 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:44:29,896 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:44:29,896 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:45:51,030 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:45:51,030 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:45:51,030 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:45:51,030 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:45:51,030 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:45:51,030 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:45:51,030 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:45:51,030 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:45:51,030 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:46:01,492 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:46:01,492 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:46:01,492 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:46:01,492 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:46:01,492 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:46:01,492 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:46:01,492 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:46:01,492 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:46:01,492 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:46:02,858 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:46:02,858 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:46:02,858 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:46:02,858 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:46:02,858 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:46:02,858 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:46:02,858 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:46:02,858 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:46:02,858 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:46:03,023 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:46:03,023 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:46:03,023 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:46:03,023 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:46:03,023 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:46:03,023 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:46:03,023 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:46:03,023 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:46:03,023 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:47:22,648 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:47:22,648 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:47:22,648 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:47:22,648 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:47:22,648 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:47:22,648 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:47:22,648 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:47:22,648 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:47:22,648 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:47:22,648 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:47:32,515 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:47:32,515 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:47:32,515 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:47:32,515 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:47:32,515 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:47:32,515 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:47:32,515 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:47:32,515 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:47:32,515 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:47:32,515 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:47:33,119 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:47:33,119 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:47:33,119 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:47:33,119 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:47:33,119 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:47:33,119 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:47:33,119 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:47:33,119 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:47:33,119 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:47:33,119 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:47:33,250 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:47:33,250 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:47:33,250 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:47:33,250 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:47:33,250 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:47:33,250 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:47:33,250 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:47:33,250 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:47:33,250 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:47:33,250 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:49:24,209 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:49:24,209 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:49:24,209 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:49:24,209 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:49:24,209 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:49:24,209 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:49:24,209 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:49:24,209 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:49:24,209 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:49:24,209 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:49:24,209 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:49:35,238 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:49:35,238 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:49:35,238 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:49:35,238 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:49:35,238 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:49:35,238 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:49:35,238 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:49:35,238 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:49:35,238 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:49:35,238 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:49:35,238 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:49:36,081 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:49:36,081 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:49:36,081 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:49:36,081 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:49:36,081 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:49:36,081 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:49:36,081 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:49:36,081 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:49:36,081 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:49:36,081 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:49:36,081 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:49:36,381 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:49:36,381 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:49:36,381 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:49:36,381 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:49:36,381 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:49:36,381 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:49:36,381 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:49:36,381 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:49:36,381 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:49:36,381 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:49:36,381 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:50:49,682 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:50:49,682 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:50:49,682 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:50:49,682 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:50:49,682 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:50:49,682 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:50:49,682 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:50:49,682 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:50:49,682 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:50:49,682 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:50:49,682 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:50:49,682 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:00,707 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:00,707 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:00,707 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:00,707 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:00,707 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:00,707 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:00,707 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:00,707 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:00,707 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:00,707 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:00,707 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:00,707 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:01,334 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:01,334 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:01,334 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:01,334 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:01,334 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:01,334 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:01,334 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:01,334 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:01,334 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:01,334 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:01,334 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:01,334 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:01,470 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:01,470 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:01,470 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:01,470 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:01,470 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:01,470 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:01,470 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:01,470 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:01,470 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:01,470 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:01,470 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:01,470 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:33,429 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:44,921 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,659 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:51:45,814 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:15,994 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:27,633 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,290 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:52:28,425 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:23,824 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:33,600 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,631 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:54:34,803 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:42,302 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:52,821 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,438 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:56:53,659 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:43,172 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:53,878 | INFO | 83: Currency Extracted and Merged
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,581 | INFO | 129: Exchange Rates Obtained
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:57:54,739 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 08:59:13,619 | INFO | 56: Initial Stock Information Downloaded
+2022-06-29 08:59:24,196 | INFO | 84: Currency Extracted and Merged
+2022-06-29 08:59:24,871 | INFO | 130: Exchange Rates Obtained
+2022-06-29 09:03:08,550 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 09:03:19,907 | INFO | 83: Currency Extracted and Merged
+2022-06-29 09:03:20,548 | INFO | 129: Exchange Rates Obtained
+2022-06-29 09:03:20,681 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 12:42:53,408 | INFO | 924: Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2022-06-29 12:43:13,279 | INFO | 924: Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2022-06-29 12:43:22,746 | INFO | 924: Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2022-06-29 12:43:33,711 | INFO | 924: Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2022-06-29 12:43:33,854 | WARNING | 269: Optimization terminated abnormally. Falling back to Newton.
+2022-06-29 12:44:03,210 | INFO | 924: Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2022-06-29 12:44:14,812 | INFO | 924: Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2022-06-29 12:44:31,170 | INFO | 924: Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2022-06-29 12:44:46,514 | INFO | 924: Disabling daily seasonality. Run prophet with daily_seasonality=True to override this.
+2022-06-29 12:45:15,636 | INFO | 56: Making 6 forecasts with cutoffs between 2021-11-01 00:00:00 and 2022-03-31 00:00:00
+2022-06-29 12:45:15,637 | WARNING | 160: Seasonality has period of 365.25 days which is larger than initial window. Consider increasing initial.
+2022-06-29 12:45:19,247 | INFO | 189: Applying in parallel with <Client: 'tcp://127.0.0.1:51038' processes=4 threads=4, memory=8.00 GiB>
+2022-06-29 12:47:53,960 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 12:47:53,960 | INFO | 55: Initial Stock Information Downloaded
+2022-06-29 12:48:05,886 | INFO | 83: Currency Extracted and Merged
+2022-06-29 12:48:05,886 | INFO | 83: Currency Extracted and Merged
+2022-06-29 12:48:06,639 | INFO | 129: Exchange Rates Obtained
+2022-06-29 12:48:06,639 | INFO | 129: Exchange Rates Obtained
+2022-06-29 12:48:06,798 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2022-06-29 12:48:06,798 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised

@@ -1,8 +1,8 @@
 import pandas as pd
 from datetime import datetime
 import yfinance as yf
-import psycopg2
 import sqlalchemy
+from sqlalchemy import create_engine
 import os
 import time
 import logging
@@ -24,6 +24,23 @@ file_handler_format = '%(asctime)s | %(levelname)s | %(lineno)d: %(message)s'
 file_handler.setFormatter(logging.Formatter(file_handler_format))
 logger.addHandler(file_handler)
 
+# sets the environment variables as python variables
+server = 'yfinance.database.windows.net'
+username = os.getenv('sqlusername')
+password = os.getenv('sqlpassword')
+driver = os.getenv('driver')
+
+# # path to SQL database stored as environment variable
+# postgres_path = os.getenv('postgres_path')
+# # dialect+driver://username:password@host:port/database
+# engine = sqlalchemy.create_engine(postgres_path)
+
+# creates the connection string required to connect to the azure sql database
+odbc_str = f'Driver={driver};SERVER=yfinance.database.windows.net; database=stocksdb;Uid={username};Pwd={password};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
+connect_str = f'mssql+pyodbc:///?odbc_connect={odbc_str}'
+# creates the engine to connect to the database with.
+# fast_executemany makes the engine insert multiple rows in each insertstatement and imporves the speed of the code drastically
+engine = create_engine(connect_str,fast_executemany=True)
 
 # function to get stock information
 def combined_stock_sql_send(stock):
@@ -41,23 +58,23 @@ def combined_stock_sql_send(stock):
     # start of time function
     start = time.time()
 
-    # path to SQL database stored as environment variable
-    postgres_path = os.getenv('postgres_path')
-    # dialect+driver://username:password@host:port/database
-    engine = sqlalchemy.create_engine(postgres_path)
-
     # create ticker for the stock
     msft = yf.Ticker(stock)
 
     try:
-        # return historical stock data and send to postgres
+        # return historical stock data and send to sql db
         stock_history = msft.history(period="max").reset_index()
         # minor cleaning
         stock_history = stock_history.rename(str.lower, axis='columns')
         stock_history['stock'] = stock
+        stock_history['date'] = pd.to_datetime(stock_history['date'])
         # send to SQL with SQL Alchemy
-        stock_history.to_sql(f'stock_history', engine, if_exists='append', index=False)
+        stock_history.to_sql(f'stock_history', engine, if_exists='replace', index=False)
         logger.info(f'historical {stock} data sent to sql')
+        stock_max_date = str(stock_history.date.max())
+        # set new dates to limit size of future uploads
+        f = open('last_update.txt', 'w')
+        f.write(f"stock_date_max {stock_max_date}")
     except Exception as e:
         logging.error("Error getting stock_history data", e)
 
@@ -68,7 +85,7 @@ def combined_stock_sql_send(stock):
         major_share_holders = major_share_holders.rename(columns={0: "percent", 1: "detail"})
         major_share_holders['stock'] = stock
         # send to SQL with SQL Alchemy
-        major_share_holders.to_sql(f'major_share_holders', engine, if_exists='append', index=False)
+        major_share_holders.to_sql(f'major_share_holders', engine, if_exists='replace', index=False)
         logger.info(f'major share holders {stock} data sent to sql')
     except Exception as e:
         logging.error("Error getting major_share_holders data", e)
@@ -81,7 +98,7 @@ def combined_stock_sql_send(stock):
         stock_financials.columns.values[0] = "date"
         stock_financials['stock'] = stock
         # send to SQL with SQL Alchemy
-        stock_financials.to_sql(f'financials', engine, if_exists='append', index=False)
+        stock_financials.to_sql(f'financials', engine, if_exists='replace', index=False)
         logger.info(f'stock financials {stock} data sent to sql')
     except Exception as e:
         logging.error("Error getting stock_financials data", e)
@@ -93,7 +110,7 @@ def combined_stock_sql_send(stock):
         stock_earnings = stock_earnings.rename(str.lower, axis='columns')
         stock_earnings['stock'] = stock
         # send to SQL with SQL Alchemy
-        stock_earnings.to_sql(f'earnings', engine, if_exists='append', index=False)
+        stock_earnings.to_sql(f'earnings', engine, if_exists='replace', index=False)
         logger.info(f'{stock} earnings data sent to sql')
     except Exception as e:
         logging.error("Error getting earnings data", e)
@@ -105,7 +122,7 @@ def combined_stock_sql_send(stock):
         stock_quarterly_earnings = stock_quarterly_earnings.rename(str.lower, axis='columns')
         stock_quarterly_earnings['stock'] = stock
         # send to SQL with SQL Alchemy
-        stock_quarterly_earnings.to_sql(f'quarterly_earnings', engine, if_exists='append', index=False)
+        stock_quarterly_earnings.to_sql(f'quarterly_earnings', engine, if_exists='replace', index=False)
         logger.info(f'{stock} quarterly earnings data sent to sql')
     except Exception as e:
         logging.error("Error getting quarterly earnings data", e)
@@ -130,7 +147,7 @@ def combined_stock_sql_send(stock):
         news_df['type'] = [x['type'] for x in news_list]
         news_df['stock'] = stock
         # send to SQL with SQL Alchemy
-        news_df.to_sql(f'news', engine, if_exists='append', index=False)
+        news_df.to_sql(f'news', engine, if_exists='replace', index=False)
         logger.info(f'{stock} news sent to sql')
     except Exception as e:
         logging.error("Error getting news data", e)
@@ -153,18 +170,6 @@ def combined_tables(stock_list):
         # returns note in log file to confirm data has been sent to postgres SQL database
     """
 
-    # path to SQL database stored as environment variable
-    postgres_path = os.getenv('postgres_path')
-    # dialect+driver://username:password@host:port/database
-    engine = sqlalchemy.create_engine(postgres_path)
-
-    # clear tables prior to reuse
-    # Add update feature in future to prevent batch load following every run
-    try:
-        blank_sql()
-    except Exception as e:
-        logging.error("Error clearing the database", e)
-
     # create master table
     stock_df = pd.DataFrame(columns=['stock'])
     stock_df['stock'] = [x for x in stock_list]
@@ -175,69 +180,49 @@ def combined_tables(stock_list):
     list(map(combined_stock_sql_send, stock_list))
     return logger.info('\nSQL Updated with combined tables')
 
-
-def blank_sql():
+def stock_history_updater(stock):
     """
-    Function to clear PostGreSQL database prior to new batch import.
-    To be replaced with drop() or drop_all() method.
+    Function to pull stock information. Pulls historical data from date of last update.
 
     Arguments:
-        # empty
+        # stock: individual stock in which user wants to return data for.
 
     Return:
-        # returns note in log file to confirm data has been cleared in postgres SQL database
+        # returns note in log file to confirm data has been sent to postgres SQL database
     """
 
-    # path to SQL database stored as environment variable
-    postgres_path = os.getenv('postgres_path')
-    # dialect+driver://username:password@host:port/database
-    engine = sqlalchemy.create_engine(postgres_path)
+    # start of time function
+    start = time.time()
 
-    # earnings
-    column_names = ["year", "revenue", "earnings", "stock"]
-    earnings = pd.DataFrame(columns=column_names)
-    earnings.to_sql('earnings', engine, if_exists='replace', index=False)
+    # create ticker for the stock
+    msft = yf.Ticker(stock)
 
-    # financials
-    column_names = ['date', 'Research Development', 'Effect Of Accounting Charges',
-                    'Income Before Tax', 'Minority Interest', 'Net Income',
-                    'Selling General Administrative', 'Gross Profit', 'Ebit',
-                    'Operating Income', 'Other Operating Expenses', 'Interest Expense',
-                    'Extraordinary Items', 'Non Recurring', 'Other Items',
-                    'Income Tax Expense', 'Total Revenue', 'Total Operating Expenses',
-                    'Cost Of Revenue', 'Total Other Income Expense Net',
-                    'Discontinued Operations', 'Net Income From Continuing Ops',
-                    'Net Income Applicable To Common Shares', 'stock'
-                    ]
-    financials = pd.DataFrame(columns=column_names)
-    financials.to_sql('financials', engine, if_exists='replace', index=False)
+    # create dicts of dates from text file for date filtering prior to upload
+    date_dict = {}
+    with open("last_update.txt") as f:
+        for line in f:
+            k, v = line.split(' ', 1)
+            v = v[:-1]
+            date_dict[k] = v
+    f.close
 
-    # major_share_holders
-    column_names = ['percent', 'detail', 'stock']
-    major_share_holders = pd.DataFrame(columns=column_names)
-    major_share_holders.to_sql('major_share_holders', engine, if_exists='replace', index=False)
-
-    # news
-    column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
-    news = pd.DataFrame(columns=column_names)
-    news.to_sql('news', engine, if_exists='replace', index=False)
-
-    # quarterly_earnings
-    column_names = ['quarter', 'revenue', 'earnings', 'stock']
-    quarterly_earnings = pd.DataFrame(columns=column_names)
-    quarterly_earnings.to_sql('quarterly_earnings', engine, if_exists='replace', index=False)
-
-    # stock_history
-    column_names = ["date", "open", "high", "low", "close", "volume", "dividends", 'stock splits', 'stock']
-    stock_history = pd.DataFrame(columns=column_names)
-    stock_history.to_sql('stock_history', engine, if_exists='replace', index=False)
-
-    # stocks_master
-    column_names = ["stock"]
-    stocks_master = pd.DataFrame(columns=column_names)
-    stocks_master.to_sql('stocks_master', engine, if_exists='replace', index=False)
-
-    return logger.info('PostGreSQL database cleared for import')
+    try:
+        # return historical stock data and send to sql db
+        today_date = date.today()
+        stock_history = msft.history(start=date_dict[stock_date_max], end=today_date, interval="1d").reset_index()
+        # minor cleaning
+        stock_history = stock_history.rename(str.lower, axis='columns')
+        stock_history['stock'] = stock
+        stock_history['date'] = pd.to_datetime(stock_history['date'])
+        # send to SQL with SQL Alchemy
+        stock_history.to_sql(f'stock_history', engine, if_exists='append', index=False)
+        logger.info(f'historical {stock} data sent to sql')
+        stock_max_date = str(stock_history.date.max())
+        # set new dates to limit size of future uploads
+        f = open('last_update.txt', 'w')
+        f.write(f"stock_date_max {stock_max_date}")
+    except Exception as e:
+        logging.error("Error getting stock_history data", e)
 
 
 def exchange_rate_table(stock_list, period, interval='1d'):
@@ -252,11 +237,6 @@ def exchange_rate_table(stock_list, period, interval='1d'):
     Return:
         # returns note in log file to confirm data has been sent to postgres SQL database
     """
-
-    # path to SQL database stored as environment variable
-    postgres_path = os.getenv('postgres_path')
-    # dialect+driver://username:password@host:port/database
-    engine = sqlalchemy.create_engine(postgres_path)
 
     currency_code = {}
     # loop to extract currency for each ticker using .info method
@@ -452,3 +432,61 @@ def exchange_rate_table(stock_list, period, interval='1d'):
 #     # [stock_sql_send(item) for item in companies]
 #     list(map(stock_sql_send, companies))
 #     return print('\nSQL Updated')
+
+# def blank_sql():
+#     """
+#     Function to clear database prior to new batch import.
+#     To be replaced with drop() or drop_all() method.
+#
+#     Arguments:
+#         # empty
+#
+#     Return:
+#         # returns note in log file to confirm data has been cleared in postgres SQL database
+#     """
+#
+#     # earnings
+#     column_names = ["year", "revenue", "earnings", "stock"]
+#     earnings = pd.DataFrame(columns=column_names)
+#     earnings.to_sql('earnings', engine, if_exists='replace', index=False)
+#
+#     # financials
+#     column_names = ['date', 'Research Development', 'Effect Of Accounting Charges',
+#                     'Income Before Tax', 'Minority Interest', 'Net Income',
+#                     'Selling General Administrative', 'Gross Profit', 'Ebit',
+#                     'Operating Income', 'Other Operating Expenses', 'Interest Expense',
+#                     'Extraordinary Items', 'Non Recurring', 'Other Items',
+#                     'Income Tax Expense', 'Total Revenue', 'Total Operating Expenses',
+#                     'Cost Of Revenue', 'Total Other Income Expense Net',
+#                     'Discontinued Operations', 'Net Income From Continuing Ops',
+#                     'Net Income Applicable To Common Shares', 'stock'
+#                     ]
+#     financials = pd.DataFrame(columns=column_names)
+#     financials.to_sql('financials', engine, if_exists='replace', index=False)
+#
+#     # major_share_holders
+#     column_names = ['percent', 'detail', 'stock']
+#     major_share_holders = pd.DataFrame(columns=column_names)
+#     major_share_holders.to_sql('major_share_holders', engine, if_exists='replace', index=False)
+#
+#     # news
+#     column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
+#     news = pd.DataFrame(columns=column_names)
+#     news.to_sql('news', engine, if_exists='replace', index=False)
+#
+#     # quarterly_earnings
+#     column_names = ['quarter', 'revenue', 'earnings', 'stock']
+#     quarterly_earnings = pd.DataFrame(columns=column_names)
+#     quarterly_earnings.to_sql('quarterly_earnings', engine, if_exists='replace', index=False)
+#
+#     # stock_history
+#     column_names = ["date", "open", "high", "low", "close", "volume", "dividends", 'stock splits', 'stock']
+#     stock_history = pd.DataFrame(columns=column_names)
+#     stock_history.to_sql('stock_history', engine, if_exists='replace', index=False)
+#
+#     # stocks_master
+#     column_names = ["stock"]
+#     stocks_master = pd.DataFrame(columns=column_names)
+#     stocks_master.to_sql('stocks_master', engine, if_exists='replace', index=False)
+#
+#     return logger.info('PostGreSQL database cleared for import')

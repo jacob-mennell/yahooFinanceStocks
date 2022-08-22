@@ -1,9 +1,8 @@
 #import libs
-from extractFunctions import individualTables, combinedTables
+from extractFunctions import *
 import os
-from sqlalchemy import create_engine
-import logging
 import sqlalchemy
+import logging
 
 logger = logging.getLogger()
 logger.setLevel(logging.NOTSET)
@@ -33,16 +32,17 @@ logger.addHandler(file_handler)
 # individualTables(['IAG.L', '0293.HK', 'AF.PA'])
 
 # sets the environment variables as python variables
-server = os.getenv('server')
+server = 'yfinance.database.windows.net'
 username = os.getenv('sqlusername')
-password = os.getenv('password')
-driver = '{ODBC Driver 13 for SQL Server}'
+password = os.getenv('sqlpassword')
+driver = os.getenv('driver')
+
 # creates the connection string required to connect to the azure sql database
-odbc_str = f'Driver={driver};Server={server},1433;Database=internalsales;Uid={username};Pwd={password};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
+odbc_str = f'Driver={driver};SERVER=yfinance.database.windows.net; database=stocksdb;Uid={username};Pwd={password};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
 connect_str = f'mssql+pyodbc:///?odbc_connect={odbc_str}'
 # creates the engine to connect to the database with.
 # fast_executemany makes the engine insert multiple rows in each insertstatement and imporves the speed of the code drastically
 engine = create_engine(connect_str,fast_executemany=True)
 
 # combine tables and send to sql
-combinedTables(['IAG.L', '0293.HK', 'AF.PA'])
+combined_tables(['IAG.L', '0293.HK', 'AF.PA'])
