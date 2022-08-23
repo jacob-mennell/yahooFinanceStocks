@@ -392,3 +392,33 @@ SQL Updated with combined tables
 2022-08-23 22:18:57,748 | INFO | 169: AF.PA extracted in 8.30 seconds
 2022-08-23 22:18:57,749 | INFO | 197: 
 SQL Updated with combined tables
+2022-08-23 22:30:27,535 | INFO | 86: historical IAG.L data sent to sql
+2022-08-23 22:30:36,238 | INFO | 102: major share holders IAG.L data sent to sql
+2022-08-23 22:30:36,542 | INFO | 115: stock financials IAG.L data sent to sql
+2022-08-23 22:30:37,802 | INFO | 127: IAG.L earnings data sent to sql
+2022-08-23 22:30:38,019 | INFO | 139: IAG.L quarterly earnings data sent to sql
+2022-08-23 22:30:39,560 | INFO | 164: IAG.L news sent to sql
+2022-08-23 22:30:39,560 | INFO | 170: IAG.L extracted in 34.43 seconds
+2022-08-23 22:30:47,839 | INFO | 86: historical 0293.HK data sent to sql
+2022-08-23 22:30:52,413 | INFO | 102: major share holders 0293.HK data sent to sql
+2022-08-23 22:30:52,689 | INFO | 115: stock financials 0293.HK data sent to sql
+2022-08-23 22:30:52,836 | INFO | 127: 0293.HK earnings data sent to sql
+2022-08-23 22:30:53,040 | INFO | 139: 0293.HK quarterly earnings data sent to sql
+2022-08-23 22:30:53,340 | INFO | 164: 0293.HK news sent to sql
+2022-08-23 22:30:53,340 | INFO | 170: 0293.HK extracted in 13.78 seconds
+2022-08-23 22:30:58,883 | INFO | 86: historical AF.PA data sent to sql
+2022-08-23 22:31:04,433 | INFO | 102: major share holders AF.PA data sent to sql
+2022-08-23 22:31:04,624 | INFO | 115: stock financials AF.PA data sent to sql
+2022-08-23 22:31:04,775 | INFO | 127: AF.PA earnings data sent to sql
+2022-08-23 22:31:04,932 | INFO | 139: AF.PA quarterly earnings data sent to sql
+2022-08-23 22:31:05,261 | INFO | 164: AF.PA news sent to sql
+2022-08-23 22:31:05,262 | INFO | 170: AF.PA extracted in 11.92 seconds
+2022-08-23 22:31:05,264 | INFO | 198: 
+SQL Updated with combined tables
+2022-08-23 22:34:15,535 | INFO | 364: earnings dropped from database
+2022-08-23 22:34:15,586 | INFO | 364: financials dropped from database
+2022-08-23 22:34:15,621 | INFO | 364: major_share_holders dropped from database
+2022-08-23 22:34:15,664 | INFO | 364: news dropped from database
+2022-08-23 22:34:15,700 | INFO | 364: quarterly_earnings dropped from database
+2022-08-23 22:34:15,735 | INFO | 364: stock_history dropped from database
+2022-08-23 22:34:15,768 | INFO | 364: stocks_master dropped from database

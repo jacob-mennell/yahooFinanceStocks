@@ -70,18 +70,19 @@ def combined_stock_sql_send(stock):
         stock_history['date'] = pd.to_datetime(stock_history['date'])
 
         # send to SQL with SQL Alchemy
-        stock_history.to_sql(f'stock_history', engine, dtype=
-        {'date': datetime,
-         'open': float,
-         'high': float,
-         'low': float,
-         'close': float,
-         'volume': float,
-         'dividends': float,
-         'stock_splits': float,
-         #   'stock': VARCHAR
-         }
-                             , if_exists='append', index=False)
+        stock_history.to_sql(f'stock_history', engine,
+                             # dtype=
+        # {'date': datetime,
+        #  'open': float,
+        #  'high': float,
+        #  'low': float,
+        #  'close': float,
+        #  'volume': float,
+        #  'dividends': float,
+        #  'stock_splits': float,
+        #  #   'stock': VARCHAR
+        #  }
+        if_exists='append', index=False)
         logger.info(f'historical {stock} data sent to sql')
         stock_max_date = str(stock_history.date.max())
         # set new dates to limit size of future uploads
@@ -184,7 +185,7 @@ def combined_tables(stock_list):
     try:
         blank_sql()
     except Exception as e:
-        logging.error("Error clearING tables", e)
+        logging.error("Error clearing tables", e)
 
     # create master table
     stock_df = pd.DataFrame(columns=['stock'])
@@ -349,57 +350,66 @@ def blank_sql():
     connection = engine.raw_connection()
     cursor = connection.cursor()
     # add in a sql statement that drops all tables.
-    command = F"DROP TABLE IF EXISTS {table_list};"
-    cursor.execute(command)
-    connection.commit()
+    table_list = ["earnings",
+                  "financials",
+                  "major_share_holders",
+                  "news",
+                  "quarterly_earnings",
+                  "stock_history",
+                  "stocks_master"]
+
+    for table in table_list:
+        cursor.execute(f"DROP TABLE IF EXISTS {table_list};")
+        connection.commit()
+        logger.info(f'{table} dropped from database')
     cursor.close()
 
 
-    # earnings
-    column_names = ["year", "revenue", "earnings", "stock"]
-    earnings = pd.DataFrame(columns=column_names)
-    earnings.to_sql('earnings', engine, if_exists='replace', index=False)
-
-    # financials
-    column_names = ['date', 'Research Development', 'Effect Of Accounting Charges',
-                    'Income Before Tax', 'Minority Interest', 'Net Income',
-                    'Selling General Administrative', 'Gross Profit', 'Ebit',
-                    'Operating Income', 'Other Operating Expenses', 'Interest Expense',
-                    'Extraordinary Items', 'Non Recurring', 'Other Items',
-                    'Income Tax Expense', 'Total Revenue', 'Total Operating Expenses',
-                    'Cost Of Revenue', 'Total Other Income Expense Net',
-                    'Discontinued Operations', 'Net Income From Continuing Ops',
-                    'Net Income Applicable To Common Shares', 'stock'
-                    ]
-    financials = pd.DataFrame(columns=column_names)
-    financials.to_sql('financials', engine, if_exists='replace', index=False)
-
-    # major_share_holders
-    column_names = ['percent', 'detail', 'stock']
-    major_share_holders = pd.DataFrame(columns=column_names)
-    major_share_holders.to_sql('major_share_holders', engine, if_exists='replace', index=False)
-
-    # news
-    column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
-    news = pd.DataFrame(columns=column_names)
-    news.to_sql('news', engine, if_exists='replace', index=False)
-
-    # quarterly_earnings
-    column_names = ['quarter', 'revenue', 'earnings', 'stock']
-    quarterly_earnings = pd.DataFrame(columns=column_names)
-    quarterly_earnings.to_sql('quarterly_earnings', engine, if_exists='replace', index=False)
-
-    # stock_history
-    column_names = ["date", "open", "high", "low", "close", "volume", "dividends", 'stock splits', 'stock']
-    stock_history = pd.DataFrame(columns=column_names)
-    stock_history.to_sql('stock_history', engine, if_exists='replace', index=False)
-
-    # stocks_master
-    column_names = ["stock"]
-    stocks_master = pd.DataFrame(columns=column_names)
-    stocks_master.to_sql('stocks_master', engine, if_exists='replace', index=False)
-
-    return logger.info('PostGreSQL database cleared for import')
+    # # earnings
+    # column_names = ["year", "revenue", "earnings", "stock"]
+    # earnings = pd.DataFrame(columns=column_names)
+    # earnings.to_sql('earnings', engine, if_exists='replace', index=False)
+    #
+    # # financials
+    # column_names = ['date', 'Research Development', 'Effect Of Accounting Charges',
+    #                 'Income Before Tax', 'Minority Interest', 'Net Income',
+    #                 'Selling General Administrative', 'Gross Profit', 'Ebit',
+    #                 'Operating Income', 'Other Operating Expenses', 'Interest Expense',
+    #                 'Extraordinary Items', 'Non Recurring', 'Other Items',
+    #                 'Income Tax Expense', 'Total Revenue', 'Total Operating Expenses',
+    #                 'Cost Of Revenue', 'Total Other Income Expense Net',
+    #                 'Discontinued Operations', 'Net Income From Continuing Ops',
+    #                 'Net Income Applicable To Common Shares', 'stock'
+    #                 ]
+    # financials = pd.DataFrame(columns=column_names)
+    # financials.to_sql('financials', engine, if_exists='replace', index=False)
+    #
+    # # major_share_holders
+    # column_names = ['percent', 'detail', 'stock']
+    # major_share_holders = pd.DataFrame(columns=column_names)
+    # major_share_holders.to_sql('major_share_holders', engine, if_exists='replace', index=False)
+    #
+    # # news
+    # column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
+    # news = pd.DataFrame(columns=column_names)
+    # news.to_sql('news', engine, if_exists='replace', index=False)
+    #
+    # # quarterly_earnings
+    # column_names = ['quarter', 'revenue', 'earnings', 'stock']
+    # quarterly_earnings = pd.DataFrame(columns=column_names)
+    # quarterly_earnings.to_sql('quarterly_earnings', engine, if_exists='replace', index=False)
+    #
+    # # stock_history
+    # column_names = ["date", "open", "high", "low", "close", "volume", "dividends", 'stock splits', 'stock']
+    # stock_history = pd.DataFrame(columns=column_names)
+    # stock_history.to_sql('stock_history', engine, if_exists='replace', index=False)
+    #
+    # # stocks_master
+    # column_names = ["stock"]
+    # stocks_master = pd.DataFrame(columns=column_names)
+    # stocks_master.to_sql('stocks_master', engine, if_exists='replace', index=False)
+    #
+    # return logger.info('PostGreSQL database cleared for import')
 
 def sqlcol(dfparam):
     dtypedict = {}
