@@ -359,7 +359,7 @@ def blank_sql():
                   "stocks_master"]
 
     for table in table_list:
-        cursor.execute(f"DROP TABLE IF EXISTS {table_list};")
+        cursor.execute(f"DROP TABLE IF EXISTS {table};")
         connection.commit()
         logger.info(f'{table} dropped from database')
     cursor.close()

@@ -422,3 +422,61 @@ SQL Updated with combined tables
 2022-08-23 22:34:15,700 | INFO | 364: quarterly_earnings dropped from database
 2022-08-23 22:34:15,735 | INFO | 364: stock_history dropped from database
 2022-08-23 22:34:15,768 | INFO | 364: stocks_master dropped from database
+2022-08-23 22:34:22,734 | INFO | 86: historical IAG.L data sent to sql
+2022-08-23 22:34:29,242 | INFO | 102: major share holders IAG.L data sent to sql
+2022-08-23 22:34:29,592 | INFO | 115: stock financials IAG.L data sent to sql
+2022-08-23 22:34:29,856 | INFO | 127: IAG.L earnings data sent to sql
+2022-08-23 22:34:30,128 | INFO | 139: IAG.L quarterly earnings data sent to sql
+2022-08-23 22:34:30,567 | INFO | 164: IAG.L news sent to sql
+2022-08-23 22:34:30,567 | INFO | 170: IAG.L extracted in 14.57 seconds
+2022-08-23 22:34:37,284 | INFO | 86: historical 0293.HK data sent to sql
+2022-08-23 22:34:43,484 | INFO | 102: major share holders 0293.HK data sent to sql
+2022-08-23 22:34:44,215 | INFO | 115: stock financials 0293.HK data sent to sql
+2022-08-23 22:34:45,004 | INFO | 127: 0293.HK earnings data sent to sql
+2022-08-23 22:34:45,637 | INFO | 139: 0293.HK quarterly earnings data sent to sql
+2022-08-23 22:34:46,110 | INFO | 164: 0293.HK news sent to sql
+2022-08-23 22:34:46,111 | INFO | 170: 0293.HK extracted in 15.54 seconds
+2022-08-23 22:34:52,498 | INFO | 86: historical AF.PA data sent to sql
+2022-08-23 22:34:58,196 | INFO | 102: major share holders AF.PA data sent to sql
+2022-08-23 22:34:58,466 | INFO | 115: stock financials AF.PA data sent to sql
+2022-08-23 22:34:58,721 | INFO | 127: AF.PA earnings data sent to sql
+2022-08-23 22:34:59,048 | INFO | 139: AF.PA quarterly earnings data sent to sql
+2022-08-23 22:35:00,007 | INFO | 164: AF.PA news sent to sql
+2022-08-23 22:35:00,009 | INFO | 170: AF.PA extracted in 13.90 seconds
+2022-08-23 22:35:00,016 | INFO | 198: 
+SQL Updated with combined tables
+2022-08-23 22:35:43,278 | INFO | 364: earnings dropped from database
+2022-08-23 22:35:43,323 | INFO | 364: financials dropped from database
+2022-08-23 22:35:43,362 | INFO | 364: major_share_holders dropped from database
+2022-08-23 22:35:43,409 | INFO | 364: news dropped from database
+2022-08-23 22:35:43,449 | INFO | 364: quarterly_earnings dropped from database
+2022-08-23 22:35:43,484 | INFO | 364: stock_history dropped from database
+2022-08-23 22:35:43,520 | INFO | 364: stocks_master dropped from database
+2022-08-23 22:39:06,504 | INFO | 364: earnings dropped from database
+2022-08-23 22:39:06,549 | INFO | 364: financials dropped from database
+2022-08-23 22:39:06,611 | INFO | 364: major_share_holders dropped from database
+2022-08-23 22:39:06,652 | INFO | 364: news dropped from database
+2022-08-23 22:39:06,732 | INFO | 364: quarterly_earnings dropped from database
+2022-08-23 22:39:06,774 | INFO | 364: stock_history dropped from database
+2022-08-23 22:39:06,805 | INFO | 364: stocks_master dropped from database
+2022-08-23 22:39:22,023 | INFO | 364: earnings dropped from database
+2022-08-23 22:39:22,090 | INFO | 364: financials dropped from database
+2022-08-23 22:39:22,227 | INFO | 364: major_share_holders dropped from database
+2022-08-23 22:39:22,276 | INFO | 364: news dropped from database
+2022-08-23 22:39:22,337 | INFO | 364: quarterly_earnings dropped from database
+2022-08-23 22:39:22,679 | INFO | 364: stock_history dropped from database
+2022-08-23 22:39:23,190 | INFO | 364: stocks_master dropped from database
+2022-08-23 22:39:30,165 | INFO | 86: historical IAG.L data sent to sql
+2022-08-23 22:39:38,036 | INFO | 102: major share holders IAG.L data sent to sql
+2022-08-23 22:39:38,349 | INFO | 115: stock financials IAG.L data sent to sql
+2022-08-23 22:39:38,589 | INFO | 127: IAG.L earnings data sent to sql
+2022-08-23 22:39:38,897 | INFO | 139: IAG.L quarterly earnings data sent to sql
+2022-08-23 22:39:39,258 | INFO | 164: IAG.L news sent to sql
+2022-08-23 22:39:39,258 | INFO | 170: IAG.L extracted in 14.42 seconds
+2022-08-23 22:39:43,686 | INFO | 86: historical 0293.HK data sent to sql
+2022-08-23 22:40:05,727 | INFO | 102: major share holders 0293.HK data sent to sql
+2022-08-23 22:40:06,307 | INFO | 115: stock financials 0293.HK data sent to sql
+2022-08-23 22:40:06,474 | INFO | 127: 0293.HK earnings data sent to sql
+2022-08-23 22:40:06,647 | INFO | 139: 0293.HK quarterly earnings data sent to sql
+2022-08-23 22:40:16,715 | INFO | 164: 0293.HK news sent to sql
+2022-08-23 22:40:16,715 | INFO | 170: 0293.HK extracted in 37.46 seconds
