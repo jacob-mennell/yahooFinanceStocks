@@ -365,52 +365,6 @@ def blank_sql():
     cursor.close()
 
 
-    # # earnings
-    # column_names = ["year", "revenue", "earnings", "stock"]
-    # earnings = pd.DataFrame(columns=column_names)
-    # earnings.to_sql('earnings', engine, if_exists='replace', index=False)
-    #
-    # # financials
-    # column_names = ['date', 'Research Development', 'Effect Of Accounting Charges',
-    #                 'Income Before Tax', 'Minority Interest', 'Net Income',
-    #                 'Selling General Administrative', 'Gross Profit', 'Ebit',
-    #                 'Operating Income', 'Other Operating Expenses', 'Interest Expense',
-    #                 'Extraordinary Items', 'Non Recurring', 'Other Items',
-    #                 'Income Tax Expense', 'Total Revenue', 'Total Operating Expenses',
-    #                 'Cost Of Revenue', 'Total Other Income Expense Net',
-    #                 'Discontinued Operations', 'Net Income From Continuing Ops',
-    #                 'Net Income Applicable To Common Shares', 'stock'
-    #                 ]
-    # financials = pd.DataFrame(columns=column_names)
-    # financials.to_sql('financials', engine, if_exists='replace', index=False)
-    #
-    # # major_share_holders
-    # column_names = ['percent', 'detail', 'stock']
-    # major_share_holders = pd.DataFrame(columns=column_names)
-    # major_share_holders.to_sql('major_share_holders', engine, if_exists='replace', index=False)
-    #
-    # # news
-    # column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
-    # news = pd.DataFrame(columns=column_names)
-    # news.to_sql('news', engine, if_exists='replace', index=False)
-    #
-    # # quarterly_earnings
-    # column_names = ['quarter', 'revenue', 'earnings', 'stock']
-    # quarterly_earnings = pd.DataFrame(columns=column_names)
-    # quarterly_earnings.to_sql('quarterly_earnings', engine, if_exists='replace', index=False)
-    #
-    # # stock_history
-    # column_names = ["date", "open", "high", "low", "close", "volume", "dividends", 'stock splits', 'stock']
-    # stock_history = pd.DataFrame(columns=column_names)
-    # stock_history.to_sql('stock_history', engine, if_exists='replace', index=False)
-    #
-    # # stocks_master
-    # column_names = ["stock"]
-    # stocks_master = pd.DataFrame(columns=column_names)
-    # stocks_master.to_sql('stocks_master', engine, if_exists='replace', index=False)
-    #
-    # return logger.info('PostGreSQL database cleared for import')
-
 def sqlcol(dfparam):
     dtypedict = {}
     dtypes = [str(x) for x in dfparam.dtypes.values]

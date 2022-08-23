@@ -480,3 +480,12 @@ SQL Updated with combined tables
 2022-08-23 22:40:06,647 | INFO | 139: 0293.HK quarterly earnings data sent to sql
 2022-08-23 22:40:16,715 | INFO | 164: 0293.HK news sent to sql
 2022-08-23 22:40:16,715 | INFO | 170: 0293.HK extracted in 37.46 seconds
+2022-08-23 22:40:27,432 | INFO | 86: historical AF.PA data sent to sql
+2022-08-23 22:40:35,097 | INFO | 102: major share holders AF.PA data sent to sql
+2022-08-23 22:40:35,319 | INFO | 115: stock financials AF.PA data sent to sql
+2022-08-23 22:40:35,535 | INFO | 127: AF.PA earnings data sent to sql
+2022-08-23 22:40:35,752 | INFO | 139: AF.PA quarterly earnings data sent to sql
+2022-08-23 22:40:36,092 | INFO | 164: AF.PA news sent to sql
+2022-08-23 22:40:36,093 | INFO | 170: AF.PA extracted in 19.38 seconds
+2022-08-23 22:40:36,094 | INFO | 198: 
+SQL Updated with combined tables
