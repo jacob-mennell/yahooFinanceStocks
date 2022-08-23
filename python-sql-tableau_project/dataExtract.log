@@ -118,3 +118,277 @@ SQL Updated with combined tables
 SQL Updated with combined tables
 2022-08-22 21:40:26,897 | INFO | 181: 
 SQL Updated with combined tables
+2022-08-23 21:37:20,976 | INFO | 73: historical IAG.L data sent to sql
+2022-08-23 21:37:20,976 | INFO | 73: historical IAG.L data sent to sql
+2022-08-23 21:37:28,061 | INFO | 89: major share holders IAG.L data sent to sql
+2022-08-23 21:37:28,061 | INFO | 89: major share holders IAG.L data sent to sql
+2022-08-23 21:37:28,946 | INFO | 102: stock financials IAG.L data sent to sql
+2022-08-23 21:37:28,946 | INFO | 102: stock financials IAG.L data sent to sql
+2022-08-23 21:37:29,768 | INFO | 114: IAG.L earnings data sent to sql
+2022-08-23 21:37:29,768 | INFO | 114: IAG.L earnings data sent to sql
+2022-08-23 21:37:30,436 | INFO | 126: IAG.L quarterly earnings data sent to sql
+2022-08-23 21:37:30,436 | INFO | 126: IAG.L quarterly earnings data sent to sql
+2022-08-23 21:37:31,229 | INFO | 151: IAG.L news sent to sql
+2022-08-23 21:37:31,229 | INFO | 151: IAG.L news sent to sql
+2022-08-23 21:37:31,230 | INFO | 157: IAG.L extracted in 14.13 seconds
+2022-08-23 21:37:31,230 | INFO | 157: IAG.L extracted in 14.13 seconds
+2022-08-23 21:37:37,016 | INFO | 73: historical 0293.HK data sent to sql
+2022-08-23 21:37:37,016 | INFO | 73: historical 0293.HK data sent to sql
+2022-08-23 21:37:41,766 | INFO | 89: major share holders 0293.HK data sent to sql
+2022-08-23 21:37:41,766 | INFO | 89: major share holders 0293.HK data sent to sql
+2022-08-23 21:37:42,577 | INFO | 102: stock financials 0293.HK data sent to sql
+2022-08-23 21:37:42,577 | INFO | 102: stock financials 0293.HK data sent to sql
+2022-08-23 21:37:43,428 | INFO | 114: 0293.HK earnings data sent to sql
+2022-08-23 21:37:43,428 | INFO | 114: 0293.HK earnings data sent to sql
+2022-08-23 21:37:44,581 | INFO | 126: 0293.HK quarterly earnings data sent to sql
+2022-08-23 21:37:44,581 | INFO | 126: 0293.HK quarterly earnings data sent to sql
+2022-08-23 21:37:45,337 | INFO | 151: 0293.HK news sent to sql
+2022-08-23 21:37:45,337 | INFO | 151: 0293.HK news sent to sql
+2022-08-23 21:37:45,337 | INFO | 157: 0293.HK extracted in 14.11 seconds
+2022-08-23 21:37:45,337 | INFO | 157: 0293.HK extracted in 14.11 seconds
+2022-08-23 21:37:52,265 | INFO | 73: historical AF.PA data sent to sql
+2022-08-23 21:37:52,265 | INFO | 73: historical AF.PA data sent to sql
+2022-08-23 21:37:57,318 | INFO | 89: major share holders AF.PA data sent to sql
+2022-08-23 21:37:57,318 | INFO | 89: major share holders AF.PA data sent to sql
+2022-08-23 21:37:58,050 | INFO | 102: stock financials AF.PA data sent to sql
+2022-08-23 21:37:58,050 | INFO | 102: stock financials AF.PA data sent to sql
+2022-08-23 21:37:59,264 | INFO | 114: AF.PA earnings data sent to sql
+2022-08-23 21:37:59,264 | INFO | 114: AF.PA earnings data sent to sql
+2022-08-23 21:38:00,009 | INFO | 126: AF.PA quarterly earnings data sent to sql
+2022-08-23 21:38:00,009 | INFO | 126: AF.PA quarterly earnings data sent to sql
+2022-08-23 21:38:00,862 | INFO | 151: AF.PA news sent to sql
+2022-08-23 21:38:00,862 | INFO | 151: AF.PA news sent to sql
+2022-08-23 21:38:00,862 | INFO | 157: AF.PA extracted in 15.52 seconds
+2022-08-23 21:38:00,862 | INFO | 157: AF.PA extracted in 15.52 seconds
+2022-08-23 21:38:00,863 | INFO | 181: 
+SQL Updated with combined tables
+2022-08-23 21:38:00,863 | INFO | 181: 
+SQL Updated with combined tables
+2022-08-23 21:40:35,566 | INFO | 73: historical IAG.L data sent to sql
+2022-08-23 21:43:00,579 | INFO | 73: historical IAG.L data sent to sql
+2022-08-23 21:43:12,715 | INFO | 89: major share holders IAG.L data sent to sql
+2022-08-23 21:43:20,620 | INFO | 102: stock financials IAG.L data sent to sql
+2022-08-23 21:43:28,631 | INFO | 114: IAG.L earnings data sent to sql
+2022-08-23 21:43:36,539 | INFO | 126: IAG.L quarterly earnings data sent to sql
+2022-08-23 21:43:45,472 | INFO | 151: IAG.L news sent to sql
+2022-08-23 21:43:45,472 | INFO | 157: IAG.L extracted in 49.78 seconds
+2022-08-23 21:43:55,419 | INFO | 73: historical 0293.HK data sent to sql
+2022-08-23 21:44:04,182 | INFO | 89: major share holders 0293.HK data sent to sql
+2022-08-23 21:44:05,261 | INFO | 102: stock financials 0293.HK data sent to sql
+2022-08-23 21:44:06,357 | INFO | 114: 0293.HK earnings data sent to sql
+2022-08-23 21:44:07,502 | INFO | 126: 0293.HK quarterly earnings data sent to sql
+2022-08-23 21:44:08,261 | INFO | 151: 0293.HK news sent to sql
+2022-08-23 21:44:08,261 | INFO | 157: 0293.HK extracted in 22.79 seconds
+2022-08-23 21:44:12,862 | INFO | 73: historical AF.PA data sent to sql
+2022-08-23 21:44:19,142 | INFO | 89: major share holders AF.PA data sent to sql
+2022-08-23 21:44:20,591 | INFO | 102: stock financials AF.PA data sent to sql
+2022-08-23 21:44:21,123 | INFO | 114: AF.PA earnings data sent to sql
+2022-08-23 21:44:22,340 | INFO | 126: AF.PA quarterly earnings data sent to sql
+2022-08-23 21:44:24,187 | INFO | 151: AF.PA news sent to sql
+2022-08-23 21:44:24,187 | INFO | 157: AF.PA extracted in 15.92 seconds
+2022-08-23 21:44:24,188 | INFO | 181: 
+SQL Updated with combined tables
+2022-08-23 21:45:19,475 | INFO | 74: historical IAG.L data sent to sql
+2022-08-23 21:45:25,432 | INFO | 90: major share holders IAG.L data sent to sql
+2022-08-23 21:45:26,351 | INFO | 103: stock financials IAG.L data sent to sql
+2022-08-23 21:45:26,899 | INFO | 115: IAG.L earnings data sent to sql
+2022-08-23 21:45:27,643 | INFO | 127: IAG.L quarterly earnings data sent to sql
+2022-08-23 21:45:31,243 | INFO | 152: IAG.L news sent to sql
+2022-08-23 21:45:31,243 | INFO | 158: IAG.L extracted in 16.06 seconds
+2022-08-23 21:45:34,952 | INFO | 74: historical 0293.HK data sent to sql
+2022-08-23 21:45:40,308 | INFO | 90: major share holders 0293.HK data sent to sql
+2022-08-23 21:45:41,026 | INFO | 103: stock financials 0293.HK data sent to sql
+2022-08-23 21:45:41,622 | INFO | 115: 0293.HK earnings data sent to sql
+2022-08-23 21:45:42,898 | INFO | 127: 0293.HK quarterly earnings data sent to sql
+2022-08-23 21:45:43,823 | INFO | 152: 0293.HK news sent to sql
+2022-08-23 21:45:43,824 | INFO | 158: 0293.HK extracted in 12.58 seconds
+2022-08-23 21:45:48,255 | INFO | 74: historical AF.PA data sent to sql
+2022-08-23 21:45:54,846 | INFO | 90: major share holders AF.PA data sent to sql
+2022-08-23 21:45:55,922 | INFO | 103: stock financials AF.PA data sent to sql
+2022-08-23 21:45:57,227 | INFO | 115: AF.PA earnings data sent to sql
+2022-08-23 21:46:00,282 | INFO | 127: AF.PA quarterly earnings data sent to sql
+2022-08-23 21:46:03,285 | INFO | 152: AF.PA news sent to sql
+2022-08-23 21:46:03,285 | INFO | 158: AF.PA extracted in 19.46 seconds
+2022-08-23 21:46:03,287 | INFO | 182: 
+SQL Updated with combined tables
+2022-08-23 21:46:19,443 | INFO | 289: Exchange Rates Obtained
+2022-08-23 21:46:19,602 | INFO | 289: Exchange Rates Obtained
+2022-08-23 21:47:33,496 | INFO | 289: Exchange Rates Obtained
+2022-08-23 21:47:33,628 | INFO | 289: Exchange Rates Obtained
+2022-08-23 21:48:29,422 | INFO | 289: Exchange Rates Obtained
+2022-08-23 21:48:29,558 | INFO | 289: Exchange Rates Obtained
+2022-08-23 21:54:16,504 | INFO | 74: historical IAG.L data sent to sql
+2022-08-23 21:54:22,418 | INFO | 90: major share holders IAG.L data sent to sql
+2022-08-23 21:54:23,051 | INFO | 103: stock financials IAG.L data sent to sql
+2022-08-23 21:54:23,775 | INFO | 115: IAG.L earnings data sent to sql
+2022-08-23 21:54:24,414 | INFO | 127: IAG.L quarterly earnings data sent to sql
+2022-08-23 21:54:25,099 | INFO | 152: IAG.L news sent to sql
+2022-08-23 21:54:25,099 | INFO | 158: IAG.L extracted in 15.09 seconds
+2022-08-23 21:54:28,328 | INFO | 74: historical 0293.HK data sent to sql
+2022-08-23 21:54:33,972 | INFO | 90: major share holders 0293.HK data sent to sql
+2022-08-23 21:54:34,845 | INFO | 103: stock financials 0293.HK data sent to sql
+2022-08-23 21:54:35,574 | INFO | 115: 0293.HK earnings data sent to sql
+2022-08-23 21:54:36,143 | INFO | 127: 0293.HK quarterly earnings data sent to sql
+2022-08-23 21:54:37,368 | INFO | 152: 0293.HK news sent to sql
+2022-08-23 21:54:37,368 | INFO | 158: 0293.HK extracted in 12.27 seconds
+2022-08-23 21:54:42,984 | INFO | 74: historical AF.PA data sent to sql
+2022-08-23 21:54:46,961 | INFO | 90: major share holders AF.PA data sent to sql
+2022-08-23 21:54:47,674 | INFO | 103: stock financials AF.PA data sent to sql
+2022-08-23 21:54:48,255 | INFO | 115: AF.PA earnings data sent to sql
+2022-08-23 21:54:48,816 | INFO | 127: AF.PA quarterly earnings data sent to sql
+2022-08-23 21:54:49,634 | INFO | 152: AF.PA news sent to sql
+2022-08-23 21:54:49,634 | INFO | 158: AF.PA extracted in 12.26 seconds
+2022-08-23 21:54:49,635 | INFO | 182: 
+SQL Updated with combined tables
+2022-08-23 22:06:37,829 | INFO | 393: PostGreSQL database cleared for import
+2022-08-23 22:06:45,637 | INFO | 101: major share holders IAG.L data sent to sql
+2022-08-23 22:06:46,041 | INFO | 114: stock financials IAG.L data sent to sql
+2022-08-23 22:06:46,215 | INFO | 126: IAG.L earnings data sent to sql
+2022-08-23 22:06:46,971 | INFO | 138: IAG.L quarterly earnings data sent to sql
+2022-08-23 22:06:47,410 | INFO | 163: IAG.L news sent to sql
+2022-08-23 22:06:47,410 | INFO | 169: IAG.L extracted in 9.28 seconds
+2022-08-23 22:07:10,280 | INFO | 101: major share holders 0293.HK data sent to sql
+2022-08-23 22:07:10,626 | INFO | 114: stock financials 0293.HK data sent to sql
+2022-08-23 22:07:10,892 | INFO | 126: 0293.HK earnings data sent to sql
+2022-08-23 22:07:11,191 | INFO | 138: 0293.HK quarterly earnings data sent to sql
+2022-08-23 22:07:11,668 | INFO | 163: 0293.HK news sent to sql
+2022-08-23 22:07:11,668 | INFO | 169: 0293.HK extracted in 24.26 seconds
+2022-08-23 22:07:18,610 | INFO | 101: major share holders AF.PA data sent to sql
+2022-08-23 22:07:18,784 | INFO | 114: stock financials AF.PA data sent to sql
+2022-08-23 22:07:18,942 | INFO | 126: AF.PA earnings data sent to sql
+2022-08-23 22:07:19,131 | INFO | 138: AF.PA quarterly earnings data sent to sql
+2022-08-23 22:07:19,403 | INFO | 163: AF.PA news sent to sql
+2022-08-23 22:07:19,403 | INFO | 169: AF.PA extracted in 7.73 seconds
+2022-08-23 22:07:19,404 | INFO | 197: 
+SQL Updated with combined tables
+2022-08-23 22:07:35,968 | INFO | 393: PostGreSQL database cleared for import
+2022-08-23 22:07:51,479 | INFO | 101: major share holders IAG.L data sent to sql
+2022-08-23 22:07:54,360 | INFO | 114: stock financials IAG.L data sent to sql
+2022-08-23 22:07:54,885 | INFO | 126: IAG.L earnings data sent to sql
+2022-08-23 22:07:55,872 | INFO | 138: IAG.L quarterly earnings data sent to sql
+2022-08-23 22:07:56,920 | INFO | 163: IAG.L news sent to sql
+2022-08-23 22:07:56,920 | INFO | 169: IAG.L extracted in 20.67 seconds
+2022-08-23 22:08:24,657 | INFO | 393: PostGreSQL database cleared for import
+2022-08-23 22:08:37,965 | INFO | 101: major share holders IAG.L data sent to sql
+2022-08-23 22:08:38,789 | INFO | 114: stock financials IAG.L data sent to sql
+2022-08-23 22:08:39,458 | INFO | 126: IAG.L earnings data sent to sql
+2022-08-23 22:08:39,967 | INFO | 138: IAG.L quarterly earnings data sent to sql
+2022-08-23 22:08:40,559 | INFO | 163: IAG.L news sent to sql
+2022-08-23 22:08:40,560 | INFO | 169: IAG.L extracted in 15.70 seconds
+2022-08-23 22:08:58,230 | INFO | 101: major share holders 0293.HK data sent to sql
+2022-08-23 22:08:58,455 | INFO | 114: stock financials 0293.HK data sent to sql
+2022-08-23 22:08:58,708 | INFO | 126: 0293.HK earnings data sent to sql
+2022-08-23 22:08:58,989 | INFO | 138: 0293.HK quarterly earnings data sent to sql
+2022-08-23 22:08:59,291 | INFO | 163: 0293.HK news sent to sql
+2022-08-23 22:08:59,291 | INFO | 169: 0293.HK extracted in 18.73 seconds
+2022-08-23 22:09:05,418 | INFO | 101: major share holders AF.PA data sent to sql
+2022-08-23 22:09:06,090 | INFO | 114: stock financials AF.PA data sent to sql
+2022-08-23 22:09:12,652 | INFO | 126: AF.PA earnings data sent to sql
+2022-08-23 22:09:13,264 | INFO | 138: AF.PA quarterly earnings data sent to sql
+2022-08-23 22:09:17,224 | INFO | 163: AF.PA news sent to sql
+2022-08-23 22:09:17,224 | INFO | 169: AF.PA extracted in 17.93 seconds
+2022-08-23 22:09:17,225 | INFO | 197: 
+SQL Updated with combined tables
+2022-08-23 22:09:40,534 | INFO | 393: PostGreSQL database cleared for import
+2022-08-23 22:09:45,170 | INFO | 101: major share holders IAG.L data sent to sql
+2022-08-23 22:09:45,485 | INFO | 114: stock financials IAG.L data sent to sql
+2022-08-23 22:09:45,824 | INFO | 126: IAG.L earnings data sent to sql
+2022-08-23 22:09:46,117 | INFO | 138: IAG.L quarterly earnings data sent to sql
+2022-08-23 22:09:46,475 | INFO | 163: IAG.L news sent to sql
+2022-08-23 22:09:46,475 | INFO | 169: IAG.L extracted in 5.80 seconds
+2022-08-23 22:09:51,325 | INFO | 101: major share holders 0293.HK data sent to sql
+2022-08-23 22:09:51,515 | INFO | 114: stock financials 0293.HK data sent to sql
+2022-08-23 22:09:51,692 | INFO | 126: 0293.HK earnings data sent to sql
+2022-08-23 22:09:51,847 | INFO | 138: 0293.HK quarterly earnings data sent to sql
+2022-08-23 22:09:52,148 | INFO | 163: 0293.HK news sent to sql
+2022-08-23 22:09:52,148 | INFO | 169: 0293.HK extracted in 5.67 seconds
+2022-08-23 22:09:56,392 | INFO | 101: major share holders AF.PA data sent to sql
+2022-08-23 22:09:56,666 | INFO | 114: stock financials AF.PA data sent to sql
+2022-08-23 22:09:56,944 | INFO | 126: AF.PA earnings data sent to sql
+2022-08-23 22:09:57,110 | INFO | 138: AF.PA quarterly earnings data sent to sql
+2022-08-23 22:09:57,407 | INFO | 163: AF.PA news sent to sql
+2022-08-23 22:09:57,407 | INFO | 169: AF.PA extracted in 5.26 seconds
+2022-08-23 22:09:57,408 | INFO | 197: 
+SQL Updated with combined tables
+2022-08-23 22:11:04,809 | INFO | 393: PostGreSQL database cleared for import
+2022-08-23 22:11:31,224 | INFO | 101: major share holders IAG.L data sent to sql
+2022-08-23 22:11:31,530 | INFO | 114: stock financials IAG.L data sent to sql
+2022-08-23 22:11:31,773 | INFO | 126: IAG.L earnings data sent to sql
+2022-08-23 22:11:31,975 | INFO | 138: IAG.L quarterly earnings data sent to sql
+2022-08-23 22:11:32,465 | INFO | 163: IAG.L news sent to sql
+2022-08-23 22:11:32,469 | INFO | 169: IAG.L extracted in 27.43 seconds
+2022-08-23 22:11:37,269 | INFO | 101: major share holders 0293.HK data sent to sql
+2022-08-23 22:11:37,515 | INFO | 114: stock financials 0293.HK data sent to sql
+2022-08-23 22:11:37,710 | INFO | 126: 0293.HK earnings data sent to sql
+2022-08-23 22:11:37,886 | INFO | 138: 0293.HK quarterly earnings data sent to sql
+2022-08-23 22:11:38,171 | INFO | 163: 0293.HK news sent to sql
+2022-08-23 22:11:38,171 | INFO | 169: 0293.HK extracted in 5.70 seconds
+2022-08-23 22:11:42,456 | INFO | 101: major share holders AF.PA data sent to sql
+2022-08-23 22:11:42,642 | INFO | 114: stock financials AF.PA data sent to sql
+2022-08-23 22:11:42,898 | INFO | 126: AF.PA earnings data sent to sql
+2022-08-23 22:11:43,070 | INFO | 138: AF.PA quarterly earnings data sent to sql
+2022-08-23 22:11:43,409 | INFO | 163: AF.PA news sent to sql
+2022-08-23 22:11:43,410 | INFO | 169: AF.PA extracted in 5.24 seconds
+2022-08-23 22:11:43,410 | INFO | 197: 
+SQL Updated with combined tables
+2022-08-23 22:15:14,120 | INFO | 393: PostGreSQL database cleared for import
+2022-08-23 22:15:21,169 | INFO | 101: major share holders IAG.L data sent to sql
+2022-08-23 22:15:21,445 | INFO | 114: stock financials IAG.L data sent to sql
+2022-08-23 22:15:21,779 | INFO | 126: IAG.L earnings data sent to sql
+2022-08-23 22:15:22,042 | INFO | 138: IAG.L quarterly earnings data sent to sql
+2022-08-23 22:15:22,594 | INFO | 163: IAG.L news sent to sql
+2022-08-23 22:15:22,595 | INFO | 169: IAG.L extracted in 8.26 seconds
+2022-08-23 22:15:34,761 | INFO | 393: PostGreSQL database cleared for import
+2022-08-23 22:15:41,541 | INFO | 101: major share holders IAG.L data sent to sql
+2022-08-23 22:15:41,845 | INFO | 114: stock financials IAG.L data sent to sql
+2022-08-23 22:15:42,113 | INFO | 126: IAG.L earnings data sent to sql
+2022-08-23 22:15:42,317 | INFO | 138: IAG.L quarterly earnings data sent to sql
+2022-08-23 22:15:42,768 | INFO | 163: IAG.L news sent to sql
+2022-08-23 22:15:42,768 | INFO | 169: IAG.L extracted in 7.85 seconds
+2022-08-23 22:15:49,926 | INFO | 101: major share holders 0293.HK data sent to sql
+2022-08-23 22:15:50,294 | INFO | 114: stock financials 0293.HK data sent to sql
+2022-08-23 22:15:50,462 | INFO | 126: 0293.HK earnings data sent to sql
+2022-08-23 22:15:51,886 | INFO | 163: 0293.HK news sent to sql
+2022-08-23 22:15:51,887 | INFO | 169: 0293.HK extracted in 9.12 seconds
+2022-08-23 22:16:10,066 | INFO | 393: PostGreSQL database cleared for import
+2022-08-23 22:16:17,384 | INFO | 101: major share holders IAG.L data sent to sql
+2022-08-23 22:16:17,834 | INFO | 114: stock financials IAG.L data sent to sql
+2022-08-23 22:16:18,213 | INFO | 126: IAG.L earnings data sent to sql
+2022-08-23 22:16:18,853 | INFO | 138: IAG.L quarterly earnings data sent to sql
+2022-08-23 22:16:19,355 | INFO | 163: IAG.L news sent to sql
+2022-08-23 22:16:19,356 | INFO | 169: IAG.L extracted in 9.10 seconds
+2022-08-23 22:16:24,348 | INFO | 101: major share holders 0293.HK data sent to sql
+2022-08-23 22:16:24,581 | INFO | 114: stock financials 0293.HK data sent to sql
+2022-08-23 22:16:24,764 | INFO | 126: 0293.HK earnings data sent to sql
+2022-08-23 22:16:24,920 | INFO | 138: 0293.HK quarterly earnings data sent to sql
+2022-08-23 22:16:25,509 | INFO | 163: 0293.HK news sent to sql
+2022-08-23 22:16:25,509 | INFO | 169: 0293.HK extracted in 6.15 seconds
+2022-08-23 22:16:31,677 | INFO | 101: major share holders AF.PA data sent to sql
+2022-08-23 22:16:31,943 | INFO | 114: stock financials AF.PA data sent to sql
+2022-08-23 22:16:32,175 | INFO | 126: AF.PA earnings data sent to sql
+2022-08-23 22:16:32,841 | INFO | 138: AF.PA quarterly earnings data sent to sql
+2022-08-23 22:16:33,479 | INFO | 163: AF.PA news sent to sql
+2022-08-23 22:16:33,480 | INFO | 169: AF.PA extracted in 7.97 seconds
+2022-08-23 22:16:33,481 | INFO | 197: 
+SQL Updated with combined tables
+2022-08-23 22:18:32,470 | INFO | 393: PostGreSQL database cleared for import
+2022-08-23 22:18:39,657 | INFO | 101: major share holders IAG.L data sent to sql
+2022-08-23 22:18:40,058 | INFO | 114: stock financials IAG.L data sent to sql
+2022-08-23 22:18:40,303 | INFO | 126: IAG.L earnings data sent to sql
+2022-08-23 22:18:40,534 | INFO | 138: IAG.L quarterly earnings data sent to sql
+2022-08-23 22:18:41,181 | INFO | 163: IAG.L news sent to sql
+2022-08-23 22:18:41,182 | INFO | 169: IAG.L extracted in 8.40 seconds
+2022-08-23 22:18:47,578 | INFO | 101: major share holders 0293.HK data sent to sql
+2022-08-23 22:18:47,921 | INFO | 114: stock financials 0293.HK data sent to sql
+2022-08-23 22:18:48,080 | INFO | 126: 0293.HK earnings data sent to sql
+2022-08-23 22:18:48,258 | INFO | 138: 0293.HK quarterly earnings data sent to sql
+2022-08-23 22:18:49,443 | INFO | 163: 0293.HK news sent to sql
+2022-08-23 22:18:49,444 | INFO | 169: 0293.HK extracted in 8.26 seconds
+2022-08-23 22:18:56,511 | INFO | 101: major share holders AF.PA data sent to sql
+2022-08-23 22:18:56,865 | INFO | 114: stock financials AF.PA data sent to sql
+2022-08-23 22:18:57,097 | INFO | 126: AF.PA earnings data sent to sql
+2022-08-23 22:18:57,341 | INFO | 138: AF.PA quarterly earnings data sent to sql
+2022-08-23 22:18:57,748 | INFO | 163: AF.PA news sent to sql
+2022-08-23 22:18:57,748 | INFO | 169: AF.PA extracted in 8.30 seconds
+2022-08-23 22:18:57,749 | INFO | 197: 
+SQL Updated with combined tables

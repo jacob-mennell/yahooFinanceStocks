@@ -29,10 +29,10 @@ server = 'yfinance.database.windows.net'
 username = os.getenv('sqlusername')
 password = os.getenv('sqlpassword')
 driver = os.getenv('driver')
-
-# # path to SQL database stored as environment variable
-# postgres_path = os.getenv('postgres_path')
-# # dialect+driver://username:password@host:port/database
+#
+#  path to SQL database stored as environment variable
+#  postgres_path = os.getenv('postgres_path')
+#  dialect+driver://username:password@host:port/database
 # engine = sqlalchemy.create_engine(postgres_path)
 
 # creates the connection string required to connect to the azure sql database
@@ -52,7 +52,7 @@ def combined_stock_sql_send(stock):
         # stock: individual stock in which user wants to return data for.
 
     Return:
-        # returns note in log file to confirm data has been sent to postgres SQL database
+        # returns note in log file to confirm data has been sent to SQL database
     """
 
     # start of time function
@@ -68,8 +68,20 @@ def combined_stock_sql_send(stock):
         stock_history = stock_history.rename(str.lower, axis='columns')
         stock_history['stock'] = stock
         stock_history['date'] = pd.to_datetime(stock_history['date'])
+
         # send to SQL with SQL Alchemy
-        stock_history.to_sql(f'stock_history', engine, if_exists='replace', index=False)
+        stock_history.to_sql(f'stock_history', engine, dtype=
+        {'date': datetime,
+         'open': float,
+         'high': float,
+         'low': float,
+         'close': float,
+         'volume': float,
+         'dividends': float,
+         'stock_splits': float,
+         #   'stock': VARCHAR
+         }
+                             , if_exists='append', index=False)
         logger.info(f'historical {stock} data sent to sql')
         stock_max_date = str(stock_history.date.max())
         # set new dates to limit size of future uploads
@@ -79,56 +91,56 @@ def combined_stock_sql_send(stock):
         logging.error("Error getting stock_history data", e)
 
     try:
-        # return major shareholders and send to postgres
+        # return major shareholders and send to SQL
         major_share_holders = msft.major_holders
         # minor cleaning
         major_share_holders = major_share_holders.rename(columns={0: "percent", 1: "detail"})
         major_share_holders['stock'] = stock
         # send to SQL with SQL Alchemy
-        major_share_holders.to_sql(f'major_share_holders', engine, if_exists='replace', index=False)
+        major_share_holders.to_sql(f'major_share_holders', engine, if_exists='append', index=False)
         logger.info(f'major share holders {stock} data sent to sql')
     except Exception as e:
         logging.error("Error getting major_share_holders data", e)
 
     try:
-        # return financials and send to postgres
+        # return financials and send to SQL
         stock_financials = msft.financials
         stock_financials = stock_financials.transpose()
         stock_financials = stock_financials.reset_index()
         stock_financials.columns.values[0] = "date"
         stock_financials['stock'] = stock
         # send to SQL with SQL Alchemy
-        stock_financials.to_sql(f'financials', engine, if_exists='replace', index=False)
+        stock_financials.to_sql(f'financials', engine, if_exists='append', index=False)
         logger.info(f'stock financials {stock} data sent to sql')
     except Exception as e:
         logging.error("Error getting stock_financials data", e)
 
     try:
-        # return earnings and send to postgres
+        # return earnings and send to SQL
         stock_earnings = msft.earnings.reset_index()
         # minor cleaning
         stock_earnings = stock_earnings.rename(str.lower, axis='columns')
         stock_earnings['stock'] = stock
         # send to SQL with SQL Alchemy
-        stock_earnings.to_sql(f'earnings', engine, if_exists='replace', index=False)
+        stock_earnings.to_sql(f'earnings', engine, if_exists='append', index=False)
         logger.info(f'{stock} earnings data sent to sql')
     except Exception as e:
         logging.error("Error getting earnings data", e)
 
     try:
-        # return quarterly earnings and send to postgres
+        # return quarterly earnings and send to SQL
         stock_quarterly_earnings = msft.quarterly_earnings.reset_index()
         # minor cleaning
         stock_quarterly_earnings = stock_quarterly_earnings.rename(str.lower, axis='columns')
         stock_quarterly_earnings['stock'] = stock
         # send to SQL with SQL Alchemy
-        stock_quarterly_earnings.to_sql(f'quarterly_earnings', engine, if_exists='replace', index=False)
+        stock_quarterly_earnings.to_sql(f'quarterly_earnings', engine, if_exists='append', index=False)
         logger.info(f'{stock} quarterly earnings data sent to sql')
     except Exception as e:
         logging.error("Error getting quarterly earnings data", e)
 
     try:
-        # return news and send to postgres
+        # return news and send to SQL
         news_list = msft.news
         column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
         news_df = pd.DataFrame(columns=column_names)
@@ -147,7 +159,7 @@ def combined_stock_sql_send(stock):
         news_df['type'] = [x['type'] for x in news_list]
         news_df['stock'] = stock
         # send to SQL with SQL Alchemy
-        news_df.to_sql(f'news', engine, if_exists='replace', index=False)
+        news_df.to_sql(f'news', engine, if_exists='append', index=False)
         logger.info(f'{stock} news sent to sql')
     except Exception as e:
         logging.error("Error getting news data", e)
@@ -167,13 +179,17 @@ def combined_tables(stock_list):
         # companies: list of stocks that we want to return data for
 
     Return:
-        # returns note in log file to confirm data has been sent to postgres SQL database
+        # returns note in log file to confirm data has been sent to SQL database
     """
+    try:
+        blank_sql()
+    except Exception as e:
+        logging.error("Error clearING tables", e)
 
     # create master table
     stock_df = pd.DataFrame(columns=['stock'])
     stock_df['stock'] = [x for x in stock_list]
-    stock_df.to_sql('stocks_master', engine, if_exists='replace', index=False)
+    stock_df.to_sql('stocks_master', engine, dtype=sqlcol(stock_df), if_exists='append', index=False)
 
     # get tables for each individual stock
     # [stock_sql_send(item) for item in companies]
@@ -188,7 +204,7 @@ def stock_history_updater(stock):
         # stock: individual stock in which user wants to return data for.
 
     Return:
-        # returns note in log file to confirm data has been sent to postgres SQL database
+        # returns note in log file to confirm data has been sent to SQL database
     """
 
     # start of time function
@@ -227,7 +243,7 @@ def stock_history_updater(stock):
 
 def exchange_rate_table(stock_list, period, interval='1d'):
     """
-    Function to create exchange rate table and date dimension table in PostGreSQL database
+    Function to create exchange rate table and date dimension table in SQL database
 
     Arguments:
         # stock list: list of stocks to return exchange rate to GBP for
@@ -235,7 +251,7 @@ def exchange_rate_table(stock_list, period, interval='1d'):
         # interval - default set to 1 day. Needs to be one day for date dimension table.
 
     Return:
-        # returns note in log file to confirm data has been sent to postgres SQL database
+        # returns note in log file to confirm data has been sent to SQL database
     """
 
     currency_code = {}
@@ -296,8 +312,8 @@ def exchange_rate_table(stock_list, period, interval='1d'):
     date_df['year'] = currency_df['Date'].dt.year
     date_df['quarter'] = currency_df['Date'].dt.quarter
     date_df['month'] = currency_df['Date'].dt.month
-    date_df['week_number_of_year'] = currency_df['Date'].dt.week
-    date_df.to_sql('date_dimension', engine, if_exists='replace', index=False)
+    # date_df['week_number_of_year'] = currency_df['Date'].dt.week
+    date_df.to_sql('date_dimension', engine, if_exists='append', index=False)
 
     # create unique id
     currency_df['exchange_id'] = (currency_df.Date.apply(
@@ -315,9 +331,93 @@ def exchange_rate_table(stock_list, period, interval='1d'):
                            how='right',
                            left_on=['currency_code'],
                            right_on=['FromCurrency'])
-    exchange_df.to_sql('stocks_master', engine, if_exists='replace', index=False)
-    return logger.info('Exchange rate table created in PostGreSQL database')
+    exchange_df.to_sql('stocks_master', engine, if_exists='append', index=False)
+    return logger.info('Exchange rate table created in SQL database')
 
+def blank_sql():
+    """
+    Function to clear database prior to new batch import.
+    To be replaced with drop() or drop_all() method.
+
+    Arguments:
+        # empty
+
+    Return:
+        # returns note in log file to confirm data has been cleared in postgres SQL database
+    """
+
+    connection = engine.raw_connection()
+    cursor = connection.cursor()
+    # add in a sql statement that drops all tables.
+    command = F"DROP TABLE IF EXISTS {table_list};"
+    cursor.execute(command)
+    connection.commit()
+    cursor.close()
+
+
+    # earnings
+    column_names = ["year", "revenue", "earnings", "stock"]
+    earnings = pd.DataFrame(columns=column_names)
+    earnings.to_sql('earnings', engine, if_exists='replace', index=False)
+
+    # financials
+    column_names = ['date', 'Research Development', 'Effect Of Accounting Charges',
+                    'Income Before Tax', 'Minority Interest', 'Net Income',
+                    'Selling General Administrative', 'Gross Profit', 'Ebit',
+                    'Operating Income', 'Other Operating Expenses', 'Interest Expense',
+                    'Extraordinary Items', 'Non Recurring', 'Other Items',
+                    'Income Tax Expense', 'Total Revenue', 'Total Operating Expenses',
+                    'Cost Of Revenue', 'Total Other Income Expense Net',
+                    'Discontinued Operations', 'Net Income From Continuing Ops',
+                    'Net Income Applicable To Common Shares', 'stock'
+                    ]
+    financials = pd.DataFrame(columns=column_names)
+    financials.to_sql('financials', engine, if_exists='replace', index=False)
+
+    # major_share_holders
+    column_names = ['percent', 'detail', 'stock']
+    major_share_holders = pd.DataFrame(columns=column_names)
+    major_share_holders.to_sql('major_share_holders', engine, if_exists='replace', index=False)
+
+    # news
+    column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
+    news = pd.DataFrame(columns=column_names)
+    news.to_sql('news', engine, if_exists='replace', index=False)
+
+    # quarterly_earnings
+    column_names = ['quarter', 'revenue', 'earnings', 'stock']
+    quarterly_earnings = pd.DataFrame(columns=column_names)
+    quarterly_earnings.to_sql('quarterly_earnings', engine, if_exists='replace', index=False)
+
+    # stock_history
+    column_names = ["date", "open", "high", "low", "close", "volume", "dividends", 'stock splits', 'stock']
+    stock_history = pd.DataFrame(columns=column_names)
+    stock_history.to_sql('stock_history', engine, if_exists='replace', index=False)
+
+    # stocks_master
+    column_names = ["stock"]
+    stocks_master = pd.DataFrame(columns=column_names)
+    stocks_master.to_sql('stocks_master', engine, if_exists='replace', index=False)
+
+    return logger.info('PostGreSQL database cleared for import')
+
+def sqlcol(dfparam):
+    dtypedict = {}
+    dtypes = [str(x) for x in dfparam.dtypes.values]
+    for i, j in zip(dfparam.columns, dtypes):
+        if "object" in j:
+            dtypedict.update({i: sqlalchemy.types.VARCHAR(length=max(dfparam[i].apply(lambda x: len(str(x)))))})
+
+        if "datetime" in j:
+            dtypedict.update({i: sqlalchemy.types.DateTime()})
+
+        if "float" in j:
+            dtypedict.update({i: sqlalchemy.types.Float(precision=3, asdecimal=True)})
+
+        if "int" in j:
+            dtypedict.update({i: sqlalchemy.types.INT()})
+
+    return dtypedict
 # -------------------- OLD CODE CAN BE REUSED IF NEEDED STOCKS IN SEPERATE TABLES --------------------
 
 # def stock_sql_send(stock):
@@ -329,7 +429,7 @@ def exchange_rate_table(stock_list, period, interval='1d'):
 #         # stock: individual stock in which user wnats to return data for.
 #
 #     Return:
-#         # returns strings to confirm data has been sent to postgres SQL database
+#         # returns strings to confirm data has been sent to  SQL database
 #     '''
 #
 #     #start of time function
@@ -433,60 +533,3 @@ def exchange_rate_table(stock_list, period, interval='1d'):
 #     list(map(stock_sql_send, companies))
 #     return print('\nSQL Updated')
 
-# def blank_sql():
-#     """
-#     Function to clear database prior to new batch import.
-#     To be replaced with drop() or drop_all() method.
-#
-#     Arguments:
-#         # empty
-#
-#     Return:
-#         # returns note in log file to confirm data has been cleared in postgres SQL database
-#     """
-#
-#     # earnings
-#     column_names = ["year", "revenue", "earnings", "stock"]
-#     earnings = pd.DataFrame(columns=column_names)
-#     earnings.to_sql('earnings', engine, if_exists='replace', index=False)
-#
-#     # financials
-#     column_names = ['date', 'Research Development', 'Effect Of Accounting Charges',
-#                     'Income Before Tax', 'Minority Interest', 'Net Income',
-#                     'Selling General Administrative', 'Gross Profit', 'Ebit',
-#                     'Operating Income', 'Other Operating Expenses', 'Interest Expense',
-#                     'Extraordinary Items', 'Non Recurring', 'Other Items',
-#                     'Income Tax Expense', 'Total Revenue', 'Total Operating Expenses',
-#                     'Cost Of Revenue', 'Total Other Income Expense Net',
-#                     'Discontinued Operations', 'Net Income From Continuing Ops',
-#                     'Net Income Applicable To Common Shares', 'stock'
-#                     ]
-#     financials = pd.DataFrame(columns=column_names)
-#     financials.to_sql('financials', engine, if_exists='replace', index=False)
-#
-#     # major_share_holders
-#     column_names = ['percent', 'detail', 'stock']
-#     major_share_holders = pd.DataFrame(columns=column_names)
-#     major_share_holders.to_sql('major_share_holders', engine, if_exists='replace', index=False)
-#
-#     # news
-#     column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
-#     news = pd.DataFrame(columns=column_names)
-#     news.to_sql('news', engine, if_exists='replace', index=False)
-#
-#     # quarterly_earnings
-#     column_names = ['quarter', 'revenue', 'earnings', 'stock']
-#     quarterly_earnings = pd.DataFrame(columns=column_names)
-#     quarterly_earnings.to_sql('quarterly_earnings', engine, if_exists='replace', index=False)
-#
-#     # stock_history
-#     column_names = ["date", "open", "high", "low", "close", "volume", "dividends", 'stock splits', 'stock']
-#     stock_history = pd.DataFrame(columns=column_names)
-#     stock_history.to_sql('stock_history', engine, if_exists='replace', index=False)
-#
-#     # stocks_master
-#     column_names = ["stock"]
-#     stocks_master = pd.DataFrame(columns=column_names)
-#     stocks_master.to_sql('stocks_master', engine, if_exists='replace', index=False)
-#
-#     return logger.info('PostGreSQL database cleared for import')
