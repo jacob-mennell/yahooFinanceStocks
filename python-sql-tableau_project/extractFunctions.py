@@ -40,7 +40,8 @@ odbc_str = f'Driver={driver};SERVER=yfinance.database.windows.net; database=stoc
 connect_str = f'mssql+pyodbc:///?odbc_connect={odbc_str}'
 # creates the engine to connect to the database with.
 # fast_executemany makes the engine insert multiple rows in each insertstatement and imporves the speed of the code drastically
-engine = create_engine(connect_str,fast_executemany=True)
+engine = create_engine(connect_str, fast_executemany=True)
+
 
 # function to get stock information
 def combined_stock_sql_send(stock):
@@ -72,22 +73,22 @@ def combined_stock_sql_send(stock):
         # send to SQL with SQL Alchemy
         stock_history.to_sql(f'stock_history', engine,
                              # dtype=
-        # {'date': datetime,
-        #  'open': float,
-        #  'high': float,
-        #  'low': float,
-        #  'close': float,
-        #  'volume': float,
-        #  'dividends': float,
-        #  'stock_splits': float,
-        #  #   'stock': VARCHAR
-        #  }
-        if_exists='append', index=False)
+                             # {'date': datetime,
+                             #  'open': float,
+                             #  'high': float,
+                             #  'low': float,
+                             #  'close': float,
+                             #  'volume': float,
+                             #  'dividends': float,
+                             #  'stock_splits': float,
+                             #  #   'stock': VARCHAR
+                             #  }
+                             if_exists='append', index=False)
         logger.info(f'historical {stock} data sent to sql')
         stock_max_date = str(stock_history.date.max())
         # set new dates to limit size of future uploads
         f = open('last_update.txt', 'w')
-        f.write(f"stock_date_max {stock_max_date}")
+        f.write(f"{stock}_date_max {stock_max_date}")
     except Exception as e:
         logging.error("Error getting stock_history data", e)
 
@@ -197,6 +198,26 @@ def combined_tables(stock_list):
     list(map(combined_stock_sql_send, stock_list))
     return logger.info('\nSQL Updated with combined tables')
 
+
+def get_last_update_date(stock):
+    """
+    Function to retrieve the last update date for a stock
+    Arguments:
+        stock: individual stock to retrieve the last update date for
+    Returns:
+        last_update_date: the last update date for the specified stock
+    """
+    try:
+        with open('last_update.txt', 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                if f"{stock}_date_max" in line:
+                    last_update_date = line.split(" ")[-1]
+                    return last_update_date
+    except FileNotFoundError:
+        return None
+
+
 def stock_history_updater(stock):
     """
     Function to pull stock information. Pulls historical data from date of last update.
@@ -214,19 +235,20 @@ def stock_history_updater(stock):
     # create ticker for the stock
     msft = yf.Ticker(stock)
 
+    # replaced with get_last_update_date(stock) func
     # create dicts of dates from text file for date filtering prior to upload
-    date_dict = {}
-    with open("last_update.txt") as f:
-        for line in f:
-            k, v = line.split(' ', 1)
-            v = v[:-1]
-            date_dict[k] = v
-    f.close
+    # date_dict = {}
+    # with open("last_update.txt") as f:
+    #     for line in f:
+    #         k, v = line.split(' ', 1)
+    #         v = v[:-1]
+    #         date_dict[k] = v
+    # f.close
 
     try:
         # return historical stock data and send to sql db
         today_date = date.today()
-        stock_history = msft.history(start=date_dict[stock_date_max], end=today_date, interval="1d").reset_index()
+        stock_history = msft.history(start=get_last_update_date(stock), end=today_date, interval="1d").reset_index()
         # minor cleaning
         stock_history = stock_history.rename(str.lower, axis='columns')
         stock_history['stock'] = stock
@@ -237,7 +259,7 @@ def stock_history_updater(stock):
         stock_max_date = str(stock_history.date.max())
         # set new dates to limit size of future uploads
         f = open('last_update.txt', 'w')
-        f.write(f"stock_date_max {stock_max_date}")
+        f.write(f"{stock}_date_max {stock_max_date}")
     except Exception as e:
         logging.error("Error getting stock_history data", e)
 
@@ -334,6 +356,7 @@ def exchange_rate_table(stock_list, period, interval='1d'):
                            right_on=['FromCurrency'])
     exchange_df.to_sql('stocks_master', engine, if_exists='append', index=False)
     return logger.info('Exchange rate table created in SQL database')
+
 
 def blank_sql():
     """
@@ -496,4 +519,3 @@ def sqlcol(dfparam):
 #     # [stock_sql_send(item) for item in companies]
 #     list(map(stock_sql_send, companies))
 #     return print('\nSQL Updated')
-
