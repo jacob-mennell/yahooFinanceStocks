@@ -69,7 +69,6 @@ def combined_stock_sql_send(stock):
         stock_history = stock_history.rename(str.lower, axis='columns')
         stock_history['stock'] = stock
         stock_history['date'] = pd.to_datetime(stock_history['date'])
-
         # send to SQL with SQL Alchemy
         stock_history.to_sql(f'stock_history', engine,
                              # dtype=
@@ -89,10 +88,7 @@ def combined_stock_sql_send(stock):
         # set new dates to limit size of future uploads
         f = open('last_update.txt', 'w')
         f.write(f"{stock}_date_max {stock_max_date}")
-    except Exception as e:
-        logging.error("Error getting stock_history data", e)
 
-    try:
         # return major shareholders and send to SQL
         major_share_holders = msft.major_holders
         # minor cleaning
@@ -101,10 +97,7 @@ def combined_stock_sql_send(stock):
         # send to SQL with SQL Alchemy
         major_share_holders.to_sql(f'major_share_holders', engine, if_exists='append', index=False)
         logger.info(f'major share holders {stock} data sent to sql')
-    except Exception as e:
-        logging.error("Error getting major_share_holders data", e)
 
-    try:
         # return financials and send to SQL
         stock_financials = msft.financials
         stock_financials = stock_financials.transpose()
@@ -114,10 +107,7 @@ def combined_stock_sql_send(stock):
         # send to SQL with SQL Alchemy
         stock_financials.to_sql(f'financials', engine, if_exists='append', index=False)
         logger.info(f'stock financials {stock} data sent to sql')
-    except Exception as e:
-        logging.error("Error getting stock_financials data", e)
 
-    try:
         # return earnings and send to SQL
         stock_earnings = msft.earnings.reset_index()
         # minor cleaning
@@ -126,10 +116,7 @@ def combined_stock_sql_send(stock):
         # send to SQL with SQL Alchemy
         stock_earnings.to_sql(f'earnings', engine, if_exists='append', index=False)
         logger.info(f'{stock} earnings data sent to sql')
-    except Exception as e:
-        logging.error("Error getting earnings data", e)
 
-    try:
         # return quarterly earnings and send to SQL
         stock_quarterly_earnings = msft.quarterly_earnings.reset_index()
         # minor cleaning
@@ -138,10 +125,7 @@ def combined_stock_sql_send(stock):
         # send to SQL with SQL Alchemy
         stock_quarterly_earnings.to_sql(f'quarterly_earnings', engine, if_exists='append', index=False)
         logger.info(f'{stock} quarterly earnings data sent to sql')
-    except Exception as e:
-        logging.error("Error getting quarterly earnings data", e)
 
-    try:
         # return news and send to SQL
         news_list = msft.news
         column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
@@ -163,8 +147,10 @@ def combined_stock_sql_send(stock):
         # send to SQL with SQL Alchemy
         news_df.to_sql(f'news', engine, if_exists='append', index=False)
         logger.info(f'{stock} news sent to sql')
+
     except Exception as e:
-        logging.error("Error getting news data", e)
+        # Log the exception along with its traceback
+        logging.exception("An exception occurred: %s", e)
 
     # end of function
     end = time.time()
@@ -186,7 +172,7 @@ def combined_tables(stock_list):
     try:
         blank_sql()
     except Exception as e:
-        logging.error("Error clearing tables", e)
+        logging.exception("An exception occurred clearing tables: %s", e)
 
     # create master table
     stock_df = pd.DataFrame(columns=['stock'])
@@ -261,7 +247,7 @@ def stock_history_updater(stock):
         f = open('last_update.txt', 'w')
         f.write(f"{stock}_date_max {stock_max_date}")
     except Exception as e:
-        logging.error("Error getting stock_history data", e)
+        logging.exception("An exception occurred: %s", e)
 
 
 def exchange_rate_table(stock_list, period, interval='1d'):
