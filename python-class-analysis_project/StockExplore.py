@@ -158,7 +158,7 @@ class ExploreStocks:
         df_na = df_na.loc[~(df_na['currency_code'].str.contains('GBP', case=False, regex=False, na=False))]
         df_na = df_na.groupby(['currency_code']).agg(currency_code_size=('currency_code', 'size')).reset_index()
         na_count = df_na['currency_code'].count() / master_df['currency_code'].count() * 100
-        print(f'\n% of NaN values in calculated GBP column : {"{:.2f}".format(na_count)}')
+        logging.info(f'\n% of NaN values in calculated GBP column : {"{:.2f}".format(na_count)}')
 
         # We know the value of missing GBP ot GBP currency is 1, so we can change this manually
         master_df.loc[master_df['currency_code'].isin(['GBP']), 'currency_close'] = 1
@@ -170,7 +170,6 @@ class ExploreStocks:
         self.stock_history = master_df.copy()
 
         logging.info('Data Retrieved - dataframe with exchange rates initialised')
-        print('Data Retrieved - access via the stock_history attribute ')
 
     def return_df(self):
         """ Returns: dataframe - also return by calling self.stock_history """
