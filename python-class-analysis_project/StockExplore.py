@@ -50,7 +50,6 @@ class ExploreStocks:
             stocks_df = stocks_df.reset_index()
         except Exception as e:
             logging.error("Error getting stock data", e)
-            return
 
         logging.info('Initial Stock Information Downloaded')
 
@@ -76,6 +75,7 @@ class ExploreStocks:
 
         df['currency_code'] = df['currency_code'].apply(
             lambda x: x.upper())
+        
         # create unique field to join exchange rates later
         df['currency_id'] = (df['Date'].apply(
             lambda x: x.strftime("%m%d%Y"))) + (df['currency_code'])
@@ -124,7 +124,7 @@ class ExploreStocks:
                 currency_df = pd.concat([currency_df, currency_help_df])
             except Exception as e:
                 logging.error("Error getting exchange rates", e)
-                return
+                
         currency_df = currency_df.reset_index()
         logging.info('Exchange Rates Obtained')
 
@@ -132,9 +132,11 @@ class ExploreStocks:
         # could average exchange rate by week in year to account for missing vlaues
         currency_df['week_number_of_year'] = currency_df['Date'].dt.week
         currency_df['year'] = currency_df['Date'].dt.year
+        
         # create unique id to merge on
         currency_df['currency_iden'] = (currency_df.Date.apply(
             lambda x: x.strftime("%m%d%Y"))) + (currency_df['FromCurrency'])
+        
         # rename columns
         currency_df.rename(columns={
             'Close': 'currency_close'
@@ -162,8 +164,10 @@ class ExploreStocks:
 
         # We know the value of missing GBP ot GBP currency is 1, so we can change this manually
         master_df.loc[master_df['currency_code'].isin(['GBP']), 'currency_close'] = 1
+        
         # confirm still numeric data type
         master_df['currency_close'] = pd.to_numeric(master_df['currency_close'], downcast='float', errors='coerce')
+        
         # now we can calculate calculated currency
         master_df['GBP_calculated close'] = master_df['Close'] * master_df['currency_close']
 
