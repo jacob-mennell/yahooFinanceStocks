@@ -62,7 +62,7 @@ class ExploreStocks:
                 currency_code[ticker] = tick.info['currency']
             except Exception as e:
                 logging.error("Error getting currency symbol", e)
-                return
+                
         # make dataframe
         currency_code_df = pd.DataFrame(list(currency_code.items()), columns=['Ticker',
                                                                               'currency_code'])
