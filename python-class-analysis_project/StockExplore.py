@@ -15,8 +15,21 @@ from sklearn.metrics import mean_absolute_error
 from dask.distributed import Client
 import itertools
 
+import logging
+import pandas as pd
+import yfinance as yf
+from typing import Optional
+
+
 class ExploreStocks:
-    def __init__(self, stock_list, period):
+    def __init__(self, stock_list: list[str], period: str):
+        """
+        ExploreStocks class for downloading and preprocessing stock data.
+
+        Args:
+            stock_list: List of stock tickers to explore.
+            period: Time period to download historical data for (e.g., '1y', '2y', 'max').
+        """
         self.stock_list = stock_list
         self.period = period
         self.currency_df = None
@@ -25,15 +38,20 @@ class ExploreStocks:
         self._download_and_preprocess_data()
 
     def _initialize_logging(self):
+        """
+        Initializes logging for the class.
+        """
         logger = logging.getLogger()
         logger.setLevel(logging.NOTSET)
 
+        # Set up logging to console
         console = logging.StreamHandler()
         console.setLevel(logging.ERROR)
         console_format = '%(asctime)s | %(levelname)s: %(message)s'
         console.setFormatter(logging.Formatter(console_format))
         logger.addHandler(console)
 
+        # Set up logging to file
         file_handler = logging.FileHandler('ExploreStocks.log')
         file_handler.setLevel(logging.INFO)
         file_handler_format = '%(asctime)s | %(levelname)s | %(lineno)d: %(message)s'
@@ -41,13 +59,20 @@ class ExploreStocks:
         logger.addHandler(file_handler)
 
     def _download_and_preprocess_data(self):
+        """
+        Downloads and preprocesses data for the specified stocks.
+        """
         self._download_initial_stock_info()
         self._extract_currency_data()
         self._download_exchange_rates()
         self._merge_exchange_rates_with_master()
 
     def _download_initial_stock_info(self):
+        """
+        Downloads initial stock information for the specified stocks.
+        """
         try:
+            # Download historical stock data for the specified stocks
             stocks_df = yf.download(self.stock_list, group_by='Ticker', period='max')
             stocks_df = stocks_df.stack(level=0).rename_axis(['Date', 'Ticker']).reset_index(level=1)
             stocks_df = stocks_df.reset_index()
@@ -58,6 +83,9 @@ class ExploreStocks:
         self.stock_history = stocks_df.copy()
 
     def _extract_currency_data(self):
+        """
+        Extracts currency data for the specified stocks.
+        """
         currency_code = {}
         for ticker in self.stock_list:
             try:
@@ -73,6 +101,9 @@ class ExploreStocks:
         logging.info('Currency Extracted')
 
     def _download_exchange_rates(self):
+        """
+        Downloads exchange rates for the specified currencies.
+        """
         currencylist = [x.upper() for x in (list(self.currency_df.currency_code.unique()))]
         interval = '1d'
 
@@ -118,6 +149,9 @@ class ExploreStocks:
         logging.info('Exchange Rates Obtained')
 
     def _merge_exchange_rates_with_master(self):
+        """
+        Merges exchange rates data with the master stock data.
+        """
         master_df = pd.merge(self.stock_history, self.currency_df[['FromCurrency', 'Close']],
                              left_on=['Date', 'currency_code'],
                              right_on=[self.currency_df.index, 'FromCurrency'],
