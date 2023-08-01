@@ -99,14 +99,26 @@ class ExploreStocks:
         self.currency_df = currency_code_df.copy()
 
         logging.info('Currency Extracted')
-
+    
     def _download_exchange_rates(self):
         """
-        Downloads exchange rates for the specified currencies.
+        Download exchange rates for currencies used in the stock list.
+    
+        This function downloads the exchange rates for the currencies used in the stock list
+        for the specified period.
+    
+        Args:
+            None
+    
+        Returns:
+            None
         """
+    
+        # List of unique currency codes from the currency dataframe
         currencylist = [x.upper() for x in (list(self.currency_df.currency_code.unique()))]
         interval = '1d'
-
+    
+        # Create a metadata dataframe containing information about currency pairs and their tickers
         meta_df = pd.DataFrame(
             {
                 'FromCurrency': [a for a in currencylist],
@@ -114,7 +126,8 @@ class ExploreStocks:
                 'YahooTickers': [f'{a}GBP=X' for a in currencylist]
             }
         )
-
+    
+        # Download exchange rate data for each currency pair and concatenate the data
         currency_df = pd.DataFrame(
             yf.download(
                 tickers=meta_df['YahooTickers'].values[0],
@@ -142,10 +155,12 @@ class ExploreStocks:
                 currency_df = pd.concat([currency_df, currency_help_df])
             except Exception as e:
                 logging.error("Error getting exchange rates", e)
-
+    
+        # Reset the index of the currency dataframe and update the class attribute
         currency_df = currency_df.reset_index()
         self.currency_df = currency_df.copy()
-
+    
+        # Log the completion of the exchange rate retrieval process
         logging.info('Exchange Rates Obtained')
     
     def _merge_exchange_rates_with_master(self):
