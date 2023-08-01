@@ -1,34 +1,48 @@
-# Yahoo Finance Project 
+# Yahoo Finance Project
 
-The project contains two parts:
+The project consists of two parts:
 
-## Scripts for pulling data from yahoo finance module and sending to Azure SQL Database
-### Stored in the python-sql-tableau_project file
-Data is pulled using Yahoo Finance, minor cleaning is then undertaken before sending to a SQL database 
-using sqlalchemy. In this instance, an Azure SQL database is used with credentials stored as environment variables 
-accessed through the os module. 
+## Data Extraction and SQL Database Integration
+### Folder: python-sql-tableau_project
+This part of the project involves pulling data from the Yahoo Finance module, performing minor data cleaning, and then sending it to an Azure SQL Database using the SQLAlchemy library. The data extraction functions are listed in the extractFunctions.py script, and they are called in the dataExtract.py script for execution.
 
-Data used is from the Yahoo Finance module includes: historical stock data, major shareholders, earnings, 
-quarterly earnings and news.
-Extraction functions are listed in the dataExtract.py script and called in the dataExtract.py script.
+Data extracted from the Yahoo Finance module includes historical stock data, major shareholders, earnings, quarterly earnings, and news related to the specified stocks. The project utilizes environment variables to securely store the credentials for accessing the Azure SQL database, which are accessed through the os module.
 
-The SQL database was then connected to Tableau to produce the dashboard included in the folder.
+#### Required Modules:
+- pandas
+- datetime
+- time
+- yfinance
+- sqlalchemy
+- os
 
-### Required modules:
-pandas, datetime, time, yfinance, sqlalchemy, os
+## StockExplore Module
+### Folder: python-class-analysis_project
+The StockExplore module provides the StockExplore class with several methods for analyzing a list of stocks. The methods available in the StockExplore class include:
+- plot_stock_price(): Visualizes the stock price for each stock over time.
+- plot_trade_volume(): Plots the trade volume of each stock over time.
+- plot_volatility(): Visualizes the volatility of each stock over time.
+- plot_rolling_average(): Plots the rolling average of each stock's price.
+- plot_cumulative_returns(): Visualizes the cumulative returns of each stock.
+- plot_future_trend(stock): Uses the Facebook Prophet model to plot the future trend of a specified stock.
 
-## StockExplore Module. 
-### Stored in the python-class-analysis_project file
-This provides the StockExplore class with the following methods to analyse a list of stocks:
-plot_stock_price(), plot_trade_volume(), plot_volatility(), plot_rolling_average(), plot_cumulative_returns(), 
-plot_future_trend(stock). 
+#### Facebook Prophet Model
+The Facebook Prophet model is utilized for plotting the future trend of a stock. Prophet is a modular regression model with interpretable parameters that can be intuitively adjusted by analysts with domain knowledge about the time series.
 
-These are listed in the StockExplore.py script and called in the analysis.py and predictive_analysis.ipynb script.
-Plotting of the future trend uses the Facebook Prophet Model.
+For more information about the Facebook Prophet model, visit: https://facebook.github.io/prophet/
 
-Facebook Prophet Model: https://facebook.github.io/prophet/
-" a modular regression model with interpretable parameters that can be intuitively adjusted 
-by analysts with domain knowledge about the time series"
+#### Required Modules:
+- pandas
+- datetime
+- time
+- yfinance
+- sqlalchemy
+- os
+- plotly
+- logging
+- prophet
+- sklearn.metrics
+- dask.distributed
+- itertools
 
-### Required modules: 
-pandas, datetime, time, yfinance, sqlalchemy, os, plotly, logging, prophet, sklearn.metrics, dask.distributed, itertools
+The project provides valuable tools for extracting data from Yahoo Finance, analyzing a list of stocks, and visualizing their trends over time. Please ensure the required modules are installed before executing the scripts.
