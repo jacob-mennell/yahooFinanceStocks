@@ -1,46 +1,51 @@
+import os
+import logging
+import time
+from datetime import datetime, date
 import pandas as pd
-from datetime import datetime
 import yfinance as yf
 import sqlalchemy
 from sqlalchemy import create_engine
-import os
-import time
-import logging
 
-logger = logging.getLogger()
-logger.setLevel(logging.NOTSET)
+def setup():
+    """
+    Function to set up the database by creating necessary tables and setting up logging.
 
-# return error and critical logs to console
-console = logging.StreamHandler()
-console.setLevel(logging.ERROR)
-console_format = '%(asctime)s | %(levelname)s: %(message)s'
-console.setFormatter(logging.Formatter(console_format))
-logger.addHandler(console)
+    Arguments:
+        None
 
-# create log file to capture all logging
-file_handler = logging.FileHandler('dataExtract.log')
-file_handler.setLevel(logging.INFO)
-file_handler_format = '%(asctime)s | %(levelname)s | %(lineno)d: %(message)s'
-file_handler.setFormatter(logging.Formatter(file_handler_format))
-logger.addHandler(file_handler)
+    Return:
+        None
+    """
 
-# sets the environment variables as python variables
-server = 'yfinance.database.windows.net'
-username = os.getenv('sqlusername')
-password = os.getenv('sqlpassword')
-driver = os.getenv('driver')
-#
-#  path to SQL database stored as environment variable
-#  postgres_path = os.getenv('postgres_path')
-#  dialect+driver://username:password@host:port/database
-# engine = sqlalchemy.create_engine(postgres_path)
+    # Set up logging
+    logger = logging.getLogger()
+    logger.setLevel(logging.NOTSET)
 
-# creates the connection string required to connect to the azure sql database
-odbc_str = f'Driver={driver};SERVER=yfinance.database.windows.net; database=stocksdb;Uid={username};Pwd={password};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
-connect_str = f'mssql+pyodbc:///?odbc_connect={odbc_str}'
-# creates the engine to connect to the database with.
-# fast_executemany makes the engine insert multiple rows in each insertstatement and imporves the speed of the code drastically
-engine = create_engine(connect_str, fast_executemany=True)
+    # Return error and critical logs to the console
+    console = logging.StreamHandler()
+    console.setLevel(logging.ERROR)
+    console_format = '%(asctime)s | %(levelname)s: %(message)s'
+    console.setFormatter(logging.Formatter(console_format))
+    logger.addHandler(console)
+
+    # Create a log file to capture all logging
+    file_handler = logging.FileHandler('dataExtract.log')
+    file_handler.setLevel(logging.INFO)
+    file_handler_format = '%(asctime)s | %(levelname)s | %(lineno)d: %(message)s'
+    file_handler.setFormatter(logging.Formatter(file_handler_format))
+    logger.addHandler(file_handler)
+
+    # Set up database connection
+    server = 'yfinance.database.windows.net'
+    username = os.getenv('sqlusername')
+    password = os.getenv('sqlpassword')
+    driver = os.getenv('driver')
+    odbc_str = f'Driver={driver};SERVER={server};database=stocksdb;Uid={username};Pwd={password};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
+    connect_str = f'mssql+pyodbc:///?odbc_connect={odbc_str}'
+    engine = create_engine(connect_str, fast_executemany=True)
+
+    logger.info('Database setup completed.')
 
 
 # function to get stock information
@@ -55,7 +60,10 @@ def combined_stock_sql_send(stock):
     Return:
         # returns note in log file to confirm data has been sent to SQL database
     """
-
+    
+    # ensure set up
+    setup()
+    
     # start of time function
     start = time.time()
 
