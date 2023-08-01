@@ -9,7 +9,7 @@ from sqlalchemy import create_engine
 
 def setup():
     """
-    Function to set up the database by creating necessary tables and setting up logging.
+    Function to set up the database by setting variables and setting up logging.
 
     Arguments:
         None
