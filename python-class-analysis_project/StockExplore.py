@@ -147,31 +147,51 @@ class ExploreStocks:
         self.currency_df = currency_df.copy()
 
         logging.info('Exchange Rates Obtained')
-
+    
     def _merge_exchange_rates_with_master(self):
         """
-        Merges exchange rates data with the master stock data.
+        Merge historical stock data with exchange rates based on date and currency code.
+    
+        This function performs the merging of historical stock data and exchange rates
+        to calculate the calculated GBP close for each stock.
+    
+        Args:
+            None
+    
+        Returns:
+            None
         """
+    
+        # Merge stock history with currency data using date and currency code
         master_df = pd.merge(self.stock_history, self.currency_df[['FromCurrency', 'Close']],
                              left_on=['Date', 'currency_code'],
                              right_on=[self.currency_df.index, 'FromCurrency'],
                              how='left')
+        
+        # Rename and convert currency close column to numeric type
         master_df.rename(columns={'Close': 'currency_close'}, inplace=True)
         master_df['currency_close'] = pd.to_numeric(master_df['currency_close'], downcast='float', errors='coerce')
+        
+        # Calculate calculated GBP close by multiplying close price with currency close
         master_df['GBP_calculated close'] = master_df['Close'] * master_df['currency_close']
-
+    
+        # Filter out data for weekends (non-trading days)
         master_df['day'] = master_df['Date'].dt.weekday
         master_df = master_df[master_df['day'] <= 4]
-
+    
+        # Calculate the percentage of NaN values in the calculated GBP column
         na_count = master_df['currency_close'].isna().sum() / master_df.shape[0] * 100
         logging.info(f'\n% of NaN values in calculated GBP column: {"{:.2f}".format(na_count)}')
-
+    
+        # Replace NaN values in the calculated GBP column for GBP currency with 1
         master_df.loc[master_df['currency_code'].isin(['GBP']), 'currency_close'] = 1
-
+    
+        # Update the stock history dataframe with the merged data
         self.stock_history = master_df.copy()
-
+    
+        # Log the completion of the data merging process
         logging.info('Data Retrieved - dataframe with exchange rates initialised')
-
+        
     def return_df(self):
         return self.stock_history
 
