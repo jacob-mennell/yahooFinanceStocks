@@ -71,12 +71,15 @@ def combined_stock_sql_send(stock):
     msft = yf.Ticker(stock)
 
     try:
+        ##################################################
         # return historical stock data and send to sql db
         stock_history = msft.history(period="max").reset_index()
-        # minor cleaning
+       
+         # minor cleaning
         stock_history = stock_history.rename(str.lower, axis='columns')
         stock_history['stock'] = stock
         stock_history['date'] = pd.to_datetime(stock_history['date'])
+        
         # send to SQL with SQL Alchemy
         stock_history.to_sql(f'stock_history', engine,
                              # dtype=
@@ -93,47 +96,58 @@ def combined_stock_sql_send(stock):
                              if_exists='append', index=False)
         logger.info(f'historical {stock} data sent to sql')
         stock_max_date = str(stock_history.date.max())
-        # set new dates to limit size of future uploads
+       
+         # set new dates to limit size of future uploads
         f = open('last_update.txt', 'w')
         f.write(f"{stock}_date_max {stock_max_date}")
 
+        ##################################################
         # return major shareholders and send to SQL
         major_share_holders = msft.major_holders
+        
         # minor cleaning
         major_share_holders = major_share_holders.rename(columns={0: "percent", 1: "detail"})
         major_share_holders['stock'] = stock
+        
         # send to SQL with SQL Alchemy
         major_share_holders.to_sql(f'major_share_holders', engine, if_exists='append', index=False)
         logger.info(f'major share holders {stock} data sent to sql')
 
+        ##################################################
         # return financials and send to SQL
-        stock_financials = msft.financials
-        stock_financials = stock_financials.transpose()
-        stock_financials = stock_financials.reset_index()
+        stock_financials = msft.financials.transpose().reset_index()
         stock_financials.columns.values[0] = "date"
         stock_financials['stock'] = stock
+        
         # send to SQL with SQL Alchemy
         stock_financials.to_sql(f'financials', engine, if_exists='append', index=False)
         logger.info(f'stock financials {stock} data sent to sql')
 
+        ##################################################
         # return earnings and send to SQL
         stock_earnings = msft.earnings.reset_index()
-        # minor cleaning
+       
+         # minor cleaning
         stock_earnings = stock_earnings.rename(str.lower, axis='columns')
         stock_earnings['stock'] = stock
+        
         # send to SQL with SQL Alchemy
         stock_earnings.to_sql(f'earnings', engine, if_exists='append', index=False)
         logger.info(f'{stock} earnings data sent to sql')
-
+        
+        ##################################################
         # return quarterly earnings and send to SQL
         stock_quarterly_earnings = msft.quarterly_earnings.reset_index()
-        # minor cleaning
+       
+         # minor cleaning
         stock_quarterly_earnings = stock_quarterly_earnings.rename(str.lower, axis='columns')
         stock_quarterly_earnings['stock'] = stock
+        
         # send to SQL with SQL Alchemy
         stock_quarterly_earnings.to_sql(f'quarterly_earnings', engine, if_exists='append', index=False)
         logger.info(f'{stock} quarterly earnings data sent to sql')
 
+        ##################################################
         # return news and send to SQL
         news_list = msft.news
         column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
@@ -142,6 +156,7 @@ def combined_stock_sql_send(stock):
         news_df['title'] = [x['title'] for x in news_list]
         news_df['publisher'] = [x['publisher'] for x in news_list]
         news_df['link'] = [x['link'] for x in news_list]
+        
         # old way of formatting dates
         # dates = [int(x['providerPublishTime']) for x in news_list]
         # func = lambda x: datetime.utcfromtimestamp(x).strftime('%Y-%m-%d %H:%M:%S')
@@ -149,14 +164,17 @@ def combined_stock_sql_send(stock):
         # formatting dates
         dates = [int(x['providerPublishTime']) for x in news_list]
         news_df['provider_publish_time'] = [datetime.utcfromtimestamp(x).strftime('%Y-%m-%d %H:%M:%S') for x in dates]
+        
         # type
         news_df['type'] = [x['type'] for x in news_list]
         news_df['stock'] = stock
+        
         # send to SQL with SQL Alchemy
         news_df.to_sql(f'news', engine, if_exists='append', index=False)
         logger.info(f'{stock} news sent to sql')
 
     except Exception as e:
+        
         # Log the exception along with its traceback
         logging.exception("An exception occurred: %s", e)
 
@@ -243,18 +261,23 @@ def stock_history_updater(stock):
         # return historical stock data and send to sql db
         today_date = date.today()
         stock_history = msft.history(start=get_last_update_date(stock), end=today_date, interval="1d").reset_index()
+        
         # minor cleaning
         stock_history = stock_history.rename(str.lower, axis='columns')
         stock_history['stock'] = stock
         stock_history['date'] = pd.to_datetime(stock_history['date'])
+        
         # send to SQL with SQL Alchemy
         stock_history.to_sql(f'stock_history', engine, if_exists='append', index=False)
         logger.info(f'historical {stock} data sent to sql')
         stock_max_date = str(stock_history.date.max())
+        
         # set new dates to limit size of future uploads
         f = open('last_update.txt', 'w')
         f.write(f"{stock}_date_max {stock_max_date}")
+    
     except Exception as e:
+        
         logging.exception("An exception occurred: %s", e)
 
 
@@ -272,6 +295,7 @@ def exchange_rate_table(stock_list, period, interval='1d'):
     """
 
     currency_code = {}
+    
     # loop to extract currency for each ticker using .info method
     for ticker in stock_list:
         try:
@@ -330,6 +354,7 @@ def exchange_rate_table(stock_list, period, interval='1d'):
     date_df['quarter'] = currency_df['Date'].dt.quarter
     date_df['month'] = currency_df['Date'].dt.month
     # date_df['week_number_of_year'] = currency_df['Date'].dt.week
+    
     date_df.to_sql('date_dimension', engine, if_exists='append', index=False)
 
     # create unique id
@@ -366,6 +391,7 @@ def blank_sql():
 
     connection = engine.raw_connection()
     cursor = connection.cursor()
+    
     # add in a sql statement that drops all tables.
     table_list = ["earnings",
                   "financials",
@@ -399,6 +425,12 @@ def sqlcol(dfparam):
             dtypedict.update({i: sqlalchemy.types.INT()})
 
     return dtypedict
+
+
+
+
+
+
 # -------------------- OLD CODE CAN BE REUSED IF NEEDED STOCKS IN SEPERATE TABLES --------------------
 
 # def stock_sql_send(stock):
