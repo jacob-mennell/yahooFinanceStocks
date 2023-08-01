@@ -15,79 +15,66 @@ from sklearn.metrics import mean_absolute_error
 from dask.distributed import Client
 import itertools
 
-
 class ExploreStocks:
-
     def __init__(self, stock_list, period):
         self.stock_list = stock_list
         self.period = period
+        self.currency_df = None
+        self.stock_history = None
+        self._initialize_logging()
+        self._download_and_preprocess_data()
 
-        # initialise log file
+    def _initialize_logging(self):
         logger = logging.getLogger()
         logger.setLevel(logging.NOTSET)
 
-        # return error and critical logs to console
         console = logging.StreamHandler()
         console.setLevel(logging.ERROR)
         console_format = '%(asctime)s | %(levelname)s: %(message)s'
         console.setFormatter(logging.Formatter(console_format))
         logger.addHandler(console)
 
-        # create log file to capture all logging
         file_handler = logging.FileHandler('ExploreStocks.log')
         file_handler.setLevel(logging.INFO)
         file_handler_format = '%(asctime)s | %(levelname)s | %(lineno)d: %(message)s'
         file_handler.setFormatter(logging.Formatter(file_handler_format))
         logger.addHandler(file_handler)
 
-        # download stock initial stock info
+    def _download_and_preprocess_data(self):
+        self._download_initial_stock_info()
+        self._extract_currency_data()
+        self._download_exchange_rates()
+        self._merge_exchange_rates_with_master()
+
+    def _download_initial_stock_info(self):
         try:
-            stocks_df = yf.download(self.stock_list,
-                                    group_by='Ticker',
-                                    period='max')
-            stocks_df = stocks_df.stack(level=0).rename_axis(['Date',
-                                                              'Ticker']).reset_index(level=1)
+            stocks_df = yf.download(self.stock_list, group_by='Ticker', period='max')
+            stocks_df = stocks_df.stack(level=0).rename_axis(['Date', 'Ticker']).reset_index(level=1)
             stocks_df = stocks_df.reset_index()
         except Exception as e:
             logging.error("Error getting stock data", e)
 
         logging.info('Initial Stock Information Downloaded')
+        self.stock_history = stocks_df.copy()
 
-        # next get currency code for each stock
+    def _extract_currency_data(self):
         currency_code = {}
-        # loop to extract currency for each ticker using .info method
         for ticker in self.stock_list:
             try:
                 tick = yf.Ticker(ticker)
                 currency_code[ticker] = tick.info['currency']
             except Exception as e:
                 logging.error("Error getting currency symbol", e)
-                
-        # make dataframe
-        currency_code_df = pd.DataFrame(list(currency_code.items()), columns=['Ticker',
-                                                                              'currency_code'])
-        # merge with master dataset
-        df = pd.merge(stocks_df,
-                      currency_code_df,
-                      how='left',
-                      left_on=['Ticker'],
-                      right_on=['Ticker'])
 
-        df['currency_code'] = df['currency_code'].apply(
-            lambda x: x.upper())
-        
-        # create unique field to join exchange rates later
-        df['currency_id'] = (df['Date'].apply(
-            lambda x: x.strftime("%m%d%Y"))) + (df['currency_code'])
+        currency_code_df = pd.DataFrame(list(currency_code.items()), columns=['Ticker', 'currency_code'])
+        currency_code_df['currency_code'] = currency_code_df['currency_code'].apply(lambda x: x.upper())
+        self.currency_df = currency_code_df.copy()
 
-        logging.info('Currency Extracted and Merged')
+        logging.info('Currency Extracted')
 
-        # function to get exchange rates to GBP table
-
-        # Create a Datafame with Yahoo Finance Module
-        currencylist = [x.upper() for x in (list(df.currency_code.unique()))]  # choose currencies
+    def _download_exchange_rates(self):
+        currencylist = [x.upper() for x in (list(self.currency_df.currency_code.unique()))]
         interval = '1d'
-        # period = (input("Enter a period e.g. 25y y=years: "))
 
         meta_df = pd.DataFrame(
             {
@@ -100,7 +87,7 @@ class ExploreStocks:
         currency_df = pd.DataFrame(
             yf.download(
                 tickers=meta_df['YahooTickers'].values[0],
-                period=period,
+                period=self.period,
                 interval=interval
             )
             , columns=['Open', 'Close', 'Low', 'High']
@@ -113,7 +100,7 @@ class ExploreStocks:
                 currency_help_df = pd.DataFrame(
                     yf.download(
                         tickers=meta_df['YahooTickers'].values[i],
-                        period=period,
+                        period=self.period,
                         interval=interval
                     )
                     , columns=['Open', 'Close', 'Low', 'High']
@@ -124,59 +111,34 @@ class ExploreStocks:
                 currency_df = pd.concat([currency_df, currency_help_df])
             except Exception as e:
                 logging.error("Error getting exchange rates", e)
-                
+
         currency_df = currency_df.reset_index()
+        self.currency_df = currency_df.copy()
+
         logging.info('Exchange Rates Obtained')
 
-        # split date
-        # could average exchange rate by week in year to account for missing vlaues
-        currency_df['week_number_of_year'] = currency_df['Date'].dt.week
-        currency_df['year'] = currency_df['Date'].dt.year
-        
-        # create unique id to merge on
-        currency_df['currency_iden'] = (currency_df.Date.apply(
-            lambda x: x.strftime("%m%d%Y"))) + (currency_df['FromCurrency'])
-        
-        # rename columns
-        currency_df.rename(columns={
-            'Close': 'currency_close'
-        }, inplace=True)
+    def _merge_exchange_rates_with_master(self):
+        master_df = pd.merge(self.stock_history, self.currency_df[['FromCurrency', 'Close']],
+                             left_on=['Date', 'currency_code'],
+                             right_on=[self.currency_df.index, 'FromCurrency'],
+                             how='left')
+        master_df.rename(columns={'Close': 'currency_close'}, inplace=True)
+        master_df['currency_close'] = pd.to_numeric(master_df['currency_close'], downcast='float', errors='coerce')
+        master_df['GBP_calculated close'] = master_df['Close'] * master_df['currency_close']
 
-        self.currency_df = currency_df
-
-        # merge exchange rates with master dataframe
-        master_df = pd.merge(df, currency_df[['currency_iden',
-                                              'currency_close']],
-                             how='left',
-                             left_on=['currency_id'],
-                             right_on=['currency_iden'])
-
-        # Eliminate weekend from future dataframe
         master_df['day'] = master_df['Date'].dt.weekday
         master_df = master_df[master_df['day'] <= 4]
 
-        # look for na values
-        df_na = master_df.loc[master_df['currency_close'].isna()]
-        df_na = df_na.loc[~(df_na['currency_code'].str.contains('GBP', case=False, regex=False, na=False))]
-        df_na = df_na.groupby(['currency_code']).agg(currency_code_size=('currency_code', 'size')).reset_index()
-        na_count = df_na['currency_code'].count() / master_df['currency_code'].count() * 100
-        logging.info(f'\n% of NaN values in calculated GBP column : {"{:.2f}".format(na_count)}')
+        na_count = master_df['currency_close'].isna().sum() / master_df.shape[0] * 100
+        logging.info(f'\n% of NaN values in calculated GBP column: {"{:.2f}".format(na_count)}')
 
-        # We know the value of missing GBP ot GBP currency is 1, so we can change this manually
         master_df.loc[master_df['currency_code'].isin(['GBP']), 'currency_close'] = 1
-        
-        # confirm still numeric data type
-        master_df['currency_close'] = pd.to_numeric(master_df['currency_close'], downcast='float', errors='coerce')
-        
-        # now we can calculate calculated currency
-        master_df['GBP_calculated close'] = master_df['Close'] * master_df['currency_close']
 
         self.stock_history = master_df.copy()
 
         logging.info('Data Retrieved - dataframe with exchange rates initialised')
 
     def return_df(self):
-        """ Returns: dataframe - also return by calling self.stock_history """
         return self.stock_history
 
     def plot_stock_price(self, log=False, **kwargs):
