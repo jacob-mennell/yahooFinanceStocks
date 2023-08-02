@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 
+
 # Get the directory of the current script (dataExtract_DAG.py)
 current_script_dir = os.path.dirname(os.path.abspath(__file__))
 
