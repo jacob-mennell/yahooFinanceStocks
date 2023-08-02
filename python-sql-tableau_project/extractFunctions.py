@@ -98,8 +98,8 @@ def combined_stock_sql_send(stock):
         stock_max_date = str(stock_history.date.max())
        
          # set new dates to limit size of future uploads
-        f = open('last_update.txt', 'w')
-        f.write(f"{stock}_date_max {stock_max_date}")
+        with open"myfile.txt", "w") as file:
+           file.write(f"{stock}_date_max {stock_max_date}")
 
         ##################################################
         # return major shareholders and send to SQL
