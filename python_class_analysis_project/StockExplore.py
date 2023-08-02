@@ -113,20 +113,20 @@ class ExploreStocks:
         Returns:
             None
         """
-    
+
         # List of unique currency codes from the currency dataframe
         currencylist = [x.upper() for x in (list(self.currency_df.currency_code.unique()))]
         interval = '1d'
-    
+
         # Create a metadata dataframe containing information about currency pairs and their tickers
         meta_df = pd.DataFrame(
             {
-                'FromCurrency': [a for a in currencylist],
+                'FromCurrency': list(currencylist),
                 'ToCurrency': ['GBP' for a in currencylist],
-                'YahooTickers': [f'{a}GBP=X' for a in currencylist]
+                'YahooTickers': [f'{a}GBP=X' for a in currencylist],
             }
         )
-    
+
         # Download exchange rate data for each currency pair and concatenate the data
         currency_df = pd.DataFrame(
             yf.download(
@@ -155,11 +155,11 @@ class ExploreStocks:
                 currency_df = pd.concat([currency_df, currency_help_df])
             except Exception as e:
                 logging.error("Error getting exchange rates", e)
-    
+
         # Reset the index of the currency dataframe and update the class attribute
         currency_df = currency_df.reset_index()
         self.currency_df = currency_df.copy()
-    
+
         # Log the completion of the exchange rate retrieval process
         logging.info('Exchange Rates Obtained')
     
@@ -219,6 +219,7 @@ class ExploreStocks:
         Returns: plotly plot of the stock price for each stock over time
          """
 
+        # plot stock price over time
         fig = px.line(
             self.stock_history.sort_values(by=['Date'],
             ascending=[True]).dropna(subset=['GBP_calculated close']),
@@ -227,13 +228,17 @@ class ExploreStocks:
             color='Ticker',
             title='Stock Price Over Time',**kwargs )
 
-        fig.update_layout(xaxis_rangeselector_buttons=list([
-            dict(label="1m", count=1, step="month", stepmode="backward"),
-            dict(label="6m", count=6, step="month", stepmode="backward"),
-            dict(label="YTD", count=1, step="year", stepmode="todate"),
-            dict(label="1y", count=1, step="year", stepmode="backward"),
-            dict(step="all")
-        ]))
+        # Add Date slider
+        fig.update_layout(
+            xaxis_rangeselector_buttons=[
+                dict(label="1m", count=1, step="month", stepmode="backward"),
+                dict(label="6m", count=6, step="month", stepmode="backward"),
+                dict(label="YTD", count=1, step="year", stepmode="todate"),
+                dict(label="1y", count=1, step="year", stepmode="backward"),
+                dict(step="all"),
+            ]
+        )
+        
         fig.update_layout(xaxis_rangeslider_visible=True)
         fig.update_yaxes(title_text='GBP Calculated Close')
 
@@ -248,14 +253,15 @@ class ExploreStocks:
 
         Returns: Plot of the volume traded for each stock over time """
 
-        fig = px.line(self.stock_history.sort_values(by=['Date'],ascending=[True]),
-                      x='Date',
-                      y='Volume',
-                      color='Ticker',
-                      facet_col='Ticker',
-                      title='Volume Traded Over Time'
-                      ,**kwargs)
-        return fig
+        return px.line(
+            self.stock_history.sort_values(by=['Date'], ascending=[True]),
+            x='Date',
+            y='Volume',
+            color='Ticker',
+            facet_col='Ticker',
+            title='Volume Traded Over Time',
+            **kwargs
+        )
 
     def plot_volatility(self,**kwargs):
         """
@@ -290,9 +296,13 @@ class ExploreStocks:
         Returns: plot of the cumulative return of each stock over time
         """
 
+        # compute cumulative returns
         cum_returns = self.stock_history[['Date', 'Close', 'Ticker']]
+        
+        # pivot table
         cum_returns = pd.pivot_table(cum_returns, columns=['Ticker'], index=['Date'])
 
+        # compute cumulative returns pct change
         daily_pct_change = cum_returns.pct_change()
         daily_pct_change.fillna(0, inplace=True)
         cumprod_daily_pct_change = (1 + daily_pct_change).cumprod()
@@ -304,6 +314,7 @@ class ExploreStocks:
         # get title
         title = (' '.join([str(item) for item in self.stock_list])) + ' Cumulative Returns'
 
+        # plot
         fig = px.line(cumprod_daily_pct_change.sort_values(by=['Date'],ascending=[True]),
                       x='Date',
                       y=['Close_0293.HK', 'Close_AF.PA', 'Close_IAG.L'],
@@ -313,6 +324,7 @@ class ExploreStocks:
         fig.update_yaxes(title_text='Cumulative Returns')
         fig.update_layout(xaxis_rangeslider_visible=True)
         fig.update_layout(legend_title_text='Ticker')
+        
         return fig
 
     def plot_rolling_average(self,**kwargs):
@@ -327,14 +339,17 @@ class ExploreStocks:
         gbp_df = self.stock_history.copy()
 
         gbp_df['MA50'] = gbp_df.groupby('Ticker')['GBP_calculated close'].transform(lambda x: x.rolling(50, 25).mean())
+
         gbp_df['MA200'] = gbp_df.groupby('Ticker')['GBP_calculated close'].transform(
             lambda x: x.rolling(200, 100).mean())
+
         gbp_df['MA365'] = gbp_df.groupby('Ticker')['GBP_calculated close'].transform(
             lambda x: x.rolling(365, 182).mean())
+
         gbp_df['MA1000'] = gbp_df.groupby('Ticker')['GBP_calculated close'].transform(
             lambda x: x.rolling(1000, 500).mean())
 
-        # Visualise the rolling mean over time
+        # plot rolling means over time
         fig = px.line(gbp_df.sort_values(by=['Date'], ascending=[True]).dropna(
             subset=['MA1000', 'GBP_calculated close', 'MA200']),
             x='Date',
@@ -346,19 +361,23 @@ class ExploreStocks:
         #         for k in fig.layout:
         #             if re.search('yaxis[1-9]+', k):
         #                 fig.layout[k].update(matches=None)
+
+        # label y-axis
         fig['layout']['yaxis1']['title']['text'] = ''
         fig['layout']['yaxis2']['title']['text'] = 'Stock Value in GBP'
         fig['layout']['yaxis3']['title']['text'] = ''
         fig.update_yaxes(matches=None)
 
-        # Add Date slider
-        fig.update_layout(xaxis_rangeselector_buttons=list([
-            dict(label="1m", count=1, step="month", stepmode="backward"),
-            dict(label="6m", count=6, step="month", stepmode="backward"),
-            dict(label="YTD", count=1, step="year", stepmode="todate"),
-            dict(label="1y", count=1, step="year", stepmode="backward"),
-            dict(step="all")
-        ]))
+        # add Date slider
+        fig.update_layout(
+            xaxis_rangeselector_buttons=[
+                dict(label="1m", count=1, step="month", stepmode="backward"),
+                dict(label="6m", count=6, step="month", stepmode="backward"),
+                dict(label="YTD", count=1, step="year", stepmode="todate"),
+                dict(label="1y", count=1, step="year", stepmode="backward"),
+                dict(step="all"),
+            ]
+        )
         fig.update_layout(xaxis_rangeslider_visible=True)
         fig.update_layout(legend_title_text='Average')
 
@@ -386,6 +405,7 @@ class ExploreStocks:
         Returns: plotly figure of future trend.
         """
 
+        # filter dataframe to get stock data after start date
         post_date_df = self.stock_history.loc[~(self.stock_history['Date'] <= start_date)]
         predict_df = post_date_df.loc[post_date_df['Ticker'].isin([stock])]
 
@@ -395,12 +415,13 @@ class ExploreStocks:
         df['cap'] = cap
         df['floor'] = floor
 
+        # construct model
         m = Prophet(yearly_seasonality=True, growth=growth, interval_width=interval_width)
 
         # get currency code for stock
         currency_code = predict_df['currency_code'].values[0]
 
-        # HOLIDAYS - default is US
+        # assign HOLIDAYS - default is US
         if currency_code == 'GBP':
             m.add_country_holidays(country_name="GB")
         elif currency_code == 'HKD':
@@ -408,8 +429,10 @@ class ExploreStocks:
         else:
             m.add_country_holidays(country_name=country_name)
 
+        # fit model
         m.fit(df)
 
+        # construct future dataframe
         future = m.make_future_dataframe(periods)
 
         # Eliminate weekend from future dataframe
@@ -424,8 +447,7 @@ class ExploreStocks:
         # format graph
         fig = plot_plotly(m, forecast, trend=trend, changepoints=changepoints, **kwargs)
         fig.update_layout(title=f'{stock} {periods} days forecast')
-        output = fig.show()
-        return output
+        return fig.show()
 
     def plot_future_trend_grid_search(self,stock,start_date='2021-05-01',periods=90,country_name='US',
                                      changepoints=True,trend=True,cap=1000,floor=0,growth='logistic',
@@ -433,26 +455,29 @@ class ExploreStocks:
 
 
         """
-           Function to predict the future trend of a stock using grid search.
-           Note takes significantly greater compute power than plot_future_trend() function.
+        Function to predict the future trend of a stock using grid search.
+        Note takes significantly greater compute power than plot_future_trend() function.
 
-           Args:
-               self:
-               stock:
-               start_date:
-               periods:
-               country_name:
-               changepoints:
-               trend:
-               cap:
-               floor:
-               growth:
-               interval_width:
-               **kwargs:
+        Args:
+            self:
+            stock:
+            start_date:
+            periods:
+            country_name:
+            changepoints:
+            trend:
+            cap:
+            floor:
+            growth:
+            interval_width:
+            **kwargs:
 
-           Returns: plotly figure of future trend and mean absolute error and mean absolute percentage error
+        Returns: plotly figure of future trend and mean absolute error and mean absolute percentage error
 
            """
+           
+            # filter dataframe to get stock data after start date
+            
         post_date_df = self.stock_history.loc[~(self.stock_history['Date'] <= start_date)]
         predict_df = post_date_df.loc[post_date_df['Ticker'].isin([stock])]
 
@@ -462,6 +487,7 @@ class ExploreStocks:
         df['cap'] = cap
         df['floor'] = floor
 
+        # construct model
         m = Prophet(yearly_seasonality=True, growth=growth, interval_width=interval_width)
 
         # get currency code for stock
@@ -475,25 +501,29 @@ class ExploreStocks:
         else:
             m.add_country_holidays(country_name=country_name)
 
+        # fit model
         m.fit(df)
 
+        # construct future dataframe
         future = m.make_future_dataframe(periods)
 
         # Eliminate weekend from future dataframe
         future['day'] = future['ds'].dt.weekday
         future = future[future['day'] <= 4]
 
+        # add cap and floor to limit extent of trend
         future['cap'] = cap
         future['floor'] = floor
 
+        # predict future
         forecast = m.predict(future)
 
-           # format graph
+        # format graph
         fig = plot_plotly(m,
-                          forecast,
-                          trend=trend,
-                          changepoints=changepoints,
-                          **kwargs)
+                            forecast,
+                            trend=trend,
+                            changepoints=changepoints,
+                            **kwargs)
 
         fig.update_layout(title=f'{stock} {periods} days forecast')
         output = fig.show()
@@ -501,6 +531,7 @@ class ExploreStocks:
         # get Mean Absolute Error
         df_merge = pd.merge(df, forecast[['ds', 'yhat_lower', 'yhat_upper', 'yhat']], on='ds')
         df_merge = df_merge[['ds', 'yhat_lower', 'yhat_upper', 'yhat', 'y']]
+        
         # calculate MAE between observed and predicted values
         y_true = df_merge['y'].values
         y_pred = df_merge['yhat'].values
