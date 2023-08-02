@@ -2,7 +2,7 @@
 
 The project consists of two parts:
 
-## Data Extraction and SQL Database Integration
+## Yahoo Finance ETL
 ### Folder: python-sql-tableau_project
 This part of the project involves pulling data from the Yahoo Finance module, performing minor data cleaning, and then sending it to an Azure SQL Database using the SQLAlchemy library. The data extraction functions are listed in the extractFunctions.py script, and they are called in the dataExtract.py script for execution.
 
