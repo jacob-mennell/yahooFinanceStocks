@@ -229,7 +229,7 @@ def combined_stock_sql_send(stock):
     except Exception as e:
 
         # Log the exception along with its traceback
-        logging.exception("An exception occurred: %s", e)
+        logger.exception("An exception occurred: %s", e)
 
     # end of function
     end = time.time()
@@ -257,7 +257,7 @@ def combined_tables(stock_list):
     try:
         blank_sql()
     except Exception as e:
-        logging.exception("An exception occurred clearing tables: %s", e)
+        logger.exception("An exception occurred clearing tables: %s", e)
     
     # create master table
     stock_df = pd.DataFrame(columns=['stock'])
@@ -342,7 +342,7 @@ def stock_history_updater(stock):
     
     except Exception as e:
         
-        logging.exception("An exception occurred: %s", e)
+        loggerexception("An exception occurred: %s", e)
 
 
 def exchange_rate_table(stock_list, period, interval='1d'):
@@ -370,7 +370,7 @@ def exchange_rate_table(stock_list, period, interval='1d'):
             tick = yf.Ticker(ticker)
             currency_code[ticker] = tick.info['currency']
         except Exception as e:
-            logging.error("Error getting currency symbol", e)
+            logger.error("Error getting currency symbol", e)
 
     # make dataframe
     df = pd.DataFrame(list(currency_code.items()), columns=['Ticker', 'currency_code'])
@@ -411,10 +411,10 @@ def exchange_rate_table(stock_list, period, interval='1d'):
 
             currency_df = pd.concat([currency_df, currency_help_df])
             currency_df = currency_df.reset_index()
-            logging.info('Exchange Rates Obtained')
+            logger.info('Exchange Rates Obtained')
 
         except Exception as e:
-            logging.error("Error getting exchange rates", e)
+            logger.error("Error getting exchange rates", e)
 
     # use exchange rates table with daily increments to crate date dimension table
     date_df = pd.DataFrame()
