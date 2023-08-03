@@ -5,6 +5,12 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 
 
+# set environment variables
+os.environ['SQL_USERNAME'] = ''
+os.environ["SQL_PASSWORD"] = ""
+os.environ["SQL_SERVER"] = ""
+os.environ["SQL_DATABASE"] = ""
+
 # Get the directory of the current script (dataExtract_DAG.py)
 current_script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -30,10 +36,11 @@ default_args = {
 
 # Create the DAG
 dag = DAG(
-    'my_dag',
+    'stock_etl_dag',
     default_args=default_args,
+    start_date = datetime(2023,8,1),
     description='My DAG for executing functions once a day at 10 PM',
-    schedule_interval='0 22 * * *',  # Cron expression to run at 10 PM every day
+    schedule='0 22 * * *',  # Cron expression to run at 10 PM every day
 )
 
 # Define tasks for each function execution
@@ -48,7 +55,7 @@ task_combined_stock = PythonOperator(
 # Task for sending exchange rate table to SQL
 task_exchange_rate = PythonOperator(
     task_id='exchange_rate_task',
-    python_callable=exchangeRate_table,
+    python_callable=exchange_rate_table,
     op_args=[['AAPL', 'GOOG'], '1y', '1d'],  # Pass stock_list, period, and interval
     dag=dag,
 )
