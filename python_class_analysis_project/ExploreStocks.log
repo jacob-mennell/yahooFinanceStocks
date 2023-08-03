@@ -732,3 +732,493 @@ INFO:root:All data retrieved
 2022-06-29 12:48:06,639 | INFO | 129: Exchange Rates Obtained
 2022-06-29 12:48:06,798 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
 2022-06-29 12:48:06,798 | INFO | 172: Data Retrieved - dataframe with exchange rates initialised
+2023-08-03 11:05:02,178 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:05:02,717 | INFO | 101: Currency Extracted
+2023-08-03 11:05:03,516 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:06:32,237 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:06:32,237 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:06:32,752 | INFO | 101: Currency Extracted
+2023-08-03 11:06:32,752 | INFO | 101: Currency Extracted
+2023-08-03 11:06:33,311 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:06:33,311 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:09:01,818 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:09:01,818 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:09:01,818 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:09:02,367 | INFO | 101: Currency Extracted
+2023-08-03 11:09:02,367 | INFO | 101: Currency Extracted
+2023-08-03 11:09:02,367 | INFO | 101: Currency Extracted
+2023-08-03 11:09:02,936 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:09:02,936 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:09:02,936 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:09:47,882 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:09:47,882 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:09:47,882 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:09:47,882 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:09:48,409 | INFO | 101: Currency Extracted
+2023-08-03 11:09:48,409 | INFO | 101: Currency Extracted
+2023-08-03 11:09:48,409 | INFO | 101: Currency Extracted
+2023-08-03 11:09:48,409 | INFO | 101: Currency Extracted
+2023-08-03 11:09:48,956 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:09:48,956 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:09:48,956 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:09:48,956 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:10:27,303 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:10:27,303 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:10:27,303 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:10:27,303 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:10:27,303 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:10:27,811 | INFO | 101: Currency Extracted
+2023-08-03 11:10:27,811 | INFO | 101: Currency Extracted
+2023-08-03 11:10:27,811 | INFO | 101: Currency Extracted
+2023-08-03 11:10:27,811 | INFO | 101: Currency Extracted
+2023-08-03 11:10:27,811 | INFO | 101: Currency Extracted
+2023-08-03 11:10:28,350 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:10:28,350 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:10:28,350 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:10:28,350 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:10:28,350 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:11:23,619 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:11:23,619 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:11:23,619 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:11:23,619 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:11:23,619 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:11:23,619 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:11:24,178 | INFO | 101: Currency Extracted
+2023-08-03 11:11:24,178 | INFO | 101: Currency Extracted
+2023-08-03 11:11:24,178 | INFO | 101: Currency Extracted
+2023-08-03 11:11:24,178 | INFO | 101: Currency Extracted
+2023-08-03 11:11:24,178 | INFO | 101: Currency Extracted
+2023-08-03 11:11:24,178 | INFO | 101: Currency Extracted
+2023-08-03 11:11:24,739 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:11:24,739 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:11:24,739 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:11:24,739 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:11:24,739 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:11:24,739 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:15:07,205 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:15:07,205 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:15:07,205 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:15:07,205 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:15:07,205 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:15:07,205 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:15:07,205 | INFO | 82: Initial Stock Information Downloaded
+2023-08-03 11:15:07,781 | INFO | 101: Currency Extracted
+2023-08-03 11:15:07,781 | INFO | 101: Currency Extracted
+2023-08-03 11:15:07,781 | INFO | 101: Currency Extracted
+2023-08-03 11:15:07,781 | INFO | 101: Currency Extracted
+2023-08-03 11:15:07,781 | INFO | 101: Currency Extracted
+2023-08-03 11:15:07,781 | INFO | 101: Currency Extracted
+2023-08-03 11:15:07,781 | INFO | 101: Currency Extracted
+2023-08-03 11:15:08,388 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:15:08,388 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:15:08,388 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:15:08,388 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:15:08,388 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:15:08,388 | INFO | 164: Exchange Rates Obtained
+2023-08-03 11:15:08,388 | INFO | 164: Exchange Rates Obtained
+2023-08-03 12:29:13,574 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:30:03,573 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:30:03,573 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:31:51,601 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:31:51,601 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:31:51,601 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:32:11,184 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:32:11,184 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:32:11,184 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:32:11,184 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:32:35,032 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:32:35,032 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:32:35,032 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:32:35,032 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:32:35,032 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:05,216 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:05,216 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:05,216 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:05,216 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:05,216 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:05,216 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,185 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,185 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,185 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,185 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,185 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,185 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,185 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,424 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,424 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,424 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,424 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,424 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,424 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:33:29,424 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:09,068 | INFO | 103: Currency Extracted
+2023-08-03 12:34:09,068 | INFO | 103: Currency Extracted
+2023-08-03 12:34:09,068 | INFO | 103: Currency Extracted
+2023-08-03 12:34:09,068 | INFO | 103: Currency Extracted
+2023-08-03 12:34:09,068 | INFO | 103: Currency Extracted
+2023-08-03 12:34:09,068 | INFO | 103: Currency Extracted
+2023-08-03 12:34:09,068 | INFO | 103: Currency Extracted
+2023-08-03 12:34:43,485 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,485 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,485 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,485 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,485 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,485 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,485 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,485 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,775 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,775 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,775 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,775 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,775 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,775 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,775 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:43,775 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:45,408 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:45,408 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:45,408 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:45,408 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:45,408 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:45,408 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:45,408 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:45,408 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:34:49,586 | INFO | 103: Currency Extracted
+2023-08-03 12:34:49,586 | INFO | 103: Currency Extracted
+2023-08-03 12:34:49,586 | INFO | 103: Currency Extracted
+2023-08-03 12:34:49,586 | INFO | 103: Currency Extracted
+2023-08-03 12:34:49,586 | INFO | 103: Currency Extracted
+2023-08-03 12:34:49,586 | INFO | 103: Currency Extracted
+2023-08-03 12:34:49,586 | INFO | 103: Currency Extracted
+2023-08-03 12:34:49,586 | INFO | 103: Currency Extracted
+2023-08-03 12:34:51,983 | INFO | 103: Currency Extracted
+2023-08-03 12:34:51,983 | INFO | 103: Currency Extracted
+2023-08-03 12:34:51,983 | INFO | 103: Currency Extracted
+2023-08-03 12:34:51,983 | INFO | 103: Currency Extracted
+2023-08-03 12:34:51,983 | INFO | 103: Currency Extracted
+2023-08-03 12:34:51,983 | INFO | 103: Currency Extracted
+2023-08-03 12:34:51,983 | INFO | 103: Currency Extracted
+2023-08-03 12:34:51,983 | INFO | 103: Currency Extracted
+2023-08-03 12:34:56,864 | INFO | 103: Currency Extracted
+2023-08-03 12:34:56,864 | INFO | 103: Currency Extracted
+2023-08-03 12:34:56,864 | INFO | 103: Currency Extracted
+2023-08-03 12:34:56,864 | INFO | 103: Currency Extracted
+2023-08-03 12:34:56,864 | INFO | 103: Currency Extracted
+2023-08-03 12:34:56,864 | INFO | 103: Currency Extracted
+2023-08-03 12:34:56,864 | INFO | 103: Currency Extracted
+2023-08-03 12:34:56,864 | INFO | 103: Currency Extracted
+2023-08-03 12:35:17,945 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:17,945 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:17,945 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:17,945 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:17,945 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:17,945 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:17,945 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:17,945 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:17,945 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:20,030 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:20,030 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:20,030 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:20,030 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:20,030 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:20,030 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:20,030 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:20,030 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:20,030 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:35:20,030 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:36:41,664 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:36:41,664 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:36:41,664 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:36:41,664 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:36:41,664 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:36:41,664 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:36:41,664 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:36:41,664 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:36:41,664 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:36:41,664 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:36:41,664 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:32,337 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:32,337 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:32,337 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:32,337 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:32,337 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:32,337 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:32,337 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:32,337 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:32,337 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:32,337 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:32,337 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:32,337 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:39,289 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:39,289 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:39,289 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:39,289 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:39,289 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:39,289 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:39,289 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:39,289 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:39,289 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:39,289 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:39,289 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:37:39,289 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:13,595 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:15,352 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:16,510 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,043 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:17,651 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:18,305 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:19,476 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:20,151 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:21,138 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:38:36,919 | INFO | 83: Initial Stock Information Downloaded
+2023-08-03 12:39:13,877 | INFO | 96: Initial Stock Information Downloaded
+2023-08-03 12:39:14,330 | INFO | 118: Currency Extracted
+2023-08-03 12:39:14,849 | INFO | 182: Exchange Rates Obtained
+2023-08-03 12:40:20,237 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 12:40:40,737 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 12:40:41,182 | INFO | 113: Currency Extracted
+2023-08-03 12:40:41,707 | INFO | 177: Exchange Rates Obtained
+2023-08-03 12:46:13,185 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 12:46:13,684 | INFO | 113: Currency Extracted
+2023-08-03 12:46:14,234 | INFO | 177: Exchange Rates Obtained
+2023-08-03 12:47:29,380 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 12:47:29,840 | INFO | 113: Currency Extracted
+2023-08-03 12:48:23,248 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 12:48:23,248 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 12:48:23,739 | INFO | 113: Currency Extracted
+2023-08-03 12:48:23,739 | INFO | 113: Currency Extracted
+2023-08-03 12:48:33,867 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 12:48:34,313 | INFO | 113: Currency Extracted
+2023-08-03 12:48:34,864 | INFO | 178: Exchange Rates Obtained
+2023-08-03 12:49:20,097 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 12:49:20,554 | INFO | 113: Currency Extracted
+2023-08-03 12:49:21,134 | INFO | 178: Exchange Rates Obtained
+2023-08-03 12:49:58,794 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 12:49:59,273 | INFO | 113: Currency Extracted
+2023-08-03 12:49:59,854 | INFO | 178: Exchange Rates Obtained
+2023-08-03 12:50:45,143 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 12:50:45,617 | INFO | 113: Currency Extracted
+2023-08-03 12:50:46,230 | INFO | 178: Exchange Rates Obtained
+2023-08-03 12:51:11,790 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 12:51:12,261 | INFO | 113: Currency Extracted
+2023-08-03 12:51:12,808 | INFO | 178: Exchange Rates Obtained
+2023-08-03 12:56:51,528 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 12:56:52,000 | INFO | 113: Currency Extracted
+2023-08-03 12:56:52,545 | INFO | 178: Exchange Rates Obtained
+2023-08-03 13:01:36,737 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:01:37,233 | INFO | 118: Currency Extracted
+2023-08-03 13:01:37,798 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:01:58,470 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:01:58,968 | INFO | 118: Currency Extracted
+2023-08-03 13:01:59,547 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:04:35,445 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:04:35,984 | INFO | 118: Currency Extracted
+2023-08-03 13:04:36,550 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:05:20,146 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:05:20,734 | INFO | 118: Currency Extracted
+2023-08-03 13:05:21,314 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:05:59,031 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:05:59,743 | INFO | 118: Currency Extracted
+2023-08-03 13:06:00,376 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:07:04,117 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:07:04,629 | INFO | 118: Currency Extracted
+2023-08-03 13:07:05,225 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:07:53,029 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:07:53,507 | INFO | 118: Currency Extracted
+2023-08-03 13:07:54,111 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:08:22,812 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:08:23,460 | INFO | 118: Currency Extracted
+2023-08-03 13:08:24,105 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:09:00,045 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:09:00,894 | INFO | 118: Currency Extracted
+2023-08-03 13:09:01,604 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:09:01,617 | INFO | 237: Data Retrieved - dataframe with exchange rates initialised
+2023-08-03 13:12:11,810 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:12:12,708 | INFO | 118: Currency Extracted
+2023-08-03 13:12:13,668 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:12:13,712 | INFO | 237: Data Retrieved - dataframe with exchange rates initialised
+2023-08-03 13:13:51,083 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:13:51,834 | INFO | 118: Currency Extracted
+2023-08-03 13:13:52,806 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:13:52,865 | INFO | 239: Data Retrieved - dataframe with exchange rates initialised
+2023-08-03 13:17:08,283 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:17:08,794 | INFO | 118: Currency Extracted
+2023-08-03 13:17:09,365 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:17:31,794 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:17:32,302 | INFO | 118: Currency Extracted
+2023-08-03 13:17:32,911 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:17:59,116 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 13:17:59,685 | INFO | 118: Currency Extracted
+2023-08-03 13:18:00,269 | INFO | 183: Exchange Rates Obtained
+2023-08-03 13:18:00,284 | INFO | 243: Data Retrieved - dataframe with exchange rates initialised
+2023-08-03 17:18:10,489 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 17:18:11,020 | INFO | 118: Currency Extracted
+2023-08-03 17:18:11,565 | INFO | 183: Exchange Rates Obtained
+2023-08-03 17:19:27,723 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 17:19:28,431 | INFO | 118: Currency Extracted
+2023-08-03 17:19:29,149 | INFO | 183: Exchange Rates Obtained
+2023-08-03 17:20:39,693 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 17:20:40,310 | INFO | 118: Currency Extracted
+2023-08-03 17:20:40,905 | INFO | 183: Exchange Rates Obtained
+2023-08-03 17:21:27,207 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 17:21:27,781 | INFO | 118: Currency Extracted
+2023-08-03 17:21:28,438 | INFO | 183: Exchange Rates Obtained
+2023-08-03 17:22:12,407 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 17:22:12,980 | INFO | 118: Currency Extracted
+2023-08-03 17:22:13,588 | INFO | 183: Exchange Rates Obtained
+2023-08-03 17:22:13,610 | INFO | 250: Data Retrieved - dataframe with exchange rates initialised
+2023-08-03 17:23:15,470 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 17:23:15,983 | INFO | 118: Currency Extracted
+2023-08-03 17:23:16,602 | INFO | 183: Exchange Rates Obtained
+2023-08-03 17:23:16,626 | INFO | 241: 
+% of NaN values in calculated GBP column: 36.32
+2023-08-03 17:23:16,629 | INFO | 250: Data Retrieved - dataframe with exchange rates initialised
+2023-08-03 17:26:59,272 | INFO | 89: Initial Stock Information Downloaded
+2023-08-03 17:27:00,023 | INFO | 118: Currency Extracted
+2023-08-03 17:30:31,192 | INFO | 91: Initial Stock Information Downloaded
+2023-08-03 17:30:31,726 | INFO | 120: Currency Extracted
+2023-08-03 17:32:59,253 | INFO | 91: Initial Stock Information Downloaded
+2023-08-03 17:32:59,253 | INFO | 91: Initial Stock Information Downloaded
+2023-08-03 17:32:59,864 | INFO | 120: Currency Extracted
+2023-08-03 17:32:59,864 | INFO | 120: Currency Extracted
+2023-08-03 18:04:17,220 | INFO | 90: Initial Stock Information Downloaded
+2023-08-03 18:04:17,803 | INFO | 119: Currency Extracted
+2023-08-03 18:04:18,323 | INFO | 184: Exchange Rates Obtained
+2023-08-03 18:04:18,336 | INFO | 236: 
+% of NaN values in calculated GBP column: 8.24
+2023-08-03 18:04:18,337 | INFO | 245: Data Retrieved - dataframe with exchange rates initialised
+2023-08-03 18:04:18,337 | INFO | 75: Data download and preprocessing completed.
+2023-08-03 18:05:48,562 | INFO | 93: Initial Stock Information Downloaded
+2023-08-03 18:05:49,097 | INFO | 120: Currency Extracted
+2023-08-03 18:05:49,651 | INFO | 185: Exchange Rates Obtained
+2023-08-03 18:05:49,663 | INFO | 237: 
+% of NaN values in calculated GBP column: 8.24
+2023-08-03 18:05:49,665 | INFO | 246: Data Retrieved - dataframe with exchange rates initialised
+2023-08-03 18:05:49,665 | INFO | 78: Data download and preprocessing completed.
+2023-08-03 21:47:38,332 | INFO | 94: Initial Stock Information Downloaded
+2023-08-03 21:47:38,734 | INFO | 121: Currency Extracted
+2023-08-03 21:47:39,382 | INFO | 186: Exchange Rates Obtained
+2023-08-03 21:47:39,414 | INFO | 238: 
+% of NaN values in calculated GBP column: 8.24
+2023-08-03 21:47:39,414 | INFO | 247: Data Retrieved - dataframe with exchange rates initialised
+2023-08-03 21:47:39,414 | INFO | 79: Data download and preprocessing completed.

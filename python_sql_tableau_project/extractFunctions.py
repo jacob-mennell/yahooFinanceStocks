@@ -4,9 +4,8 @@ import time
 from datetime import datetime, date
 import pandas as pd
 import yfinance as yf
-import sqlalchemy
-from sqlalchemy import create_engine
-
+import sqlalchemy 
+from sqlalchemy import create_engine, VARCHAR
 
 
 def setup_logging():
@@ -36,6 +35,8 @@ def setup_logging():
     file_handler_format = '%(asctime)s | %(levelname)s | %(lineno)d: %(message)s'
     file_handler.setFormatter(logging.Formatter(file_handler_format))
     logger.addHandler(file_handler)
+    
+    return logger
 
 def setup_sql():
     """
@@ -60,8 +61,9 @@ def setup_sql():
     sql_password = os.environ['SQL_PASSWORD']
     sql_server = os.environ['SQL_SERVER']
     sql_database = os.environ['SQL_DATABASE']
+    driver = 'ODBC Driver 17 for SQL Server'
 
-    odbc_str = f'Driver=ODBC Driver 17 for SQL Server;SERVER={sql_server};database={sql_database};Uid={sql_username};Pwd={sql_password};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
+    odbc_str = f'Driver={driver};Server={sql_server},1433;Database={sql_database};Uid={sql_username};Pwd={sql_password};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;'
     connect_str = f'mssql+pyodbc:///?odbc_connect={odbc_str}'
 
     return create_engine(connect_str, fast_executemany=True)
@@ -77,7 +79,7 @@ def setup():
         None
     """
     # logging setup
-    setup_logging()
+    logger = setup_logging()
     
     # sql connection setup
     engine = setup_sql()
@@ -101,7 +103,9 @@ def combined_stock_sql_send(stock):
     Return:
         # returns note in log file to confirm data has been sent to SQL database
     """
-    
+    # logging setup
+    logger = setup_logging()
+
     # ensure database and logging set up is complete
     engine = setup()
 
@@ -114,34 +118,40 @@ def combined_stock_sql_send(stock):
     try:
         ##################################################
         # return historical stock data and send to sql db
-        stock_history = msft.history(period="max").reset_index()
+        # stock_history = msft.history(period="max").reset_index()
 
-        stock_history = stock_history.rename(str.lower, axis='columns')
-        stock_history['stock'] = stock
-        stock_history['date'] = pd.to_datetime(stock_history['date'])
+        # stock_history = stock_history.rename(str.lower, axis='columns')
+        # stock_history['stock'] = stock
+        # stock_history['date'] = pd.to_datetime(stock_history['date'])
 
-        # send to SQL with SQL Alchemy
-        stock_history.to_sql(f'stock_history', engine,
-                             # dtype=
-                             # {'date': datetime,
-                             #  'open': float,
-                             #  'high': float,
-                             #  'low': float,
-                             #  'close': float,
-                             #  'volume': float,
-                             #  'dividends': float,
-                             #  'stock_splits': float,
-                             #  #   'stock': VARCHAR
-                             #  }
-                             if_exists='append', index=False)
-        logger.info(f'historical {stock} data sent to sql')
-        stock_max_date = str(stock_history.date.max())
+        # print(stock_history.columns)
+                
+        # # send to SQL with SQL Alchemy
+        # stock_history.to_sql(
+        #     'stock_history',
+        #     engine,
+        #     dtype={
+        #         'date': datetime,
+        #         'open': float,
+        #         'high': float,
+        #         'low': float,
+        #         'close': float,
+        #         'volume': float,
+        #         'dividends': float,
+        #         'stock_splits': float,
+        #         'stock': VARCHAR,
+        #     },
+        #     if_exists='append',
+        #     index=False,
+        # )
+        # logger.info(f'historical {stock} data sent to sql')
+        # stock_max_date = str(stock_history.date.max())
 
-        f = open('last_update.txt', 'w')
-        f.write(f"{stock}_date_max {stock_max_date}")
+        # f = open('last_update.txt', 'w')
+        # f.write(f"{stock}_date_max {stock_max_date}")
 
-        ##################################################
-        # return major shareholders and send to SQL
+        # ##################################################
+        # # return major shareholders and send to SQL
         major_share_holders = msft.major_holders
 
         # minor cleaning
@@ -165,69 +175,70 @@ def combined_stock_sql_send(stock):
             'financials', engine, if_exists='append', index=False)
         logger.info(f'stock financials {stock} data sent to sql')
 
-        ##################################################
+        #################################################
         # return earnings and send to SQL
-        stock_earnings = msft.earnings.reset_index()
+        # stock_earnings = msft.earnings.reset_index()
 
-        stock_earnings = stock_earnings.rename(str.lower, axis='columns')
-        stock_earnings['stock'] = stock
+        # stock_earnings = stock_earnings.rename(str.lower, axis='columns')
+        # stock_earnings['stock'] = stock
 
-        # send to SQL with SQL Alchemy
-        stock_earnings.to_sql(
-            'earnings', engine, if_exists='append', index=False)
-        logger.info(f'{stock} earnings data sent to sql')
+        # # send to SQL with SQL Alchemy
+        # stock_earnings.to_sql(
+        #     'earnings', engine, if_exists='append', index=False)
+        # logger.info(f'{stock} earnings data sent to sql')
 
         ##################################################
         # return quarterly earnings and send to SQL
-        stock_quarterly_earnings = msft.quarterly_earnings.reset_index()
+        # stock_quarterly_earnings = msft.quarterly_earnings.reset_index()
 
-        stock_quarterly_earnings = stock_quarterly_earnings.rename(str.lower, axis='columns')
-        stock_quarterly_earnings['stock'] = stock
+        # stock_quarterly_earnings = stock_quarterly_earnings.rename(str.lower, axis='columns')
+        # stock_quarterly_earnings['stock'] = stock
 
-        # send to SQL with SQL Alchemy
-        stock_quarterly_earnings.to_sql(
-            'quarterly_earnings', engine, if_exists='append', index=False)
-        logger.info(f'{stock} quarterly earnings data sent to sql')
+        # # send to SQL with SQL Alchemy
+        # stock_quarterly_earnings.to_sql(
+        #     'quarterly_earnings', engine, if_exists='append', index=False)
+        # logger.info(f'{stock} quarterly earnings data sent to sql')
 
         ##################################################
         # return news and send to SQL
-        news_list = msft.news
-        column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
-        news_df = pd.DataFrame(columns=column_names)
-        news_df['uuid'] = [x['uuid'] for x in news_list]
-        news_df['title'] = [x['title'] for x in news_list]
-        news_df['publisher'] = [x['publisher'] for x in news_list]
-        news_df['link'] = [x['link'] for x in news_list]
+        # news_list = msft.news
+        # column_names = ["stock", "uuid", "title", "publisher", "link", "provider_publish_time", "type"]
+        # news_df = pd.DataFrame(columns=column_names)
+        # news_df['uuid'] = [x['uuid'] for x in news_list]
+        # news_df['title'] = [x['title'] for x in news_list]
+        # news_df['publisher'] = [x['publisher'] for x in news_list]
+        # news_df['link'] = [x['link'] for x in news_list]
 
         # old way of formatting dates
         # dates = [int(x['providerPublishTime']) for x in news_list]
         # func = lambda x: datetime.utcfromtimestamp(x).strftime('%Y-%m-%d %H:%M:%S')
         # news_df['providerPublishTime'] = list(map(func, dates))
         # formatting dates
-        dates = [int(x['providerPublishTime']) for x in news_list]
-        news_df['provider_publish_time'] = [datetime.utcfromtimestamp(x).strftime('%Y-%m-%d %H:%M:%S') for x in dates]
+        # dates = [int(x['providerPublishTime']) for x in news_list]
+        # news_df['provider_publish_time'] = [datetime.utcfromtimestamp(x).strftime('%Y-%m-%d %H:%M:%S') for x in dates]
 
-        # type
-        news_df['type'] = [x['type'] for x in news_list]
-        news_df['stock'] = stock
+        # # type
+        # news_df['type'] = [x['type'] for x in news_list]
+        # news_df['stock'] = stock
 
         # send to SQL with SQL Alchemy
-        news_df.to_sql(
-            'news', engine, if_exists='append', index=False)
-        logger.info(f'{stock} news sent to sql')
+        # news_df.to_sql(
+        #     'news', engine, if_exists='append', index=False)
+        # logger.info(f'{stock} news sent to sql')
 
     except Exception as e:
 
         # Log the exception along with its traceback
-        logging.exception("An exception occurred: %s", e)
+        logger.exception("An exception occurred: %s", e)
 
     # end of function
     end = time.time()
+    
     logger.info(f'{stock} extracted in {"{:.2f}".format(end - start)} seconds')
 
 
 # function to extract data for multiple companies for comparison
-def combined_tables(stock_list, engine=setup_sql()):
+def combined_tables(stock_list):
     """
     Function to pull stock information for multiple stocks. Currently pulls historical stock data, major shareholders,
     earnings, quarterly earnings and news.
@@ -238,10 +249,15 @@ def combined_tables(stock_list, engine=setup_sql()):
     Return:
         # returns note in log file to confirm data has been sent to SQL database
     """
+    # logging setup
+    logger = setup_logging()
+    
+    engine = setup_sql()
+    
     try:
         blank_sql()
     except Exception as e:
-        logging.exception("An exception occurred clearing tables: %s", e)
+        logger.exception("An exception occurred clearing tables: %s", e)
     
     # create master table
     stock_df = pd.DataFrame(columns=['stock'])
@@ -251,7 +267,8 @@ def combined_tables(stock_list, engine=setup_sql()):
     # get tables for each individual stock
     # [stock_sql_send(item) for item in companies]
     list(map(combined_stock_sql_send, stock_list))
-    return logger.info('\nSQL Updated with combined tables')
+    
+    #return logger.info('\nSQL Updated with combined tables')
 
 
 def get_last_update_date(stock):
@@ -272,7 +289,7 @@ def get_last_update_date(stock):
         return None
 
 
-def stock_history_updater(stock, engine=setup_sql()):
+def stock_history_updater(stock):
     """
     Function to pull stock information. Pulls historical data from date of last update.
 
@@ -285,6 +302,11 @@ def stock_history_updater(stock, engine=setup_sql()):
 
     # start of time function
     start = time.time()
+    
+    # logging setup
+    logger = setup_logging()
+    
+    engine = setup_sql()
 
     # create ticker for the stock
     msft = yf.Ticker(stock)
@@ -320,10 +342,10 @@ def stock_history_updater(stock, engine=setup_sql()):
     
     except Exception as e:
         
-        logging.exception("An exception occurred: %s", e)
+        loggerexception("An exception occurred: %s", e)
 
 
-def exchange_rate_table(stock_list, period, interval='1d', engine=setup_sql()):
+def exchange_rate_table(stock_list, period, interval='1d'):
     """
     Function to create exchange rate table and date dimension table in SQL database
 
@@ -335,7 +357,11 @@ def exchange_rate_table(stock_list, period, interval='1d', engine=setup_sql()):
     Return:
         # returns note in log file to confirm data has been sent to SQL database
     """
-
+    # logging setup
+    logger = setup_logging()
+    
+    engine = setup_sql()
+    
     currency_code = {}
 
     # loop to extract currency for each ticker using .info method
@@ -344,7 +370,7 @@ def exchange_rate_table(stock_list, period, interval='1d', engine=setup_sql()):
             tick = yf.Ticker(ticker)
             currency_code[ticker] = tick.info['currency']
         except Exception as e:
-            logging.error("Error getting currency symbol", e)
+            logger.error("Error getting currency symbol", e)
 
     # make dataframe
     df = pd.DataFrame(list(currency_code.items()), columns=['Ticker', 'currency_code'])
@@ -385,10 +411,10 @@ def exchange_rate_table(stock_list, period, interval='1d', engine=setup_sql()):
 
             currency_df = pd.concat([currency_df, currency_help_df])
             currency_df = currency_df.reset_index()
-            logging.info('Exchange Rates Obtained')
+            logger.info('Exchange Rates Obtained')
 
         except Exception as e:
-            logging.error("Error getting exchange rates", e)
+            logger.error("Error getting exchange rates", e)
 
     # use exchange rates table with daily increments to crate date dimension table
     date_df = pd.DataFrame()
@@ -434,7 +460,10 @@ def blank_sql():
     Return:
         # returns note in log file to confirm data has been cleared in postgres SQL database
     """
-
+    # logging setup
+    logger = setup_logging()
+    
+    engine = setup_sql()
     connection = engine.raw_connection()
     cursor = connection.cursor()
     
