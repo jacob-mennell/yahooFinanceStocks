@@ -3,8 +3,8 @@
 The project consists of two parts:
 
 ## Yahoo Finance ETL
-### Folder: python-sql-tableau_project
-This part of the project involves pulling data from the Yahoo Finance module, performing minor data cleaning, and then sending it to an Azure SQL Database using the SQLAlchemy library. The data extraction functions are listed in the extractFunctions.py script, and they are executed as part of the Stocks ETL module.
+### Folder: python_sql_tableau_project
+This part of the project involves pulling data from the Yahoo Finance module, performing minor data cleaning, and then sending it to an Azure SQL Database using the SQLAlchemy library. The data extraction functions are listed in the etlClass.py script, and they are executed as part of the Stocks ETL module.
 
 Data extracted from the Yahoo Finance module includes historical stock data, major shareholders, earnings, quarterly earnings, and news related to the specified stocks. The project utilizes environment variables to securely store the credentials for accessing the Azure SQL database, which are accessed through the os module.
 
@@ -17,7 +17,7 @@ Data extracted from the Yahoo Finance module includes historical stock data, maj
 - os
 
 ## StockExplore Module
-### Folder: python-class-analysis_project
+### Folder: python_class_analysis_project
 The StockExplore module provides the StockExplore class with several methods for analyzing a list of stocks. The methods available in the StockExplore class include:
 - plot_stock_price(): Visualizes the stock price for each stock over time.
 - plot_trade_volume(): Plots the trade volume of each stock over time.
