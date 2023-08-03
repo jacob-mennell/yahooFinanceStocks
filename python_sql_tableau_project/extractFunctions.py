@@ -175,7 +175,7 @@ def combined_stock_sql_send(stock):
             'financials', engine, if_exists='append', index=False)
         logger.info(f'stock financials {stock} data sent to sql')
 
-        ##################################################
+        #################################################
         # return earnings and send to SQL
         # stock_earnings = msft.earnings.reset_index()
 

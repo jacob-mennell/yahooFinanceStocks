@@ -14,7 +14,6 @@ from sklearn.metrics import mean_absolute_percentage_error
 from sklearn.metrics import mean_absolute_error
 from dask.distributed import Client
 import itertools
-
 import logging
 import pandas as pd
 import yfinance as yf
@@ -34,52 +33,65 @@ class ExploreStocks:
         self.period = period
         self.currency_df = None
         self.stock_history = None
-        self._initialize_logging()
+        
+        self.logger = logging.getLogger()
+        self.logger.setLevel(logging.NOTSET)
+
+        self.logger = self._initialize_logging()  # Call the logging setup method
+
         self._download_and_preprocess_data()
 
+    
     def _initialize_logging(self):
         """
-        Initializes logging for the class.
+        Initializesself.logger for the class.
         """
-        logger = logging.getLogger()
-        logger.setLevel(logging.NOTSET)
-
-        # Set up logging to console
+        # Set upself.logger to console
         console = logging.StreamHandler()
         console.setLevel(logging.ERROR)
         console_format = '%(asctime)s | %(levelname)s: %(message)s'
         console.setFormatter(logging.Formatter(console_format))
-        logger.addHandler(console)
+        self.logger.addHandler(console)
 
-        # Set up logging to file
+        # Set upself.logger to file
         file_handler = logging.FileHandler('ExploreStocks.log')
         file_handler.setLevel(logging.INFO)
         file_handler_format = '%(asctime)s | %(levelname)s | %(lineno)d: %(message)s'
         file_handler.setFormatter(logging.Formatter(file_handler_format))
-        logger.addHandler(file_handler)
+        self.logger.addHandler(file_handler)
+        
+        return self.logger
+
 
     def _download_and_preprocess_data(self):
         """
         Downloads and preprocesses data for the specified stocks.
         """
         self._download_initial_stock_info()
-        self._extract_currency_data()
+        
+        self._extract_currency_data() #- error here
+        
         self._download_exchange_rates()
+        
         self._merge_exchange_rates_with_master()
+        
+        self.logger.info('Data download and preprocessing completed.')
 
     def _download_initial_stock_info(self):
         """
         Downloads initial stock information for the specified stocks.
         """
+       
         try:
             # Download historical stock data for the specified stocks
             stocks_df = yf.download(self.stock_list, group_by='Ticker', period='max')
             stocks_df = stocks_df.stack(level=0).rename_axis(['Date', 'Ticker']).reset_index(level=1)
             stocks_df = stocks_df.reset_index()
         except Exception as e:
-            logging.error("Error getting stock data", e)
+            self.logger.error("Error getting stock data", e)
 
-        logging.info('Initial Stock Information Downloaded')
+        self.logger.info('Initial Stock Information Downloaded')
+        
         self.stock_history = stocks_df.copy()
 
     def _extract_currency_data(self):
@@ -87,18 +99,25 @@ class ExploreStocks:
         Extracts currency data for the specified stocks.
         """
         currency_code = {}
+        
         for ticker in self.stock_list:
             try:
                 tick = yf.Ticker(ticker)
                 currency_code[ticker] = tick.info['currency']
             except Exception as e:
-                logging.error("Error getting currency symbol", e)
-
+                self.logging.error("Error getting currency symbol", e)
+        
         currency_code_df = pd.DataFrame(list(currency_code.items()), columns=['Ticker', 'currency_code'])
-        currency_code_df['currency_code'] = currency_code_df['currency_code'].apply(lambda x: x.upper())
+        currency_code_df['currency_code'] = currency_code_df['currency_code'].str.upper()
+        
         self.currency_df = currency_code_df.copy()
+        
+        self.stock_history = pd.merge(self.stock_history, self.currency_df,
+                             left_on=['Ticker'],
+                             right_on=['Ticker'],
+                             how='left')
 
-        logging.info('Currency Extracted')
+        self.logger.info('Currency Extracted')
     
     def _download_exchange_rates(self):
         """
@@ -116,12 +135,13 @@ class ExploreStocks:
 
         # List of unique currency codes from the currency dataframe
         currencylist = [x.upper() for x in (list(self.currency_df.currency_code.unique()))]
+        
         interval = '1d'
 
         # Create a metadata dataframe containing information about currency pairs and their tickers
         meta_df = pd.DataFrame(
             {
-                'FromCurrency': list(currencylist),
+                'FromCurrency': [x for x in currencylist],
                 'ToCurrency': ['GBP' for a in currencylist],
                 'YahooTickers': [f'{a}GBP=X' for a in currencylist],
             }
@@ -158,10 +178,11 @@ class ExploreStocks:
 
         # Reset the index of the currency dataframe and update the class attribute
         currency_df = currency_df.reset_index()
+        
         self.currency_df = currency_df.copy()
 
         # Log the completion of the exchange rate retrieval process
-        logging.info('Exchange Rates Obtained')
+        self.logger.info('Exchange Rates Obtained')
     
     def _merge_exchange_rates_with_master(self):
         """
@@ -178,18 +199,35 @@ class ExploreStocks:
         """
     
         # Merge stock history with currency data using date and currency code
-        master_df = pd.merge(self.stock_history, self.currency_df[['FromCurrency', 'Close']],
+       
+        # retain original data
+        self.stock_history_org = self.stock_history.copy()
+    
+        # Rename and convert currency close column to numeric type
+        self.currency_df = self.currency_df.rename(columns={'Close': 'currency_close'}).reset_index()
+        self.currency_df['currency_close'] = pd.to_numeric(self.currency_df['currency_close'], downcast='float', errors='coerce')
+       
+        # assign correct data types to join
+        self.stock_history['Date'] = self.stock_history['Date'].astype('datetime64[ns]')
+        self.currency_df['Date'] = self.currency_df['Date'].astype('datetime64[ns]')
+        self.stock_history['currency_code'] = self.stock_history['currency_code'].astype(str)
+        self.currency_df['FromCurrency'] = self.currency_df['FromCurrency'].astype(str)
+       
+       # join stock history with currency exchange data
+        master_df = pd.merge(self.stock_history, self.currency_df[['Date','FromCurrency','currency_close']],
                              left_on=['Date', 'currency_code'],
-                             right_on=[self.currency_df.index, 'FromCurrency'],
+                             right_on=['Date', 'FromCurrency'],
                              how='left')
         
-        # Rename and convert currency close column to numeric type
-        master_df.rename(columns={'Close': 'currency_close'}, inplace=True)
+        
+        # # Rename and convert currency close column to numeric type
+        # master_df = master_df.rename(columns={'Close': 'currency_close'})
+        
         master_df['currency_close'] = pd.to_numeric(master_df['currency_close'], downcast='float', errors='coerce')
         
         # Calculate calculated GBP close by multiplying close price with currency close
         master_df['GBP_calculated close'] = master_df['Close'] * master_df['currency_close']
-    
+        
         # Filter out data for weekends (non-trading days)
         master_df['day'] = master_df['Date'].dt.weekday
         master_df = master_df[master_df['day'] <= 4]
@@ -205,7 +243,7 @@ class ExploreStocks:
         self.stock_history = master_df.copy()
     
         # Log the completion of the data merging process
-        logging.info('Data Retrieved - dataframe with exchange rates initialised')
+        self.logger.info('Data Retrieved - dataframe with exchange rates initialised')
         
     def return_df(self):
         return self.stock_history
