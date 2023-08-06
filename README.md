@@ -30,7 +30,7 @@ The combination of Airflow and Docker provides a scalable and reliable solution 
 
 ### Folder: stocks_analysis_project
 
-The `StockExplore.py`provides the StockExplore class with several methods for analyzing a list of stocks. The methods available in the StockExplore class include:
+The `StockExplore.py`provides the ExploreStocks module with several methods for analyzing a list of stocks. The methods available in the ExploreStocks module include:
 - plot_stock_price(): Visualizes the stock price for each stock over time.
 - plot_trade_volume(): Plots the trade volume of each stock over time.
 - plot_volatility(): Visualizes the volatility of each stock over time.
