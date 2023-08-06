@@ -3,21 +3,33 @@
 The project consists of two parts:
 
 ## Yahoo Finance ETL
-### Folder: python_sql_tableau_project
-This part of the project involves pulling data from the Yahoo Finance module, performing minor data cleaning, and then sending it to an Azure SQL Database using the SQLAlchemy library. The data extraction functions are listed in the etlClass.py script, and they are executed as part of the Stocks ETL module.
 
-Data extracted from the Yahoo Finance module includes historical stock data, major shareholders, earnings, quarterly earnings, and news related to the specified stocks. The project utilizes environment variables to securely store the credentials for accessing the Azure SQL database, which are accessed through the os module.
+### Folder: stocks_ETL_project
+This part of the project involves pulling data from the Yahoo Finance module, performing minor data cleaning, and then sending it to an  SQL Database using the SQLAlchemy library. The data extraction functions are listed in the `etlClass.py` script, and they are executed as part of the Stocks ETL module.
+
+Data extracted from the Yahoo Finance module includes historical stock data, major shareholders, earnings, quarterly earnings, and news related to the specified stocks. The project utilizes environment variables to securely store the credentials for accessing the ASQL database, which are accessed through the `os` module.
 
 #### Required Modules:
-- pandas
-- datetime
+- os
 - time
+- datetime
 - yfinance
 - sqlalchemy
-- os
+- pandas
+- airflow
+
+## Airflow Integration and Docker
+
+In addition to the Yahoo Finance ETL process, the project utilizes Apache Airflow for workflow automation and scheduling. By converting the data extraction tasks into an Airflow DAG (Directed Acyclic Graph), you can manage and monitor data pipelines easily.
+
+To deploy and manage the entire project, Docker and Docker Compose are used. Docker allows you to containerize the project, ensuring consistent execution across various environments. Docker Compose simplifies the deployment by defining services, networks, and volumes required for the application in a single `docker-compose.yml` file.
+
+The combination of Airflow and Docker provides a scalable and reliable solution for automated data extraction, processing, and storage. The project can be deployed to different environments with ease, allowing for efficient management and scaling of containers.
 
 ## StockExplore Module
-### Folder: python_class_analysis_project
+
+### Folder: stocks_analysis_project
+
 The StockExplore module provides the StockExplore class with several methods for analyzing a list of stocks. The methods available in the StockExplore class include:
 - plot_stock_price(): Visualizes the stock price for each stock over time.
 - plot_trade_volume(): Plots the trade volume of each stock over time.

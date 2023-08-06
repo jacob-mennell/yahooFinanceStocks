@@ -428,10 +428,8 @@ def exchange_rate_table(stock_list, period, interval='1d'):
         'date_dimension', engine, if_exists='append', index=False)
 
     # create unique id
-    currency_df['exchange_id'] = (currency_df.Date.apply(
-        lambda x: x.strftime("%m%d%Y"))) + (currency_df['FromCurrency'])
-    currency_df['currency_date_key'] = (currency_df.Date.apply(
-        lambda x: x.strftime("%m%d%Y")))
+    currency_df['exchange_id'] = currency_df['Date'].dt.strftime('%m%d%Y') + (currency_df['FromCurrency'])
+    currency_df['currency_date_key'] = currency_df['Date'].dt.strftime('%m%d%Y')
 
     # rename columns
     currency_df.rename(columns={
@@ -444,7 +442,7 @@ def exchange_rate_table(stock_list, period, interval='1d'):
                            left_on=['currency_code'],
                            right_on=['FromCurrency'])
     exchange_df.to_sql(
-        'stocks_master', engine, if_exists='append', index=False)
+        'exhange_table', engine, if_exists='append', index=False)
     
     return logger.info('Exchange rate table created in SQL database')
 

@@ -5,7 +5,7 @@ from datetime import datetime, date
 import pandas as pd
 import yfinance as yf
 import sqlalchemy 
-from sqlalchemy import create_engine, VARCHAR
+from sqlalchemy import create_engine, VARCHAR, DateTime, Float, String, Time
 
 class StocksETL:
     def __init__(self, stock_list: list[str]):
@@ -99,26 +99,28 @@ class StocksETL:
             ##################################################
             # return historical stock data and send to sql db
             stock_history = msft.history(period="max").reset_index()
+            print(stock_history.columns)
 
             stock_history = stock_history.rename(str.lower, axis='columns')
             stock_history['stock'] = stock
             stock_history['date'] = pd.to_datetime(stock_history['date'])
-
-            # print(stock_history.columns)
+            
+             # filter cols 
+            stock_history = stock_history[['date', 'open', 'high', 'low', 'close', 'volume', 'dividends', 'stock']]
                     
             # send to SQL with SQL Alchemy
             stock_history.to_sql(
                 'stock_history',
                self.engine,
                 dtype={
-                    'date': datetime,
-                    'open': float,
-                    'high': float,
-                    'low': float,
-                    'close': float,
-                    'volume': float,
-                    'dividends': float,
-                    'stock_splits': float,
+                    'date': DateTime,
+                    'open': Float,
+                    'high': Float,
+                    'low': Float,
+                    'close': Float,
+                    'volume': Float,
+                    'dividends': Float,
+                  #  'stock splits': Float,
                     'stock': VARCHAR,
                 },
                 if_exists='append',
@@ -137,6 +139,8 @@ class StocksETL:
             # minor cleaning
             major_share_holders = major_share_holders.rename(columns={0: "percent", 1: "detail"})
             major_share_holders['stock'] = stock
+            
+            print(major_share_holders.columns)
 
             # send to SQL with SQL Alchemy
             major_share_holders.to_sql(
@@ -144,11 +148,29 @@ class StocksETL:
             )
             self.logger.info(f'major share holders {stock} data sent to sql')
 
-            ##################################################
+            #################################################
             # return financials and send to SQL
             stock_financials = msft.financials.transpose().reset_index()
             stock_financials.columns.values[0] = "date"
             stock_financials['stock'] = stock
+            
+            # Define the list of common column names
+            common_columns = ['date', 'Tax Effect Of Unusual Items', 'Tax Rate For Calcs', 'Normalized EBITDA',
+                            'Total Unusual Items', 'Total Unusual Items Excluding Goodwill',
+                            'Net Income From Continuing Operation Net Minority Interest',
+                            'Reconciled Depreciation', 'Reconciled Cost Of Revenue', 'EBIT',
+                            'Net Interest Income', 'Interest Expense', 'Interest Income',
+                            'Normalized Income', 'Net Income From Continuing And Discontinued Operation',
+                            'Total Expenses', 'Rent Expense Supplemental',
+                            'Total Operating Income As Reported', 'Diluted Average Shares',
+                            'Basic Average Shares', 'Diluted EPS', 'Basic EPS',
+                            'Diluted NI Availto Com Stockholders', 'Net Income Common Stockholders',
+                            'Otherunder Preferred Stock Dividend', 'Net Income', 'Minority Interests',
+                            'Net Income Including Noncontrolling Interests',
+                            'Net Income Continuous Operations', 'Tax Provision', 'Pretax Income']
+
+            # Filter DataFrame using the common columns
+            stock_financials = stock_financials[common_columns]
 
             # send to SQL with SQL Alchemy
             stock_financials.to_sql(
@@ -156,29 +178,43 @@ class StocksETL:
             
             self.logger.info(f'stock financials {stock} data sent to sql')
 
-            ##################################################
+
+        # ISSUE: 
+        #       issue with API request for earnings data
+        
+        #     ##################################################
             # return earnings and send to SQL
-            stock_earnings = msft.earnings.reset_index()
+            # stock_earnings = msft.earnings.reset_index()
 
-            stock_earnings = stock_earnings.rename(str.lower, axis='columns')
-            stock_earnings['stock'] = stock
+            # stock_earnings = stock_earnings.rename(str.lower, axis='columns')
+            # stock_earnings['stock'] = stock
+            
+            # print(stock_earnings.columns)
+            
+            # # filter cols 
+            # # stock_earnings = stock_earnings['stock', 'date']
 
-            # # send to SQL with SQL Alchemy
-            stock_earnings.to_sql(
-                'earnings', self.engine, if_exists='append', index=False)
-            self.logger.info(f'{stock} earnings data sent to sql')
+            # # # send to SQL with SQL Alchemy
+            # stock_earnings.to_sql(
+            #     'earnings', self.engine, if_exists='append', index=False)
+            # self.logger.info(f'{stock} earnings data sent to sql')
 
-            ##################################################
-            #return quarterly earnings and send to SQL
-            stock_quarterly_earnings = msft.quarterly_earnings.reset_index()
+        #     ##################################################
+        #     #return quarterly earnings and send to SQL
+            # stock_quarterly_earnings = msft.quarterly_earnings.reset_index()
 
-            stock_quarterly_earnings = stock_quarterly_earnings.rename(str.lower, axis='columns')
-            stock_quarterly_earnings['stock'] = stock
+            # stock_quarterly_earnings = stock_quarterly_earnings.rename(str.lower, axis='columns')
+            # stock_quarterly_earnings['stock'] = stock
+            
+            # print(stock_quarterly_earnings.columns)
+            
+            # # filter cols 
+            # stock_quarterly_earnings = stock_quarterly_earnings['stock', 'date']
 
-            # # send to SQL with SQL Alchemy
-            stock_quarterly_earnings.to_sql(
-                'quarterly_earnings', self.engine, if_exists='append', index=False)
-            self.logger.info(f'{stock} quarterly earnings data sent to sql')
+            # # # send to SQL with SQL Alchemy
+            # stock_quarterly_earnings.to_sql(
+            #     'quarterly_earnings', self.engine, if_exists='append', index=False)
+            # self.logger.info(f'{stock} quarterly earnings data sent to sql')
 
             ##################################################
             # return news and send to SQL
@@ -201,6 +237,11 @@ class StocksETL:
             # type
             news_df['type'] = [x['type'] for x in news_list]
             news_df['stock'] = stock
+            
+            print(news_df.columns)
+            
+            # filter cols 
+            # news_df = news_df['stock', 'date']
 
             # send to SQL with SQL Alchemy
             news_df.to_sql(
@@ -232,18 +273,18 @@ class StocksETL:
         """
        
         try:
-            blank_sql()
+            self.blank_sql()
         except Exception as e:
             self.logger.exception("An exception occurred clearing tables: %s", e)
         
         # create master table
         stock_df = pd.DataFrame(columns=['stock'])
         stock_df['stock'] = list(self.stock_list)
-        stock_df.to_sql('stocks_master', self.engine, dtype=sqlcol(stock_df), if_exists='append', index=False)
+        stock_df.to_sql('stocks_master', self.engine, dtype=self.sqlcol(stock_df), if_exists='append', index=False)
 
         # get tables for each individual stock
         # [stock_sql_send(item) for item in companies]
-        list(map(combined_stock_sql_send, self.stock_list))
+        list(map(self.combined_stock_sql_send, self.stock_list))
         
         return self.logger.info('\nSQL Updated with combined tables')
 
@@ -395,10 +436,8 @@ class StocksETL:
             'date_dimension', self.engine, if_exists='append', index=False)
 
         # create unique id
-        currency_df['exchange_id'] = (currency_df.Date.apply(
-            lambda x: x.strftime("%m%d%Y"))) + (currency_df['FromCurrency'])
-        currency_df['currency_date_key'] = (currency_df.Date.apply(
-            lambda x: x.strftime("%m%d%Y")))
+        currency_df['exchange_id'] = currency_df['Date'].dt.strftime('%m%d%Y') + (currency_df['FromCurrency'])
+        currency_df['currency_date_key'] = currency_df['Date'].dt.strftime('%m%d%Y')
 
         # rename columns
         currency_df.rename(columns={
@@ -411,7 +450,7 @@ class StocksETL:
                             left_on=['currency_code'],
                             right_on=['FromCurrency'])
         exchange_df.to_sql(
-            'stocks_master', self.engine, if_exists='append', index=False)
+            'exhange_table', self.engine, if_exists='append', index=False)
         
         return self.logger.info('Exchange rate table created in SQL database')
 
@@ -447,10 +486,11 @@ class StocksETL:
         cursor.close()
 
 
-    def sqlcol(dfparam):
+    def sqlcol(self, dfparam):
         dtypedict = {}
         dtypes = [str(x) for x in dfparam.dtypes.values]
         for i, j in zip(dfparam.columns, dtypes):
+            
             if "object" in j:
                 dtypedict[i] = sqlalchemy.types.VARCHAR(
                     length=max(dfparam[i].apply(lambda x: len(str(x))))
@@ -459,7 +499,7 @@ class StocksETL:
             if "datetime" in j:
                 dtypedict[i] = sqlalchemy.types.DateTime()
 
-            if "float" in j:
+            if "Float" in j:
                 dtypedict[i] = sqlalchemy.types.Float(precision=3, asdecimal=True)
 
             if "int" in j:
@@ -472,6 +512,12 @@ if __name__ == "__main__":
         
 
         # extract data and send to SQL database - specify three airline stocks foe example.
+        
+        # set environment variables
+        os.environ['SQL_USERNAME'] = ""
+        os.environ["SQL_PASSWORD"] = ""
+        os.environ["SQL_SERVER"] = ""
+        os.environ["SQL_DATABASE"] = ""
 
         # IAG.L = International Consolidated Airlines Group, S.A.
         # 0293.HK = Cathay Pacific Airways Ltd
@@ -479,10 +525,13 @@ if __name__ == "__main__":
 
         # send individual tables to sql for each stock
         # individualTables(['IAG.L', '0293.HK', 'AF.PA'])
-
+        
+        
         # combine tables and send to sql
         stock_list = ['IAG.L', '0293.HK', 'AF.PA']
-        StocksETL(stock_list).combined_tables()
+        x = StocksETL(stock_list)
+        
+        #x.combined_tables()
         
         # send exchange rate table to sql
-        stocksETL(stock_list).exchange_rate_table(period='1y', interval='1d')
+        x.exchange_rate_table(period='1y', interval='1d')
