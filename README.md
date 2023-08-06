@@ -26,7 +26,7 @@ To deploy and manage the entire project, Docker and Docker Compose are used. Doc
 
 The combination of Airflow and Docker provides a scalable and reliable solution for automated data extraction, processing, and storage. The project can be deployed to different environments with ease, allowing for efficient management and scaling of containers.
 
-### StockExplore Module
+## Stock Analysis Module
 
 ### Folder: stocks_analysis_project
 
