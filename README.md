@@ -3,11 +3,11 @@
 The project consists of two parts:
 
 ## Yahoo Finance ETL
+
 ### Folder: stocks_ETL_project
+This part of the project involves pulling data from the Yahoo Finance module, performing minor data cleaning, and then sending it to an  SQL Database using the SQLAlchemy library. The data extraction functions are listed in the `etlClass.py` script, and they are executed as part of the Stocks ETL module.
 
-This part of the project involves pulling data from the Yahoo Finance module, performing minor data cleaning, and then sending it to an Azure SQL Database using the SQLAlchemy library. The data extraction functions are listed in the `etlClass.py` script, and they are executed as part of the Stocks ETL module.
-
-Data extracted from the Yahoo Finance module includes historical stock data, major shareholders, earnings, quarterly earnings, and news related to the specified stocks. The project utilizes environment variables to securely store the credentials for accessing the Azure SQL database, which are accessed through the `os` module.
+Data extracted from the Yahoo Finance module includes historical stock data, major shareholders, earnings, quarterly earnings, and news related to the specified stocks. The project utilizes environment variables to securely store the credentials for accessing the ASQL database, which are accessed through the `os` module.
 
 #### Required Modules:
 - os
@@ -27,7 +27,9 @@ To deploy and manage the entire project, Docker and Docker Compose are used. Doc
 The combination of Airflow and Docker provides a scalable and reliable solution for automated data extraction, processing, and storage. The project can be deployed to different environments with ease, allowing for efficient management and scaling of containers.
 
 ## StockExplore Module
+
 ### Folder: stocks_analysis_project
+
 The StockExplore module provides the StockExplore class with several methods for analyzing a list of stocks. The methods available in the StockExplore class include:
 - plot_stock_price(): Visualizes the stock price for each stock over time.
 - plot_trade_volume(): Plots the trade volume of each stock over time.
