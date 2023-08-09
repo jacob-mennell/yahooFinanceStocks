@@ -214,4 +214,3 @@ dependencies:
     - simplejson==3.17.6
     - yahoo-finance==1.4.0
     - yfinance==0.1.72
-prefix: /Users/JacobMennell/Applications/anaconda3/envs/stock_env

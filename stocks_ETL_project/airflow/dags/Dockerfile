@@ -3,7 +3,7 @@ FROM python:3.8-slim-buster
 
 # Set environment variables for Airflow configuration
 ENV AIRFLOW_HOME=/usr/local/airflow
-# ENV AIRFLOW__CORE__SQL_ALCHEMY_CONN=mysql+mysqlconnector://<username>:<password>@<host>:<port>/<database_name>- add later
+# ENV AIRFLOW__CORE__SQL_ALCHEMY_CONN=mysql+mysqlconnector://<username>:<password>@<host>:<port>/<database_name>
 ENV AIRFLOW__CORE__LOAD_EXAMPLES=False
 
 # Install system dependencies
