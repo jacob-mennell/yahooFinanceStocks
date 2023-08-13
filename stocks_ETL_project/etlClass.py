@@ -4,28 +4,32 @@ import time
 from datetime import datetime, date
 import pandas as pd
 import yfinance as yf
-import sqlalchemy 
+import sqlalchemy
 from sqlalchemy import create_engine, VARCHAR, DateTime, Float, String, Time
+import sqlite3
 
 class StocksETL:
-    def __init__(self, stock_list: list[str]):
+    def __init__(self, stock_list: list[str], database_type: str = 'sqlite', db_name: str = 'stock_db'):
         """
-        ExploreStocks class for downloading and preprocessing stock data.
+        StocksETL class for downloading and preprocessing stock data.
 
         Args:
             stock_list: List of stock tickers to explore.
-            period: Time period to download historical data for (e.g., '1y', '2y', 'max').
+            database_type: Type of database to use ('azure_sql' or 'sqlite').
+            db_name: Name of the SQLite database.
         """
         self.stock_list = stock_list
         self.currency_df = None
         self.stock_history = None
-        
+
         self.logger = logging.getLogger()
         self.logger.setLevel(logging.NOTSET)
+        self.logger = self._initialize_logging()  # Call the logger setup method
 
-        self.logger = self._initialize_logging()  # Call theself.logger setup method
-
-        self.engine = self.setup_sql()
+        if database_type == 'azure_sql':
+            self.engine = self.setup_azure_sql()
+        elif database_type == 'sqlite':
+            self.engine, self.conn = self.setup_sqlite(db_name)
 
     def _initialize_logging(self):
         """
@@ -47,7 +51,24 @@ class StocksETL:
         
         return self.logger
 
-    def setup_sql(self):
+    def setup_sqlite(self, db_name: str = 'stock_db'):
+            """
+            Function to set up an SQLite connection and create the database if it doesn't exist.
+
+            Args:
+                db_name: Name of the SQLite database.
+
+            Returns:
+                engine: SQLAlchemy engine for database connection.
+                conn: SQLite connection object.
+            """
+            conn = sqlite3.connect(f'{db_name}.db')
+            
+            engine = create_engine(f'sqlite:///{db_name}.db', echo=True)
+            
+            return engine, conn
+        
+    def setup_azure_sql(self):
         """
         Function to set up the SQL connection.
 

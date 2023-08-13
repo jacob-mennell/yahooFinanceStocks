@@ -2,7 +2,7 @@ version: '3'
 services:
   airflow_webserver:
     build:
-      context: ./python_sql_class/airflow/dags
+      context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"   # Expose the Airflow webserver port
