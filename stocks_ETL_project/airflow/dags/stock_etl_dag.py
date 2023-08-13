@@ -5,10 +5,10 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 
 # set environment variables
-os.environ['SQL_USERNAME'] = ''
-os.environ["SQL_PASSWORD"] = ""
-os.environ["SQL_SERVER"] = ""
-os.environ["SQL_DATABASE"] = ""
+# os.environ['SQL_USERNAME'] = 
+# os.environ["SQL_PASSWORD"] = 
+# os.environ["SQL_SERVER"] = 
+# os.environ["SQL_DATABASE"] = 
 
 # Get the directory of the current script (dataExtract_DAG.py)
 current_script_dir = os.path.dirname(os.path.abspath(__file__))
