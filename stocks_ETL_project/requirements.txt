@@ -4,4 +4,3 @@ requests==2.28.0
 simplejson==3.17.6
 yahoo-finance==1.4.0
 yfinance==0.1.72
-sqlite3

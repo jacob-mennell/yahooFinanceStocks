@@ -8,6 +8,7 @@ import sqlalchemy
 from sqlalchemy import create_engine, VARCHAR, DateTime, Float, String, Time
 import sqlite3
 
+
 class StocksETL:
     def __init__(self, stock_list: list[str], database_type: str = 'sqlite', db_name: str = 'stock_db'):
         """

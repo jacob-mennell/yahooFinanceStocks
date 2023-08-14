@@ -9,6 +9,6 @@ services:
     volumes:
       - /path/to/airflow/dags:/usr/local/airflow/dags   # Mount DAGs directory to the container
       # Space for other volumes or configurations
-    environment:
-      # Add any necessary environment variables if required
     command: ["airflow", "webserver", "--port", "8080"]
+
+    # remember to run airflow db init --version 2.6.3 to initialise meta db

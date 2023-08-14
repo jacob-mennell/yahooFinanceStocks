@@ -22,10 +22,10 @@ package_dir = os.path.dirname(parent_dir)
 # Add the package directory to the Python path
 sys.path.append(package_dir)
 
-from etlClass import ETLClass
+from etlClass import StocksETL
 
 def run_etl(stock_list, period, interval):
-    x = ETLClass(stock_list)
+    x = StocksETL(stock_list)
     x.combined_tables()
     x.exchange_rate_table(period=period, interval=interval)
 
@@ -49,7 +49,7 @@ dag = DAG(
     default_args=default_args,
     start_date=datetime(2023, 8, 1),
     description='My DAG for executing functions once a day at 10 PM',
-    schedule_interval='0 22 * * *',  # Cron expression to run at 10 PM every day
+    schedule="@daily"
 )
 
 # Define a task to run the ETL function
