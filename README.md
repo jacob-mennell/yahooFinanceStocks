@@ -7,7 +7,7 @@ The project consists of two parts:
 ### Folder: stocks_ETL_project
 This part of the project involves pulling data from the Yahoo Finance module, performing minor data cleaning, and then sending it to an  SQL Database using the SQLAlchemy library. The data extraction functions are listed in the `etlClass.py` script, and they are executed as part of the Stocks ETL module.
 
-Data extracted from the Yahoo Finance module includes historical stock data, major shareholders, earnings, quarterly earnings, and news related to the specified stocks. The project utilizes environment variables to securely store the credentials for accessing the SQL database, which are accessed through the `os` module.
+Data extracted from the Yahoo Finance module includes historical stock data, major shareholders, earnings, quarterly earnings, and news related to the specified stocks. The project utilizes environment variables to securely store the credentials if the user decides to write to an Azure SQL database, which are accessed through the `os` module. Alternatively, the module writes to a sqlite db by default.
 
 #### Required Modules:
 - os
