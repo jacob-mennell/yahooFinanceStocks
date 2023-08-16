@@ -7,7 +7,7 @@ The project consists of two parts:
 ### Folder: stocks_ETL_project
 This part of the project involves pulling data from the Yahoo Finance module, performing minor data cleaning, and then sending it to an  SQL Database using the SQLAlchemy library. The data extraction functions are listed in the `etlClass.py` script, and they are executed as part of the Stocks ETL module.
 
-Data extracted from the Yahoo Finance module includes historical stock data, major shareholders, earnings, quarterly earnings, and news related to the specified stocks. The project utilizes environment variables to securely store the credentials if the user decides to write to an Azure SQL database, which are accessed through the `os` module. Alternatively, the module writes to a 'sqlite' db by default.
+Data extracted from the Yahoo Finance module includes historical stock data, major shareholders, earnings, quarterly earnings, and news related to the specified stocks. The project utilizes environment variables to securely store the credentials if the user decides to write to an Azure SQL database, which are accessed through the `os` module. Alternatively, the module writes to a `sqlite` db by default.
 
 #### Required Modules:
 - os
@@ -67,12 +67,12 @@ Above allows for efficient file  sharing between the host machine and your conta
 ### Folder: stocks_analysis_project
 
 The `StockExplore.py`provides the ExploreStocks module with several methods for analyzing a list of stocks. The methods available in the ExploreStocks module include:
-- plot_stock_price(): Visualizes the stock price for each stock over time.
-- plot_trade_volume(): Plots the trade volume of each stock over time.
-- plot_volatility(): Visualizes the volatility of each stock over time.
-- plot_rolling_average(): Plots the rolling average of each stock's price.
-- plot_cumulative_returns(): Visualizes the cumulative returns of each stock.
-- plot_future_trend(stock): Uses the Facebook Prophet model to plot the future trend of a specified stock.
+- `plot_stock_price()`: Visualizes the stock price for each stock over time.
+- `plot_trade_volume()`: Plots the trade volume of each stock over time.
+- `plot_volatility()`: Visualizes the volatility of each stock over time.
+- `plot_rolling_average()`: Plots the rolling average of each stock's price.
+- `plot_cumulative_returns()`: Visualizes the cumulative returns of each stock.
+- `plot_future_trend(stock)`: Uses the Facebook Prophet model to plot the future trend of a specified stock.
 
 #### Facebook Prophet Model
 The Facebook Prophet model is utilized for plotting the future trend of a stock. Prophet is a modular regression model with interpretable parameters that can be intuitively adjusted by analysts with domain knowledge about the time series.
@@ -93,4 +93,4 @@ For more information about the Facebook Prophet model, visit: https://facebook.g
 - dask.distributed
 - itertools
 
-The project provides valuable tools for extracting data from Yahoo Finance, analyzing a list of stocks, and visualizing their trends over time. Please ensure the required modules are installed before executing the scripts.
+The project provides valuable tools for extracting data from Yahoo Finance, analyzing a list of stocks, and visualizing their trends over time. Ensure the required modules are installed before executing the scripts.
