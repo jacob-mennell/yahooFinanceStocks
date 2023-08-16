@@ -28,7 +28,7 @@ The combination of Airflow and Docker provides a scalable and reliable solution 
 
 #### Challenges and Solutions
 
-##### Challenge: Sharing Files and Using Volumes
+##### Sharing Files and Using Volumes
 
 **Issue:** Understanding how to effectively share files between the host machine and containers using Docker Compose.
 
@@ -61,6 +61,23 @@ COPY ./airflow/dags/hello_world_dag.py ./dags
 ```
 
 Above allows for efficient file  sharing between the host machine and your containers using Docker Compose.
+
+##### Initializing Correct Database
+
+Ensure that the Airflow database is initialized correctly using the `airflow db init` command during image build. This prepares the database schema for use.
+
+##### Running Airflow Scheduler
+
+After launching the Airflow webserver, you also need to start the Airflow scheduler using the `airflow scheduler` command. The scheduler manages task execution and scheduling.
+
+##### Default SQLite Database
+
+By default, Airflow uses an SQLite database for its metadata storage. While SQLite is convenient for development, it may not be suitable for production setups. Consider configuring a more robust database backend, such as PostgreSQL or MySQL, for better performance and reliability in production environments.
+
+##### Additional Configuration
+
+When using a non-SQLite database backend, make sure to update your Airflow configuration to reflect the connection details of the chosen database. This configuration is typically done in the `airflow.cfg` file. Adjusting the database connection settings ensures that Airflow interacts with the correct database.
+
 
 ## Stock Analysis Module
 
