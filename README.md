@@ -16,7 +16,7 @@ Data extracted from the Yahoo Finance module includes historical stock data, maj
 - yfinance
 - sqlalchemy
 - pandas
-- airflow
+- apache-airflow[
 
 ### Airflow Integration and Docker
 
