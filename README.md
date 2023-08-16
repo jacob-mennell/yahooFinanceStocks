@@ -26,6 +26,42 @@ To deploy and manage the entire project, Docker and Docker Compose are used. Doc
 
 The combination of Airflow and Docker provides a scalable and reliable solution for automated data extraction, processing, and storage. The project can be deployed to different environments with ease, allowing for efficient management and scaling of containers.
 
+### Challenges and Solutions
+
+#### Challenge: Sharing Files and Using Volumes
+
+**Issue:** Understanding how to effectively share files between the host machine and containers using Docker Compose.
+
+**Solution:**
+- **Volumes for Sharing:** Use Docker Compose volumes to share files between the host machine and containers.
+- **Automatic Mapping:** Docker Compose automatically maps host machine paths to corresponding container paths when defining volumes.
+- **Avoid Redundancy:** Do not include volume paths in both the Docker Compose file and the Dockerfile. It's unnecessary and can lead to confusion.
+- **No Need to Copy:** When using volumes, avoid copying files from the host machine into the container using the Dockerfile. Volumes allow direct access to files on the host machine within the container.
+- **Alternative Approach:** If you prefer not to use volumes, you can copy files into the container using the `COPY` command in the Dockerfile. However, this approach is less flexible for development as changes in the host machine aren't immediately reflected in the container.
+
+**Example with Volumes:**
+```yaml
+version: '3'
+services:
+  airflow_webserver:
+    build:
+      context: C:/path/to/Dockerfile/
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./airflow/dags:/usr/local/airflow/dags
+    command: ["airflow", "webserver", "--port", "8080"]
+```
+
+**Example with Dockerfile Copy:**
+```Dockerfile
+# Copy your DAG file to the DAGs directory
+COPY ./airflow/dags/hello_world_dag.py ./dags
+```
+
+Above allows for efficient file  sharing between the host machine and your containers using Docker Compose.
+
 ## Stock Analysis Module
 
 ### Folder: stocks_analysis_project
