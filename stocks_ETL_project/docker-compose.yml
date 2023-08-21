@@ -6,7 +6,8 @@ services:
      dockerfile: Dockerfile
    ports:
      - "8080:8080"  # Expose the Airflow webserver port
-   #volumes:
+   # volumes:
+   # DAGs copied directly in Dockerfile, preference would be to use volumes section
    #  - ./stocks_ETL_project/airflow/dags:/usr/local/airflow/dags  # Update the path to your local DAGs directory
-     # Space for other volumes or configurations
+  # Space for other volumes or configurations
    command: ["airflow", "webserver", "--port", "8080"]
