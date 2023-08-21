@@ -489,3 +489,232 @@ SQL Updated with combined tables
 2022-08-23 22:40:36,093 | INFO | 170: AF.PA extracted in 19.38 seconds
 2022-08-23 22:40:36,094 | INFO | 198: 
 SQL Updated with combined tables
+2023-08-17 08:46:22,672 | INFO | 507: earnings dropped from database
+2023-08-17 08:46:22,677 | INFO | 507: financials dropped from database
+2023-08-17 08:46:22,682 | INFO | 507: major_share_holders dropped from database
+2023-08-17 08:46:22,686 | INFO | 507: news dropped from database
+2023-08-17 08:46:22,687 | INFO | 507: quarterly_earnings dropped from database
+2023-08-17 08:46:22,691 | INFO | 507: stock_history dropped from database
+2023-08-17 08:46:22,695 | INFO | 507: stocks_master dropped from database
+2023-08-17 08:46:22,702 | INFO | 1863: PRAGMA main.table_info("stocks_master")
+2023-08-17 08:46:22,703 | INFO | 1868: [raw sql] ()
+2023-08-17 08:46:22,703 | INFO | 1863: PRAGMA temp.table_info("stocks_master")
+2023-08-17 08:46:22,704 | INFO | 1868: [raw sql] ()
+2023-08-17 08:46:22,705 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:46:22,705 | INFO | 1863: 
+CREATE TABLE stocks_master (
+	stock VARCHAR(5)
+)
+
+
+2023-08-17 08:46:22,706 | INFO | 1868: [no key 0.00074s] ()
+2023-08-17 08:46:22,711 | INFO | 1092: COMMIT
+2023-08-17 08:46:22,713 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:46:22,714 | INFO | 1863: INSERT INTO stocks_master (stock) VALUES (?)
+2023-08-17 08:46:22,714 | INFO | 1868: [generated in 0.00040s] ('IAG.L',)
+2023-08-17 08:46:22,716 | INFO | 1092: COMMIT
+2023-08-17 08:46:25,365 | INFO | 1863: PRAGMA main.table_info("stock_history")
+2023-08-17 08:46:25,365 | INFO | 1868: [raw sql] ()
+2023-08-17 08:46:25,366 | INFO | 1863: PRAGMA temp.table_info("stock_history")
+2023-08-17 08:46:25,366 | INFO | 1868: [raw sql] ()
+2023-08-17 08:46:25,368 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:46:25,369 | INFO | 1863: 
+CREATE TABLE stock_history (
+	date DATETIME, 
+	open FLOAT, 
+	high FLOAT, 
+	low FLOAT, 
+	close FLOAT, 
+	volume FLOAT, 
+	dividends FLOAT, 
+	stock VARCHAR
+)
+
+
+2023-08-17 08:46:25,370 | INFO | 1868: [no key 0.00170s] ()
+2023-08-17 08:46:25,377 | INFO | 1092: COMMIT
+2023-08-17 08:46:25,387 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:46:25,436 | INFO | 1863: INSERT INTO stock_history (date, open, high, low, close, volume, dividends, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2023-08-17 08:46:25,437 | INFO | 1868: [generated in 0.04158s] (('2003-01-02 00:00:00.000000', 96.97414542244864, 101.96546173095703, 96.97414542244864, 101.96546173095703, 4645894.0, 0.0, 'IAG.L'), ('2003-01-03 00:00:00.000000', 104.28286230153051, 106.0654753323259, 101.25242014917835, 103.39155578613281, 4085260.0, 0.0, 'IAG.L'), ('2003-01-06 00:00:00.000000', 100.00459248560968, 103.0350346821433, 96.7958889833976, 102.85677337646484, 8031430.0, 0.0, 'IAG.L'), ('2003-01-07 00:00:00.000000', 102.14373327338178, 102.67851721722147, 96.26110989114513, 98.4002456665039, 6085123.0, 0.0, 'IAG.L'), ('2003-01-08 00:00:00.000000', 99.11327122679545, 99.82631634353498, 93.40891029287916, 97.15239715576172, 4450954.0, 0.0, 'IAG.L'), ('2003-01-09 00:00:00.000000', 94.8350037392296, 99.46979715505661, 94.30021988355726, 98.75675201416016, 5170888.0, 0.0, 'IAG.L'), ('2003-01-10 00:00:00.000000', 94.30022435869489, 100.53936963762555, 93.7654404776437, 99.82632446289062, 9729682.0, 0.0, 'IAG.L'), ('2003-01-13 00:00:00.000000', 98.43448322775266, 98.75677675275661, 95.01328882530555, 95.5480728149414, 5362024.0, 0.0, 'IAG.L')  ... displaying 10 of 5229 total bound parameter sets ...  ('2023-08-16 00:00:00.000000', 164.25, 166.5, 163.6999969482422, 165.5, 7618074.0, 0.0, 'IAG.L'), ('2023-08-17 00:00:00.000000', 164.6999969482422, 164.89999389648438, 164.0500030517578, 164.4499969482422, 409857.0, 0.0, 'IAG.L'))
+2023-08-17 08:46:25,453 | INFO | 1092: COMMIT
+2023-08-17 08:46:25,459 | INFO | 151: historical IAG.L data sent to sql
+2023-08-17 08:46:32,421 | INFO | 1863: PRAGMA main.table_info("major_share_holders")
+2023-08-17 08:46:32,422 | INFO | 1868: [raw sql] ()
+2023-08-17 08:46:32,422 | INFO | 1863: PRAGMA temp.table_info("major_share_holders")
+2023-08-17 08:46:32,423 | INFO | 1868: [raw sql] ()
+2023-08-17 08:46:32,424 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:46:32,424 | INFO | 1863: 
+CREATE TABLE major_share_holders (
+	percent TEXT, 
+	detail TEXT, 
+	stock TEXT
+)
+
+
+2023-08-17 08:46:32,425 | INFO | 1868: [no key 0.00108s] ()
+2023-08-17 08:46:32,431 | INFO | 1092: COMMIT
+2023-08-17 08:46:32,433 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:46:32,435 | INFO | 1863: INSERT INTO major_share_holders (percent, detail, stock) VALUES (?, ?, ?)
+2023-08-17 08:46:32,435 | INFO | 1868: [generated in 0.00054s] (('25.51%', '% of Shares Held by All Insider', 'IAG.L'), ('15.82%', '% of Shares Held by Institutions', 'IAG.L'), ('21.23%', '% of Float Held by Institutions', 'IAG.L'), ('174', 'Number of Institutions Holding Shares', 'IAG.L'))
+2023-08-17 08:46:32,437 | INFO | 1092: COMMIT
+2023-08-17 08:46:32,440 | INFO | 171: major share holders IAG.L data sent to sql
+2023-08-17 08:46:32,445 | INFO | 1863: PRAGMA main.table_info("financials")
+2023-08-17 08:46:32,446 | INFO | 1868: [raw sql] ()
+2023-08-17 08:46:32,446 | INFO | 1863: PRAGMA temp.table_info("financials")
+2023-08-17 08:46:32,447 | INFO | 1868: [raw sql] ()
+2023-08-17 08:46:32,448 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:46:32,448 | INFO | 1863: 
+CREATE TABLE financials (
+	date TEXT, 
+	stock TEXT
+)
+
+
+2023-08-17 08:46:32,449 | INFO | 1868: [no key 0.00066s] ()
+2023-08-17 08:46:32,453 | INFO | 1092: COMMIT
+2023-08-17 08:46:32,455 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:46:32,456 | INFO | 1863: INSERT INTO financials (date, stock) VALUES (?, ?)
+2023-08-17 08:46:32,456 | INFO | 1868: [generated in 0.00042s] (('Open', 'IAG.L'), ('High', 'IAG.L'), ('Low', 'IAG.L'), ('Close', 'IAG.L'), ('Adj Close', 'IAG.L'), ('Volume', 'IAG.L'))
+2023-08-17 08:46:32,459 | INFO | 1092: COMMIT
+2023-08-17 08:46:32,463 | INFO | 201: stock financials IAG.L data sent to sql
+2023-08-17 08:46:32,556 | INFO | 1863: PRAGMA main.table_info("news")
+2023-08-17 08:46:32,556 | INFO | 1868: [raw sql] ()
+2023-08-17 08:46:32,557 | INFO | 1863: PRAGMA temp.table_info("news")
+2023-08-17 08:46:32,557 | INFO | 1868: [raw sql] ()
+2023-08-17 08:46:32,559 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:46:32,560 | INFO | 1863: 
+CREATE TABLE news (
+	stock TEXT, 
+	uuid TEXT, 
+	title TEXT, 
+	publisher TEXT, 
+	link TEXT, 
+	provider_publish_time TEXT, 
+	type TEXT
+)
+
+
+2023-08-17 08:46:32,561 | INFO | 1868: [no key 0.00120s] ()
+2023-08-17 08:46:32,566 | INFO | 1092: COMMIT
+2023-08-17 08:46:32,569 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:46:32,570 | INFO | 1863: INSERT INTO news (stock, uuid, title, publisher, link, provider_publish_time, type) VALUES (?, ?, ?, ?, ?, ?, ?)
+2023-08-17 08:46:32,570 | INFO | 1868: [generated in 0.00049s] (('IAG.L', 'c9cd9764-62de-3286-8d3d-197c2267c625', 'Where summer heat hits hard: Mideast and North Africa', 'AFP', 'https://finance.yahoo.com/m/c9cd9764-62de-3286-8d3d-197c2267c625/where-summer-heat-hits-hard%3A.html', None, 'STORY'), ('IAG.L', '6a419d11-3b00-313b-b219-901ae566b2f7', 'Here’s Why Greenlight Capital Exited Civitas Resources (CIVI)', 'Insider Monkey', 'https://finance.yahoo.com/news/why-greenlight-capital-exited-civitas-074057127.html', None, 'STORY'), ('IAG.L', 'f3fb887d-f581-341e-b20e-4ee2996bd6bc', 'Most markets drop as US rate, China fears dent global optimism', 'AFP', 'https://finance.yahoo.com/m/f3fb887d-f581-341e-b20e-4ee2996bd6bc/most-markets-drop-as-us-rate%2C.html', None, 'STORY'), ('IAG.L', '024afb59-a610-391f-adb3-884de000304d', "'Silent threat': Bahrain to build walls against rising sea", 'AFP', 'https://finance.yahoo.com/m/024afb59-a610-391f-adb3-884de000304d/%27silent-threat%27%3A-bahrain-to.html', None, 'STORY'), ('IAG.L', 'f8bc00ac-0154-3e1b-9145-b809797e29b4', 'Q2 2023 PAVmed Inc Earnings Call', 'Thomson Reuters StreetEvents', 'https://finance.yahoo.com/news/q2-2023-pavmed-inc-earnings-073909102.html', None, 'STORY'), ('IAG.L', 'b2d21b58-df34-3189-ab1f-f086a072f0a1', 'By 2031, the Global Market for Particle Size Analyzers is Expected to Surpass US$ 500 million, with a CAGR of over 5% from 2022 to 2031: TMR study', 'GlobeNewswire', 'https://finance.yahoo.com/news/2031-global-market-particle-size-073900118.html', None, 'STORY'), ('IAG.L', '88c29fea-8347-316c-bf98-5c80e6cccbca', "Explainer-Country Garden: How bad is China's property crisis?", 'Reuters', 'https://finance.yahoo.com/news/explainer-country-garden-bad-chinas-073859491.html', None, 'STORY'), ('IAG.L', '42abaa98-a66b-3199-a114-24e5b25375e7', 'Fukushima water discharge plan brings out concerned moms', 'Reuters Videos', 'https://finance.yahoo.com/m/42abaa98-a66b-3199-a114-24e5b25375e7/fukushima-water-discharge.html', None, 'VIDEO'))
+2023-08-17 08:46:32,574 | INFO | 1092: COMMIT
+2023-08-17 08:46:32,578 | INFO | 271: IAG.L news sent to sql
+2023-08-17 08:46:32,578 | INFO | 281: IAG.L extracted in 9.86 seconds
+2023-08-17 08:46:32,579 | INFO | 311: 
+SQL Updated with combined tables
+2023-08-17 08:47:43,027 | INFO | 507: earnings dropped from database
+2023-08-17 08:47:43,032 | INFO | 507: financials dropped from database
+2023-08-17 08:47:43,036 | INFO | 507: major_share_holders dropped from database
+2023-08-17 08:47:43,040 | INFO | 507: news dropped from database
+2023-08-17 08:47:43,041 | INFO | 507: quarterly_earnings dropped from database
+2023-08-17 08:47:43,046 | INFO | 507: stock_history dropped from database
+2023-08-17 08:47:43,049 | INFO | 507: stocks_master dropped from database
+2023-08-17 08:47:43,057 | INFO | 1863: PRAGMA main.table_info("stocks_master")
+2023-08-17 08:47:43,057 | INFO | 1868: [raw sql] ()
+2023-08-17 08:47:43,058 | INFO | 1863: PRAGMA temp.table_info("stocks_master")
+2023-08-17 08:47:43,058 | INFO | 1868: [raw sql] ()
+2023-08-17 08:47:43,059 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:47:43,060 | INFO | 1863: 
+CREATE TABLE stocks_master (
+	stock VARCHAR(5)
+)
+
+
+2023-08-17 08:47:43,061 | INFO | 1868: [no key 0.00078s] ()
+2023-08-17 08:47:43,066 | INFO | 1092: COMMIT
+2023-08-17 08:47:43,068 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:47:43,070 | INFO | 1863: INSERT INTO stocks_master (stock) VALUES (?)
+2023-08-17 08:47:43,070 | INFO | 1868: [generated in 0.00048s] ('IAG.L',)
+2023-08-17 08:47:43,072 | INFO | 1092: COMMIT
+2023-08-17 08:47:43,390 | INFO | 1863: PRAGMA main.table_info("stock_history")
+2023-08-17 08:47:43,391 | INFO | 1868: [raw sql] ()
+2023-08-17 08:47:43,391 | INFO | 1863: PRAGMA temp.table_info("stock_history")
+2023-08-17 08:47:43,392 | INFO | 1868: [raw sql] ()
+2023-08-17 08:47:43,393 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:47:43,393 | INFO | 1863: 
+CREATE TABLE stock_history (
+	date DATETIME, 
+	open FLOAT, 
+	high FLOAT, 
+	low FLOAT, 
+	close FLOAT, 
+	volume FLOAT, 
+	dividends FLOAT, 
+	stock VARCHAR
+)
+
+
+2023-08-17 08:47:43,395 | INFO | 1868: [no key 0.00117s] ()
+2023-08-17 08:47:43,400 | INFO | 1092: COMMIT
+2023-08-17 08:47:43,407 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:47:43,445 | INFO | 1863: INSERT INTO stock_history (date, open, high, low, close, volume, dividends, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2023-08-17 08:47:43,446 | INFO | 1868: [generated in 0.03384s] (('2003-01-02 00:00:00.000000', 96.97414542244864, 101.96546173095703, 96.97414542244864, 101.96546173095703, 4645894.0, 0.0, 'IAG.L'), ('2003-01-03 00:00:00.000000', 104.28285460636533, 106.06546750561945, 101.25241267763336, 103.39154815673828, 4085260.0, 0.0, 'IAG.L'), ('2003-01-06 00:00:00.000000', 100.00459248560968, 103.0350346821433, 96.7958889833976, 102.85677337646484, 8031430.0, 0.0, 'IAG.L'), ('2003-01-07 00:00:00.000000', 102.14372535373855, 102.67850925611414, 96.261102427607, 98.40023803710938, 6085123.0, 0.0, 'IAG.L'), ('2003-01-08 00:00:00.000000', 99.11329457694237, 99.82633986166857, 93.40893229913274, 97.15242004394531, 4450954.0, 0.0, 'IAG.L'), ('2003-01-09 00:00:00.000000', 94.83501106565178, 99.46980483953702, 94.30022716866503, 98.75675964355469, 5170888.0, 0.0, 'IAG.L'), ('2003-01-10 00:00:00.000000', 94.300238772801, 100.53938500540598, 93.76545481000629, 99.82633972167969, 9729682.0, 0.0, 'IAG.L'), ('2003-01-13 00:00:00.000000', 98.43447536788186, 98.75676886715107, 95.01328123861285, 95.54806518554688, 5362024.0, 0.0, 'IAG.L')  ... displaying 10 of 5229 total bound parameter sets ...  ('2023-08-16 00:00:00.000000', 164.25, 166.5, 163.6999969482422, 165.5, 7618074.0, 0.0, 'IAG.L'), ('2023-08-17 00:00:00.000000', 164.6999969482422, 164.89999389648438, 164.0500030517578, 164.4499969482422, 409857.0, 0.0, 'IAG.L'))
+2023-08-17 08:47:43,458 | INFO | 1092: COMMIT
+2023-08-17 08:47:43,463 | INFO | 151: historical IAG.L data sent to sql
+2023-08-17 08:47:49,833 | INFO | 1863: PRAGMA main.table_info("major_share_holders")
+2023-08-17 08:47:49,834 | INFO | 1868: [raw sql] ()
+2023-08-17 08:47:49,835 | INFO | 1863: PRAGMA temp.table_info("major_share_holders")
+2023-08-17 08:47:49,835 | INFO | 1868: [raw sql] ()
+2023-08-17 08:47:49,837 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:47:49,837 | INFO | 1863: 
+CREATE TABLE major_share_holders (
+	percent TEXT, 
+	detail TEXT, 
+	stock TEXT
+)
+
+
+2023-08-17 08:47:49,839 | INFO | 1868: [no key 0.00120s] ()
+2023-08-17 08:47:49,845 | INFO | 1092: COMMIT
+2023-08-17 08:47:49,847 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:47:49,848 | INFO | 1863: INSERT INTO major_share_holders (percent, detail, stock) VALUES (?, ?, ?)
+2023-08-17 08:47:49,848 | INFO | 1868: [generated in 0.00039s] (('25.51%', '% of Shares Held by All Insider', 'IAG.L'), ('15.82%', '% of Shares Held by Institutions', 'IAG.L'), ('21.23%', '% of Float Held by Institutions', 'IAG.L'), ('174', 'Number of Institutions Holding Shares', 'IAG.L'))
+2023-08-17 08:47:49,849 | INFO | 1092: COMMIT
+2023-08-17 08:47:49,853 | INFO | 171: major share holders IAG.L data sent to sql
+2023-08-17 08:47:49,857 | INFO | 1863: PRAGMA main.table_info("financials")
+2023-08-17 08:47:49,857 | INFO | 1868: [raw sql] ()
+2023-08-17 08:47:49,858 | INFO | 1863: PRAGMA temp.table_info("financials")
+2023-08-17 08:47:49,858 | INFO | 1868: [raw sql] ()
+2023-08-17 08:47:49,859 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:47:49,859 | INFO | 1863: 
+CREATE TABLE financials (
+	date TEXT, 
+	stock TEXT
+)
+
+
+2023-08-17 08:47:49,860 | INFO | 1868: [no key 0.00069s] ()
+2023-08-17 08:47:49,864 | INFO | 1092: COMMIT
+2023-08-17 08:47:49,865 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:47:49,866 | INFO | 1863: INSERT INTO financials (date, stock) VALUES (?, ?)
+2023-08-17 08:47:49,866 | INFO | 1868: [generated in 0.00031s] (('Open', 'IAG.L'), ('High', 'IAG.L'), ('Low', 'IAG.L'), ('Close', 'IAG.L'), ('Adj Close', 'IAG.L'), ('Volume', 'IAG.L'))
+2023-08-17 08:47:49,868 | INFO | 1092: COMMIT
+2023-08-17 08:47:49,871 | INFO | 201: stock financials IAG.L data sent to sql
+2023-08-17 08:47:50,868 | INFO | 1863: PRAGMA main.table_info("news")
+2023-08-17 08:47:50,869 | INFO | 1868: [raw sql] ()
+2023-08-17 08:47:50,870 | INFO | 1863: PRAGMA temp.table_info("news")
+2023-08-17 08:47:50,870 | INFO | 1868: [raw sql] ()
+2023-08-17 08:47:50,872 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:47:50,872 | INFO | 1863: 
+CREATE TABLE news (
+	stock TEXT, 
+	uuid TEXT, 
+	title TEXT, 
+	publisher TEXT, 
+	link TEXT, 
+	provider_publish_time TEXT, 
+	type TEXT
+)
+
+
+2023-08-17 08:47:50,874 | INFO | 1868: [no key 0.00171s] ()
+2023-08-17 08:47:50,880 | INFO | 1092: COMMIT
+2023-08-17 08:47:50,885 | INFO | 1032: BEGIN (implicit)
+2023-08-17 08:47:50,886 | INFO | 1863: INSERT INTO news (stock, uuid, title, publisher, link, provider_publish_time, type) VALUES (?, ?, ?, ?, ?, ?, ?)
+2023-08-17 08:47:50,886 | INFO | 1868: [generated in 0.00065s] (('IAG.L', 'c9cd9764-62de-3286-8d3d-197c2267c625', 'Where summer heat hits hard: Mideast and North Africa', 'AFP', 'https://finance.yahoo.com/m/c9cd9764-62de-3286-8d3d-197c2267c625/where-summer-heat-hits-hard%3A.html', None, 'STORY'), ('IAG.L', '6a419d11-3b00-313b-b219-901ae566b2f7', 'Here’s Why Greenlight Capital Exited Civitas Resources (CIVI)', 'Insider Monkey', 'https://finance.yahoo.com/news/why-greenlight-capital-exited-civitas-074057127.html', None, 'STORY'), ('IAG.L', 'f3fb887d-f581-341e-b20e-4ee2996bd6bc', 'Most markets drop as US rate, China fears dent global optimism', 'AFP', 'https://finance.yahoo.com/m/f3fb887d-f581-341e-b20e-4ee2996bd6bc/most-markets-drop-as-us-rate%2C.html', None, 'STORY'), ('IAG.L', '024afb59-a610-391f-adb3-884de000304d', "'Silent threat': Bahrain to build walls against rising sea", 'AFP', 'https://finance.yahoo.com/m/024afb59-a610-391f-adb3-884de000304d/%27silent-threat%27%3A-bahrain-to.html', None, 'STORY'), ('IAG.L', 'f8bc00ac-0154-3e1b-9145-b809797e29b4', 'Q2 2023 PAVmed Inc Earnings Call', 'Thomson Reuters StreetEvents', 'https://finance.yahoo.com/news/q2-2023-pavmed-inc-earnings-073909102.html', None, 'STORY'), ('IAG.L', 'b2d21b58-df34-3189-ab1f-f086a072f0a1', 'By 2031, the Global Market for Particle Size Analyzers is Expected to Surpass US$ 500 million, with a CAGR of over 5% from 2022 to 2031: TMR study', 'GlobeNewswire', 'https://finance.yahoo.com/news/2031-global-market-particle-size-073900118.html', None, 'STORY'), ('IAG.L', '88c29fea-8347-316c-bf98-5c80e6cccbca', "Explainer-Country Garden: How bad is China's property crisis?", 'Reuters', 'https://finance.yahoo.com/news/explainer-country-garden-bad-chinas-073859491.html', None, 'STORY'), ('IAG.L', '42abaa98-a66b-3199-a114-24e5b25375e7', 'Fukushima water discharge plan brings out concerned moms', 'Reuters Videos', 'https://finance.yahoo.com/m/42abaa98-a66b-3199-a114-24e5b25375e7/fukushima-water-discharge.html', None, 'VIDEO'))
+2023-08-17 08:47:50,890 | INFO | 1092: COMMIT
+2023-08-17 08:47:50,893 | INFO | 271: IAG.L news sent to sql
+2023-08-17 08:47:50,893 | INFO | 281: IAG.L extracted in 7.82 seconds
+2023-08-17 08:47:50,894 | INFO | 311: SQL Updated with combined tables

@@ -32,7 +32,7 @@ class StocksETL:
         elif database_type == 'sqlite':
             self.engine, self.conn = self.setup_sqlite(db_name)
 
-    def _initialize_logging(self):
+    def _initialize_logging(self, filepath="stocks_ETL_project"):
         """
         Initializesself.logger for the class.
         """
@@ -44,7 +44,7 @@ class StocksETL:
         self.logger.addHandler(console)
 
         # Set upself.logger to file
-        file_handler = logging.FileHandler('ExploreStocks.log')
+        file_handler = logging.FileHandler(f'{filepath}/dataExtract.log')
         file_handler.setLevel(logging.INFO)
         file_handler_format = '%(asctime)s | %(levelname)s | %(lineno)d: %(message)s'
         file_handler.setFormatter(logging.Formatter(file_handler_format))
@@ -63,9 +63,9 @@ class StocksETL:
                 engine: SQLAlchemy engine for database connection.
                 conn: SQLite connection object.
             """
-            conn = sqlite3.connect(f'{db_name}.db')
+            conn = sqlite3.connect(f'stocks_ETL_project/{db_name}.db')
             
-            engine = create_engine(f'sqlite:///{db_name}.db', echo=True)
+            engine = create_engine(f'sqlite:///stocks_ETL_project/{db_name}.db', echo=True)
             
             return engine, conn
         
@@ -177,22 +177,22 @@ class StocksETL:
             stock_financials['stock'] = stock
             
             # Define the list of common column names
-            common_columns = ['date', 'Tax Effect Of Unusual Items', 'Tax Rate For Calcs', 'Normalized EBITDA',
-                            'Total Unusual Items', 'Total Unusual Items Excluding Goodwill',
-                            'Net Income From Continuing Operation Net Minority Interest',
-                            'Reconciled Depreciation', 'Reconciled Cost Of Revenue', 'EBIT',
-                            'Net Interest Income', 'Interest Expense', 'Interest Income',
-                            'Normalized Income', 'Net Income From Continuing And Discontinued Operation',
-                            'Total Expenses', 'Rent Expense Supplemental',
-                            'Total Operating Income As Reported', 'Diluted Average Shares',
-                            'Basic Average Shares', 'Diluted EPS', 'Basic EPS',
-                            'Diluted NI Availto Com Stockholders', 'Net Income Common Stockholders',
-                            'Otherunder Preferred Stock Dividend', 'Net Income', 'Minority Interests',
-                            'Net Income Including Noncontrolling Interests',
-                            'Net Income Continuous Operations', 'Tax Provision', 'Pretax Income']
+            # common_columns = ['date', 'Tax Effect Of Unusual Items', 'Tax Rate For Calcs', 'Normalized EBITDA',
+            #                 'Total Unusual Items', 'Total Unusual Items Excluding Goodwill',
+            #                 'Net Income From Continuing Operation Net Minority Interest',
+            #                 'Reconciled Depreciation', 'Reconciled Cost Of Revenue', 'EBIT',
+            #                 'Net Interest Income', 'Interest Expense', 'Interest Income',
+            #                 'Normalized Income', 'Net Income From Continuing And Discontinued Operation',
+            #                 'Total Expenses', 'Rent Expense Supplemental',
+            #                 'Total Operating Income As Reported', 'Diluted Average Shares',
+            #                 'Basic Average Shares', 'Diluted EPS', 'Basic EPS',
+            #                 'Diluted NI Availto Com Stockholders', 'Net Income Common Stockholders',
+            #                 'Otherunder Preferred Stock Dividend', 'Net Income', 'Minority Interests',
+            #                 'Net Income Including Noncontrolling Interests',
+            #                 'Net Income Continuous Operations', 'Tax Provision', 'Pretax Income']
 
-            # Filter DataFrame using the common columns
-            stock_financials = stock_financials[common_columns]
+            # # Filter DataFrame using the common columns
+            # stock_financials = stock_financials[common_columns]
 
             # send to SQL with SQL Alchemy
             stock_financials.to_sql(
@@ -308,7 +308,7 @@ class StocksETL:
         # [stock_sql_send(item) for item in companies]
         list(map(self.combined_stock_sql_send, self.stock_list))
         
-        return self.logger.info('\nSQL Updated with combined tables')
+        return self.logger.info('SQL Updated with combined tables')
 
 
     def get_last_update_date(self, stock):
@@ -396,12 +396,14 @@ class StocksETL:
 
         # loop to extract currency for each ticker using .info method
         for ticker in self.stock_list:
+
             try:
                 tick = yf.Ticker(ticker)
+
                 currency_code[ticker] = tick.info['currency']
             except Exception as e:
                self.logger.error("Error getting currency symbol", e)
-
+               
         # make dataframe
         df = pd.DataFrame(list(currency_code.items()), columns=['Ticker', 'currency_code'])
         df['currency_code'] = df['currency_code'].apply(
@@ -418,6 +420,8 @@ class StocksETL:
             }
         )
 
+        print(meta_df['YahooTickers'])
+        
         currency_df = pd.DataFrame(
             yf.download(
                 tickers=meta_df['YahooTickers'].values[0],
@@ -536,10 +540,10 @@ if __name__ == "__main__":
         # extract data and send to SQL database - specify three airline stocks foe example.
         
         # set environment variables
-        os.environ['SQL_USERNAME'] = ""
-        os.environ["SQL_PASSWORD"] = ""
-        os.environ["SQL_SERVER"] = ""
-        os.environ["SQL_DATABASE"] = ""
+        # os.environ['SQL_USERNAME'] = ""
+        # os.environ["SQL_PASSWORD"] = ""
+        # os.environ["SQL_SERVER"] = ""
+        # os.environ["SQL_DATABASE"] = ""
 
         # IAG.L = International Consolidated Airlines Group, S.A.
         # 0293.HK = Cathay Pacific Airways Ltd
@@ -550,10 +554,11 @@ if __name__ == "__main__":
         
         
         # combine tables and send to sql
-        stock_list = ['IAG.L', '0293.HK', 'AF.PA']
+        stock_list = ['AAPL']
         x = StocksETL(stock_list)
         
         #x.combined_tables()
         
         # send exchange rate table to sql
-        x.exchange_rate_table(period='1y', interval='1d')
+        #x.exchange_rate_table(period='1y', interval='1d')
+                

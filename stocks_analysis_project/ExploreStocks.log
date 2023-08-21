@@ -1127,3 +1127,10 @@
 % of NaN values in calculated GBP column: 8.24
 2023-08-03 21:47:39,414 | INFO | 247: Data Retrieved - dataframe with exchange rates initialised
 2023-08-03 21:47:39,414 | INFO | 79: Data download and preprocessing completed.
+2023-08-17 09:49:13,432 | INFO | 93: Initial Stock Information Downloaded
+2023-08-17 10:02:32,534 | INFO | 93: Initial Stock Information Downloaded
+2023-08-17 10:02:51,879 | INFO | 120: Currency Extracted
+2023-08-18 08:42:15,655 | INFO | 93: Initial Stock Information Downloaded
+2023-08-18 08:42:35,462 | INFO | 120: Currency Extracted
+2023-08-18 08:43:20,456 | INFO | 93: Initial Stock Information Downloaded
+2023-08-18 08:43:40,465 | INFO | 120: Currency Extracted

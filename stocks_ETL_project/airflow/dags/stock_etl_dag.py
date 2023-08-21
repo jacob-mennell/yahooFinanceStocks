@@ -2,7 +2,7 @@ import sys
 import os
 from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python import PythonOperator
 
 # set environment variables
 # os.environ['SQL_USERNAME'] = 
@@ -27,7 +27,8 @@ from etlClass import StocksETL
 def run_etl(stock_list, period, interval):
     x = StocksETL(stock_list)
     x.combined_tables()
-    x.exchange_rate_table(period=period, interval=interval)
+    # issue with loop to extract currency for each ticker using .info method
+    # x.exchange_rate_table(period=period, interval=interval)
 
 # DAG arguments with default parameters
 default_args = {
@@ -37,7 +38,7 @@ default_args = {
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
     'params': {
-        'stock_list': ['IAG.L', '0293.HK', 'AF.PA'],
+        'stock_list': ['IAG.L'],
         'period': '1y',
         'interval': '1d',
     }
