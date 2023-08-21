@@ -6,12 +6,12 @@ import sqlalchemy
 import time
 import plotly.express as px
 import logging
-from prophet import Prophet
-from prophet.diagnostics import cross_validation
-from prophet.diagnostics import performance_metrics
-from prophet.plot import plot_plotly, plot_components_plotly, add_changepoints_to_plot
-from sklearn.metrics import mean_absolute_percentage_error
-from sklearn.metrics import mean_absolute_error
+# from prophet import Prophet
+# from prophet.diagnostics import cross_validation
+# from prophet.diagnostics import performance_metrics
+# from prophet.plot import plot_plotly, plot_components_plotly, add_changepoints_to_plot
+# from sklearn.metrics import mean_absolute_percentage_error
+# from sklearn.metrics import mean_absolute_error
 from dask.distributed import Client
 import itertools
 import logging
@@ -105,7 +105,7 @@ class ExploreStocks:
                 tick = yf.Ticker(ticker)
                 currency_code[ticker] = tick.info['currency']
             except Exception as e:
-                self.logging.error("Error getting currency symbol", e)
+                self.logger.error("Error getting currency symbol", e)
         
         currency_code_df = pd.DataFrame(list(currency_code.items()), columns=['Ticker', 'currency_code'])
         currency_code_df['currency_code'] = currency_code_df['currency_code'].str.upper()
@@ -174,7 +174,7 @@ class ExploreStocks:
                 )
                 currency_df = pd.concat([currency_df, currency_help_df])
             except Exception as e:
-                logging.error("Error getting exchange rates", e)
+                logger.error("Error getting exchange rates", e)
 
         # Reset the index of the currency dataframe and update the class attribute
         currency_df = currency_df.reset_index()
@@ -234,7 +234,7 @@ class ExploreStocks:
     
         # Calculate the percentage of NaN values in the calculated GBP column
         na_count = master_df['currency_close'].isna().sum() / master_df.shape[0] * 100
-        logging.info(f'\n% of NaN values in calculated GBP column: {"{:.2f}".format(na_count)}')
+        logger.info(f'\n% of NaN values in calculated GBP column: {"{:.2f}".format(na_count)}')
     
         # Replace NaN values in the calculated GBP column for GBP currency with 1
         master_df.loc[master_df['currency_code'].isin(['GBP']), 'currency_close'] = 1

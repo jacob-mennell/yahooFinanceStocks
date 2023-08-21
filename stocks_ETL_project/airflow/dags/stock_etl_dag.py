@@ -2,7 +2,7 @@ import sys
 import os
 from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python import PythonOperator
 
 # set environment variables
 # os.environ['SQL_USERNAME'] = 
@@ -22,12 +22,13 @@ package_dir = os.path.dirname(parent_dir)
 # Add the package directory to the Python path
 sys.path.append(package_dir)
 
-from etlClass import ETLClass
+from etlClass import StocksETL
 
 def run_etl(stock_list, period, interval):
-    x = ETLClass(stock_list)
+    x = StocksETL(stock_list)
     x.combined_tables()
-    x.exchange_rate_table(period=period, interval=interval)
+    # issue with loop to extract currency for each ticker using .info method
+    # x.exchange_rate_table(period=period, interval=interval)
 
 # DAG arguments with default parameters
 default_args = {
@@ -37,7 +38,7 @@ default_args = {
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
     'params': {
-        'stock_list': ['IAG.L', '0293.HK', 'AF.PA'],
+        'stock_list': ['IAG.L'],
         'period': '1y',
         'interval': '1d',
     }
@@ -49,7 +50,7 @@ dag = DAG(
     default_args=default_args,
     start_date=datetime(2023, 8, 1),
     description='My DAG for executing functions once a day at 10 PM',
-    schedule_interval='0 22 * * *',  # Cron expression to run at 10 PM every day
+    schedule="@daily"
 )
 
 # Define a task to run the ETL function

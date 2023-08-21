@@ -1,14 +1,12 @@
 version: '3'
 services:
-  airflow_webserver:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"   # Expose the Airflow webserver port
-    volumes:
-      - /path/to/airflow/dags:/usr/local/airflow/dags   # Mount DAGs directory to the container
-      # Space for other volumes or configurations
-    environment:
-      # Add any necessary environment variables if required
-    command: ["airflow", "webserver", "--port", "8080"]
+ airflow_webserver:
+   build:
+     context: .
+     dockerfile: Dockerfile
+   ports:
+     - "8080:8080"  # Expose the Airflow webserver port
+   #volumes:
+   #  - ./stocks_ETL_project/airflow/dags:/usr/local/airflow/dags  # Update the path to your local DAGs directory
+     # Space for other volumes or configurations
+   command: ["airflow", "webserver", "--port", "8080"]
