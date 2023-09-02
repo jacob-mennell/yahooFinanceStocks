@@ -6,12 +6,12 @@ import sqlalchemy
 import time
 import plotly.express as px
 import logging
-# from prophet import Prophet
-# from prophet.diagnostics import cross_validation
-# from prophet.diagnostics import performance_metrics
-# from prophet.plot import plot_plotly, plot_components_plotly, add_changepoints_to_plot
-# from sklearn.metrics import mean_absolute_percentage_error
-# from sklearn.metrics import mean_absolute_error
+from prophet import Prophet
+from prophet.diagnostics import cross_validation
+from prophet.diagnostics import performance_metrics
+from prophet.plot import plot_plotly, plot_components_plotly, add_changepoints_to_plot
+from sklearn.metrics import mean_absolute_percentage_error
+from sklearn.metrics import mean_absolute_error
 from dask.distributed import Client
 import itertools
 import logging
