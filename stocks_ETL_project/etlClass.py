@@ -4,18 +4,21 @@ import time
 from datetime import datetime, date
 import pandas as pd
 import yfinance as yf
+from typing import List
 import sqlalchemy
 from sqlalchemy import create_engine, VARCHAR, DateTime, Float, String, Time
 import sqlite3
 
 
 class StocksETL:
+
     def __init__(
         self,
         stock_list: list[str],
         database_type: str = "sqlite",
         db_name: str = "stock_db",
-    ):
+      ):
+      
         """
         StocksETL class for downloading and preprocessing stock data.
 
@@ -568,6 +571,7 @@ class StocksETL:
 
 
 if __name__ == "__main__":
+
     # extract data and send to SQL database - specify three airline stocks foe example.
 
     # set environment variables
