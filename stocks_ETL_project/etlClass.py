@@ -11,22 +11,72 @@ import sqlite3
 
 
 class StocksETL:
+    """
+    StocksETL class for downloading and preprocessing stock data.
+
+    Args:
+        stock_list: List of stock tickers to explore.
+        database_type: Type of database to use ('azure_sql' or 'sqlite').
+        db_name: Name of the SQLite database.
+
+    Attributes:
+        stock_list: List of stock tickers to explore.
+        currency_df: DataFrame for currency data.
+        stock_history: DataFrame for stock history data.
+        logger: Logger object for logging.
+        engine: SQLAlchemy engine for database connection.
+        conn: SQLite connection object.
+
+    Methods:
+        __init__: Initializes the StocksETL class.
+        _initialize_logging: Initializes the logger for the class.
+        setup_sqlite: Sets up an SQLite connection and creates the database if it doesn't exist.
+        setup_azure_sql: Sets up the SQL connection.
+        combined_stock_sql_send: Pulls stock information for a single stock and sends it to the SQL database.
+        combined_tables: Pulls stock information for multiple stocks and sends it to the SQL database.
+        get_last_update_date: Retrieves the last update date for a stock.
+        stock_history_updater: Pulls stock information for a single stock from the date of the last update.
+        exchange_rate_table: Creates an exchange rate table and date dimension table in the SQL database.
+        blank_sql: Clears the database prior to a new batch import.
+        sqlcol: Returns the SQL column types for a DataFrame.
+
+    Example:
+        ```
+        stock_list = ['AAPL', 'MSFT']
+        etl = StocksETL(stock_list)
+        etl.combined_tables()
+        ```
+    """
 
     def __init__(
         self,
         stock_list: list[str],
         database_type: str = "sqlite",
         db_name: str = "stock_db",
-      ):
-      
+    ):
         """
-        StocksETL class for downloading and preprocessing stock data.
+        Initializes the StocksETL class.
 
         Args:
             stock_list: List of stock tickers to explore.
             database_type: Type of database to use ('azure_sql' or 'sqlite').
             db_name: Name of the SQLite database.
+
+        Attributes:
+            stock_list: List of stock tickers to explore.
+            currency_df: DataFrame for currency data.
+            stock_history: DataFrame for stock history data.
+            logger: Logger object for logging.
+            engine: SQLAlchemy engine for database connection.
+            conn: SQLite connection object.
+
+        Example:
+            ```
+            stock_list = ['AAPL', 'MSFT']
+            etl = StocksETL(stock_list)
+            ```
         """
+
         self.stock_list = stock_list
         self.currency_df = None
         self.stock_history = None
@@ -42,8 +92,21 @@ class StocksETL:
 
     def _initialize_logging(self, filepath="stocks_ETL_project"):
         """
-        Initializesself.logger for the class.
+        Initializes the logging for the class.
+
+        Args:
+            filepath: Path to the directory where the log file will be stored. Default is "stocks_ETL_project".
+
+        Returns:
+            logger: Logger object for logging.
+
+        Example:
+            ```
+            etl = StocksETL()
+            logger = etl._initialize_logging()
+            ``
         """
+        
         # Set upself.logger to console
         console = logging.StreamHandler()
         console.setLevel(logging.ERROR)
@@ -571,7 +634,6 @@ class StocksETL:
 
 
 if __name__ == "__main__":
-
     # extract data and send to SQL database - specify three airline stocks foe example.
 
     # set environment variables
