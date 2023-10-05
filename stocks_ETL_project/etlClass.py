@@ -229,8 +229,6 @@ class StocksETL:
             self.logger.info(f"historical {stock} data sent to sql")
             stock_max_date = str(stock_history.date.max())
 
-   
-
             # Open the file using the 'with' statement
             with open("last_update.txt", "w") as f:
                 f.write(f"{stock}_date_max {stock_max_date}")
