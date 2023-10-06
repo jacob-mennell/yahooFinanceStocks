@@ -21,14 +21,69 @@ from typing import Optional
 
 
 class ExploreStocks:
+    """
+    ExploreStocks class for downloading and preprocessing stock data.
+
+    Args:
+        stock_list: List of stock tickers to explore.
+        period: Time period to download historical data for (e.g., '1y', '2y', 'max').
+
+    Attributes:
+        stock_list: List of stock tickers to explore.
+        period: Time period to download historical data for.
+        currency_df: DataFrame for currency data.
+        stock_history: DataFrame for stock history data.
+        logger: Logger object for logging.
+
+    Methods:
+        __init__: Initializes the ExploreStocks class.
+        _initialize_logging: Initializes the logger for the class.
+        _download_and_preprocess_data: Downloads and preprocesses data for the specified stocks.
+        _download_initial_stock_info: Downloads initial stock information for the specified stocks.
+        _extract_currency_data: Extracts currency data for the specified stocks.
+        _download_exchange_rates: Download exchange rates for currencies used in the stock list.
+        _merge_exchange_rates_with_master: Merge historical stock data with exchange rates based on date and currency code.
+        return_df: Returns the stock history DataFrame.
+        plot_stock_price: Plots the stock price for each stock over time.
+        plot_trade_volume: Plots the volume traded for each stock over time.
+        plot_volatility: Plots the volatility of each stock (daily close % change).
+        plot_cumulative_returns: Plots the cumulative return of each stock over time.
+        plot_rolling_average: Plots the rolling average of each stock over time.
+        plot_future_trend: Predicts and plots the future trend of a stock.
+        plot_future_trend_grid_search: Predicts and plots the future trend of a stock using grid search.
+
+    Example:
+        ```
+        stock_list = ['AAPL', 'MSFT']
+        period = '1y'
+        explorer = ExploreStocks(stock_list, period)
+        explorer.plot_stock_price()
+        ```
+    """
+
     def __init__(self, stock_list: list[str], period: str):
         """
-        ExploreStocks class for downloading and preprocessing stock data.
+        Initializes the ExploreStocks class.
 
         Args:
             stock_list: List of stock tickers to explore.
             period: Time period to download historical data for (e.g., '1y', '2y', 'max').
+
+        Attributes:
+            stock_list: List of stock tickers to explore.
+            period: Time period to download historical data for.
+            currency_df: DataFrame for currency data.
+            stock_history: DataFrame for stock history data.
+            logger: Logger object for logging.
+
+        Example:
+            ```
+            stock_list = ['AAPL', 'MSFT']
+            period = '1y'
+            explorer = ExploreStocks(stock_list, period)
+            ```
         """
+
         self.stock_list = stock_list
         self.period = period
         self.currency_df = None
@@ -43,9 +98,19 @@ class ExploreStocks:
 
     def _initialize_logging(self):
         """
-        Initializesself.logger for the class.
+        Initializes the logging for the class.
+
+        Returns:
+            logger: Logger object for logging.
+
+        Example:
+            ```
+            explorer = ExploreStocks()
+            logger = explorer._initialize_logging()
+            ```
         """
-        # Set upself.logger to console
+
+        # Set up logger to console
         console = logging.StreamHandler()
         console.setLevel(logging.ERROR)
         console_format = "%(asctime)s | %(levelname)s: %(message)s"
