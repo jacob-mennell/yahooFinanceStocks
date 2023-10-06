@@ -124,157 +124,151 @@ class StocksETL:
 
         return create_engine(connect_str, fast_executemany=True)
 
+    def send_dataframe_to_sql(self, df, table_name):
+        """
+        Function to send a dataframe to SQL database.
 
-def send_dataframe_to_sql(self, df, table_name):
-    """
-    Function to send a dataframe to SQL database.
+        Arguments:
+            # df: dataframe to be sent to SQL database.
+            # table_name: name of the table in SQL database.
 
-    Arguments:
-        # df: dataframe to be sent to SQL database.
-        # table_name: name of the table in SQL database.
+        Return:
+            # returns note in log file to confirm data has been sent to SQL database
+        """
 
-    Return:
-        # returns note in log file to confirm data has been sent to SQL database
-    """
+        # send to SQL with SQL Alchemy
+        df.to_sql(
+            table_name,
+            self.engine,
+            if_exists="append",
+            index=False,
+        )
+        self.logger.info(f"{table_name} data sent to sql")
 
-    # send to SQL with SQL Alchemy
-    df.to_sql(
-        table_name,
-        self.engine,
-        if_exists="append",
-        index=False,
-    )
-    self.logger.info(f"{table_name} data sent to sql")
+    def get_stock_history(stock):
+        """
+        Function to pull historical stock data for a given stock.
 
+        Arguments:
+            stock: individual stock in which user wants to return data for.
 
-def get_stock_history(stock):
-    """
-    Function to pull historical stock data for a given stock.
+        Return:
+            Pandas DataFrame with historical stock data.
+        """
+        msft = yf.Ticker(stock)
+        stock_history = msft.history(period="max").reset_index()
+        stock_history = stock_history.rename(str.lower, axis="columns")
+        stock_history["stock"] = stock
+        stock_history["date"] = pd.to_datetime(stock_history["date"])
+        stock_history = stock_history[
+            ["date", "open", "high", "low", "close", "volume", "dividends", "stock"]
+        ]
+        return stock_history
 
-    Arguments:
-        stock: individual stock in which user wants to return data for.
+    def get_major_shareholders(stock):
+        """
+        Function to pull major shareholders data for a given stock.
 
-    Return:
-        Pandas DataFrame with historical stock data.
-    """
-    msft = yf.Ticker(stock)
-    stock_history = msft.history(period="max").reset_index()
-    stock_history = stock_history.rename(str.lower, axis="columns")
-    stock_history["stock"] = stock
-    stock_history["date"] = pd.to_datetime(stock_history["date"])
-    stock_history = stock_history[
-        ["date", "open", "high", "low", "close", "volume", "dividends", "stock"]
-    ]
-    return stock_history
+        Arguments:
+            stock: individual stock in which user wants to return data for.
 
+        Return:
+            Pandas DataFrame with major shareholders data.
+        """
+        msft = yf.Ticker(stock)
+        major_share_holders = msft.major_holders
+        major_share_holders = major_share_holders.rename(
+            columns={0: "percent", 1: "detail"}
+        )
+        major_share_holders["stock"] = stock
+        return major_share_holders
 
-def get_major_shareholders(stock):
-    """
-    Function to pull major shareholders data for a given stock.
+    def get_stock_financials(stock):
+        """
+        Function to pull financials data for a given stock.
 
-    Arguments:
-        stock: individual stock in which user wants to return data for.
+        Arguments:
+            stock: individual stock in which user wants to return data for.
 
-    Return:
-        Pandas DataFrame with major shareholders data.
-    """
-    msft = yf.Ticker(stock)
-    major_share_holders = msft.major_holders
-    major_share_holders = major_share_holders.rename(
-        columns={0: "percent", 1: "detail"}
-    )
-    major_share_holders["stock"] = stock
-    return major_share_holders
+        Return:
+            Pandas DataFrame with financials data.
+        """
+        msft = yf.Ticker(stock)
+        stock_financials = msft.financials.transpose().reset_index()
+        stock_financials.columns.values[0] = "date"
+        stock_financials["stock"] = stock
+        return stock_financials
 
+    def get_news(stock):
+        """
+        Function to pull news data for a given stock.
 
-def get_stock_financials(stock):
-    """
-    Function to pull financials data for a given stock.
+        Arguments:
+            stock: individual stock in which user wants to return data for.
 
-    Arguments:
-        stock: individual stock in which user wants to return data for.
+        Return:
+            Pandas DataFrame with news data.
+        """
+        msft = yf.Ticker(stock)
+        news_list = msft.news
+        column_names = [
+            "stock",
+            "uuid",
+            "title",
+            "publisher",
+            "link",
+            "provider_publish_time",
+            "type",
+        ]
+        news_df = pd.DataFrame(columns=column_names)
+        news_df["uuid"] = [x["uuid"] for x in news_list]
+        news_df["title"] = [x["title"] for x in news_list]
+        news_df["publisher"] = [x["publisher"] for x in news_list]
+        news_df["link"] = [x["link"] for x in news_list]
+        news_df["type"] = [x["type"] for x in news_list]
+        news_df["stock"] = stock
+        return news_df
 
-    Return:
-        Pandas DataFrame with financials data.
-    """
-    msft = yf.Ticker(stock)
-    stock_financials = msft.financials.transpose().reset_index()
-    stock_financials.columns.values[0] = "date"
-    stock_financials["stock"] = stock
-    return stock_financials
+    def combined_stock_sql_send(self, stock):
+        """
+        Function to pull stock information. Currently pulls historical stock data, major shareholders,
+        earnings, quarterly earnings and news.
 
+        Arguments:
+            stock: individual stock in which user wants to return data for.
 
-def get_news(stock):
-    """
-    Function to pull news data for a given stock.
+        Return:
+            None.
+        """
+        start = time.time()
 
-    Arguments:
-        stock: individual stock in which user wants to return data for.
+        try:
+            stock_history = get_stock_history(stock)
+            self.send_dataframe_to_sql(stock_history, "stock_history")
+            self.logger.info(f"historical {stock} data sent to sql")
+            stock_max_date = str(stock_history.date.max())
 
-    Return:
-        Pandas DataFrame with news data.
-    """
-    msft = yf.Ticker(stock)
-    news_list = msft.news
-    column_names = [
-        "stock",
-        "uuid",
-        "title",
-        "publisher",
-        "link",
-        "provider_publish_time",
-        "type",
-    ]
-    news_df = pd.DataFrame(columns=column_names)
-    news_df["uuid"] = [x["uuid"] for x in news_list]
-    news_df["title"] = [x["title"] for x in news_list]
-    news_df["publisher"] = [x["publisher"] for x in news_list]
-    news_df["link"] = [x["link"] for x in news_list]
-    news_df["type"] = [x["type"] for x in news_list]
-    news_df["stock"] = stock
-    return news_df
+            # Open the file using the 'with' statement
+            with open("last_update.txt", "w") as f:
+                f.write(f"{stock}_date_max {stock_max_date}")
 
+            major_share_holders = get_major_shareholders(stock)
+            self.send_dataframe_to_sql(major_share_holders, "major_share_holders")
+            self.logger.info(f"major share holders {stock} data sent to sql")
 
-def combined_stock_sql_send(self, stock):
-    """
-    Function to pull stock information. Currently pulls historical stock data, major shareholders,
-    earnings, quarterly earnings and news.
+            stock_financials = get_stock_financials(stock)
+            self.send_dataframe_to_sql(stock_financials, "financials")
+            self.logger.info(f"stock financials {stock} data sent to sql")
 
-    Arguments:
-        stock: individual stock in which user wants to return data for.
+            news_df = get_news(stock)
+            self.send_dataframe_to_sql(news_df, "news")
+            self.logger.info(f"{stock} news sent to sql")
 
-    Return:
-        None.
-    """
-    start = time.time()
+        except Exception as e:
+            self.logger.exception("An exception occurred: %s", e)
 
-    try:
-        stock_history = get_stock_history(stock)
-        self.send_dataframe_to_sql(stock_history, "stock_history")
-        self.logger.info(f"historical {stock} data sent to sql")
-        stock_max_date = str(stock_history.date.max())
-
-        # Open the file using the 'with' statement
-        with open("last_update.txt", "w") as f:
-            f.write(f"{stock}_date_max {stock_max_date}")
-
-        major_share_holders = get_major_shareholders(stock)
-        self.send_dataframe_to_sql(major_share_holders, "major_share_holders")
-        self.logger.info(f"major share holders {stock} data sent to sql")
-
-        stock_financials = get_stock_financials(stock)
-        self.send_dataframe_to_sql(stock_financials, "financials")
-        self.logger.info(f"stock financials {stock} data sent to sql")
-
-        news_df = get_news(stock)
-        self.send_dataframe_to_sql(news_df, "news")
-        self.logger.info(f"{stock} news sent to sql")
-
-    except Exception as e:
-        self.logger.exception("An exception occurred: %s", e)
-
-    end = time.time()
-    self.logger.info(f'{stock} extracted in {"{:.2f}".format(end - start)} seconds')
+        end = time.time()
+        self.logger.info(f'{stock} extracted in {"{:.2f}".format(end - start)} seconds')
 
     # function to extract data for multiple companies for comparison
     def combined_tables(self):
