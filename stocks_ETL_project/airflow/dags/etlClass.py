@@ -241,8 +241,8 @@ def combined_stock_sql_send(self, stock):
         stock_max_date = str(stock_history.date.max())
 
         # Open the file using the 'with' statement
-            with open("last_update.txt", "w") as f:
-                f.write(f"{stock}_date_max {stock_max_date}")
+        with open("last_update.txt", "w") as f:
+            f.write(f"{stock}_date_max {stock_max_date}")
 
         major_share_holders = get_major_shareholders(stock)
         self.send_dataframe_to_sql(major_share_holders, "major_share_holders")
