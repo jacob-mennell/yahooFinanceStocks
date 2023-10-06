@@ -18,12 +18,26 @@ class StocksETL:
         db_name: str = "stock_db",
     ):
         """
-        StocksETL class for downloading and preprocessing stock data.
+        Initializes the StocksETL class.
 
         Args:
-            stock_list:  List of stock tickers to explore.
+            stock_list: List of stock tickers to explore.
             database_type: Type of database to use ('azure_sql' or 'sqlite').
             db_name: Name of the SQLite database.
+
+        Attributes:
+            stock_list: List of stock tickers to explore.
+            currency_df: DataFrame for currency data.
+            stock_history: DataFrame for stock history data.
+            logger: Logger object for logging.
+            engine: SQLAlchemy engine for database connection.
+            conn: SQLite connection object.
+
+        Example:
+            ```
+            stock_list = ['AAPL', 'MSFT']
+            etl = StocksETL(stock_list)
+            ```
         """
         self.stock_list = stock_list
         self.currency_df = None
