@@ -6,13 +6,14 @@ import pandas as pd
 import yfinance as yf
 import sqlalchemy
 from sqlalchemy import create_engine, VARCHAR, DateTime, Float, String, Time
+from typing import List
 import sqlite3
 
 
 class StocksETL:
     def __init__(
         self,
-        stock_list: list[str],
+        stock_list: List[str],
         database_type: str = "sqlite",
         db_name: str = "stock_db",
     ):
@@ -20,7 +21,7 @@ class StocksETL:
         StocksETL class for downloading and preprocessing stock data.
 
         Args:
-            stock_list: List of stock tickers to explore.
+            stock_list:  List of stock tickers to explore.
             database_type: Type of database to use ('azure_sql' or 'sqlite').
             db_name: Name of the SQLite database.
         """
@@ -109,196 +110,156 @@ class StocksETL:
 
         return create_engine(connect_str, fast_executemany=True)
 
-    def combined_stock_sql_send(self, stock):
-        """
-        Function to pull stock information. Currently pulls historical stock data, major shareholders,
-        earnings, quarterly earnings and news.
 
-        Arguments:
-            # stock: individual stock in which user wants to return data for.
+def send_dataframe_to_sql(self, df, table_name):
+    """
+    Function to send a dataframe to SQL database.
 
-        Return:
-            # returns note in log file to confirm data has been sent to SQL database
-        """
+    Arguments:
+        # df: dataframe to be sent to SQL database.
+        # table_name: name of the table in SQL database.
 
-        # start of time function
-        start = time.time()
+    Return:
+        # returns note in log file to confirm data has been sent to SQL database
+    """
 
-        # create ticker for the stock
-        msft = yf.Ticker(stock)
+    # send to SQL with SQL Alchemy
+    df.to_sql(
+        table_name,
+        self.engine,
+        if_exists="append",
+        index=False,
+    )
+    self.logger.info(f"{table_name} data sent to sql")
 
-        try:
-            ##################################################
-            # return historical stock data and send to sql db
-            stock_history = msft.history(period="max").reset_index()
-            print(stock_history.columns)
 
-            stock_history = stock_history.rename(str.lower, axis="columns")
-            stock_history["stock"] = stock
-            stock_history["date"] = pd.to_datetime(stock_history["date"])
+def get_stock_history(stock):
+    """
+    Function to pull historical stock data for a given stock.
 
-            # filter cols
-            stock_history = stock_history[
-                ["date", "open", "high", "low", "close", "volume", "dividends", "stock"]
-            ]
+    Arguments:
+        stock: individual stock in which user wants to return data for.
 
-            # send to SQL with SQL Alchemy
-            stock_history.to_sql(
-                "stock_history",
-                self.engine,
-                dtype={
-                    "date": DateTime,
-                    "open": Float,
-                    "high": Float,
-                    "low": Float,
-                    "close": Float,
-                    "volume": Float,
-                    "dividends": Float,
-                    #  'stock splits': Float,
-                    "stock": VARCHAR,
-                },
-                if_exists="append",
-                index=False,
-            )
-            self.logger.info(f"historical {stock} data sent to sql")
-            stock_max_date = str(stock_history.date.max())
+    Return:
+        Pandas DataFrame with historical stock data.
+    """
+    msft = yf.Ticker(stock)
+    stock_history = msft.history(period="max").reset_index()
+    stock_history = stock_history.rename(str.lower, axis="columns")
+    stock_history["stock"] = stock
+    stock_history["date"] = pd.to_datetime(stock_history["date"])
+    stock_history = stock_history[
+        ["date", "open", "high", "low", "close", "volume", "dividends", "stock"]
+    ]
+    return stock_history
 
-            f = open("last_update.txt", "w")
-            f.write(f"{stock}_date_max {stock_max_date}")
 
-            # ##################################################
-            # # return major shareholders and send to SQL
-            major_share_holders = msft.major_holders
+def get_major_shareholders(stock):
+    """
+    Function to pull major shareholders data for a given stock.
 
-            # minor cleaning
-            major_share_holders = major_share_holders.rename(
-                columns={0: "percent", 1: "detail"}
-            )
-            major_share_holders["stock"] = stock
+    Arguments:
+        stock: individual stock in which user wants to return data for.
 
-            print(major_share_holders.columns)
+    Return:
+        Pandas DataFrame with major shareholders data.
+    """
+    msft = yf.Ticker(stock)
+    major_share_holders = msft.major_holders
+    major_share_holders = major_share_holders.rename(
+        columns={0: "percent", 1: "detail"}
+    )
+    major_share_holders["stock"] = stock
+    return major_share_holders
 
-            # send to SQL with SQL Alchemy
-            major_share_holders.to_sql(
-                "major_share_holders", self.engine, if_exists="append", index=False
-            )
-            self.logger.info(f"major share holders {stock} data sent to sql")
 
-            #################################################
-            # return financials and send to SQL
-            stock_financials = msft.financials.transpose().reset_index()
-            stock_financials.columns.values[0] = "date"
-            stock_financials["stock"] = stock
+def get_stock_financials(stock):
+    """
+    Function to pull financials data for a given stock.
 
-            # Define the list of common column names
-            # common_columns = ['date', 'Tax Effect Of Unusual Items', 'Tax Rate For Calcs', 'Normalized EBITDA',
-            #                 'Total Unusual Items', 'Total Unusual Items Excluding Goodwill',
-            #                 'Net Income From Continuing Operation Net Minority Interest',
-            #                 'Reconciled Depreciation', 'Reconciled Cost Of Revenue', 'EBIT',
-            #                 'Net Interest Income', 'Interest Expense', 'Interest Income',
-            #                 'Normalized Income', 'Net Income From Continuing And Discontinued Operation',
-            #                 'Total Expenses', 'Rent Expense Supplemental',
-            #                 'Total Operating Income As Reported', 'Diluted Average Shares',
-            #                 'Basic Average Shares', 'Diluted EPS', 'Basic EPS',
-            #                 'Diluted NI Availto Com Stockholders', 'Net Income Common Stockholders',
-            #                 'Otherunder Preferred Stock Dividend', 'Net Income', 'Minority Interests',
-            #                 'Net Income Including Noncontrolling Interests',
-            #                 'Net Income Continuous Operations', 'Tax Provision', 'Pretax Income']
+    Arguments:
+        stock: individual stock in which user wants to return data for.
 
-            # # Filter DataFrame using the common columns
-            # stock_financials = stock_financials[common_columns]
+    Return:
+        Pandas DataFrame with financials data.
+    """
+    msft = yf.Ticker(stock)
+    stock_financials = msft.financials.transpose().reset_index()
+    stock_financials.columns.values[0] = "date"
+    stock_financials["stock"] = stock
+    return stock_financials
 
-            # send to SQL with SQL Alchemy
-            stock_financials.to_sql(
-                "financials", self.engine, if_exists="append", index=False
-            )
 
-            self.logger.info(f"stock financials {stock} data sent to sql")
+def get_news(stock):
+    """
+    Function to pull news data for a given stock.
 
-            # ISSUE:
-            #       issue with API request for earnings data
+    Arguments:
+        stock: individual stock in which user wants to return data for.
 
-            #     ##################################################
-            # return earnings and send to SQL
-            # stock_earnings = msft.earnings.reset_index()
+    Return:
+        Pandas DataFrame with news data.
+    """
+    msft = yf.Ticker(stock)
+    news_list = msft.news
+    column_names = [
+        "stock",
+        "uuid",
+        "title",
+        "publisher",
+        "link",
+        "provider_publish_time",
+        "type",
+    ]
+    news_df = pd.DataFrame(columns=column_names)
+    news_df["uuid"] = [x["uuid"] for x in news_list]
+    news_df["title"] = [x["title"] for x in news_list]
+    news_df["publisher"] = [x["publisher"] for x in news_list]
+    news_df["link"] = [x["link"] for x in news_list]
+    news_df["type"] = [x["type"] for x in news_list]
+    news_df["stock"] = stock
+    return news_df
 
-            # stock_earnings = stock_earnings.rename(str.lower, axis='columns')
-            # stock_earnings['stock'] = stock
 
-            # print(stock_earnings.columns)
+def combined_stock_sql_send(self, stock):
+    """
+    Function to pull stock information. Currently pulls historical stock data, major shareholders,
+    earnings, quarterly earnings and news.
 
-            # # filter cols
-            # # stock_earnings = stock_earnings['stock', 'date']
+    Arguments:
+        stock: individual stock in which user wants to return data for.
 
-            # # # send to SQL with SQL Alchemy
-            # stock_earnings.to_sql(
-            #     'earnings', self.engine, if_exists='append', index=False)
-            # self.logger.info(f'{stock} earnings data sent to sql')
+    Return:
+        None.
+    """
+    start = time.time()
 
-            #     ##################################################
-            #     #return quarterly earnings and send to SQL
-            # stock_quarterly_earnings = msft.quarterly_earnings.reset_index()
+    try:
+        stock_history = get_stock_history(stock)
+        self.send_dataframe_to_sql(stock_history, "stock_history")
+        self.logger.info(f"historical {stock} data sent to sql")
+        stock_max_date = str(stock_history.date.max())
 
-            # stock_quarterly_earnings = stock_quarterly_earnings.rename(str.lower, axis='columns')
-            # stock_quarterly_earnings['stock'] = stock
+        f = open("last_update.txt", "w")
+        f.write(f"{stock}_date_max {stock_max_date}")
 
-            # print(stock_quarterly_earnings.columns)
+        major_share_holders = get_major_shareholders(stock)
+        self.send_dataframe_to_sql(major_share_holders, "major_share_holders")
+        self.logger.info(f"major share holders {stock} data sent to sql")
 
-            # # filter cols
-            # stock_quarterly_earnings = stock_quarterly_earnings['stock', 'date']
+        stock_financials = get_stock_financials(stock)
+        self.send_dataframe_to_sql(stock_financials, "financials")
+        self.logger.info(f"stock financials {stock} data sent to sql")
 
-            # # # send to SQL with SQL Alchemy
-            # stock_quarterly_earnings.to_sql(
-            #     'quarterly_earnings', self.engine, if_exists='append', index=False)
-            # self.logger.info(f'{stock} quarterly earnings data sent to sql')
+        news_df = get_news(stock)
+        self.send_dataframe_to_sql(news_df, "news")
+        self.logger.info(f"{stock} news sent to sql")
 
-            ##################################################
-            # return news and send to SQL
-            news_list = msft.news
-            column_names = [
-                "stock",
-                "uuid",
-                "title",
-                "publisher",
-                "link",
-                "provider_publish_time",
-                "type",
-            ]
-            news_df = pd.DataFrame(columns=column_names)
-            news_df["uuid"] = [x["uuid"] for x in news_list]
-            news_df["title"] = [x["title"] for x in news_list]
-            news_df["publisher"] = [x["publisher"] for x in news_list]
-            news_df["link"] = [x["link"] for x in news_list]
+    except Exception as e:
+        self.logger.exception("An exception occurred: %s", e)
 
-            # old way of formatting dates
-            # dates = [int(x['providerPublishTime']) for x in news_list]
-            # func = lambda x: datetime.utcfromtimestamp(x).strftime('%Y-%m-%d %H:%M:%S')
-            # news_df['providerPublishTime'] = list(map(func, dates))
-            # formatting dates
-            # dates = [int(x['providerPublishTime']) for x in news_list]
-            # news_df['provider_publish_time'] = [datetime.utcfromtimestamp(x).strftime('%Y-%m-%d %H:%M:%S') for x in dates]
-
-            # type
-            news_df["type"] = [x["type"] for x in news_list]
-            news_df["stock"] = stock
-
-            print(news_df.columns)
-
-            # filter cols
-            # news_df = news_df['stock', 'date']
-
-            # send to SQL with SQL Alchemy
-            news_df.to_sql("news", self.engine, if_exists="append", index=False)
-            self.logger.info(f"{stock} news sent to sql")
-
-        except Exception as e:
-            # Log the exception along with its traceback
-            self.logger.exception("An exception occurred: %s", e)
-
-        # end of function
-        end = time.time()
-
-        self.logger.info(f'{stock} extracted in {"{:.2f}".format(end - start)} seconds')
+    end = time.time()
+    self.logger.info(f'{stock} extracted in {"{:.2f}".format(end - start)} seconds')
 
     # function to extract data for multiple companies for comparison
     def combined_tables(self):
