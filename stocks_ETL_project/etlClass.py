@@ -368,9 +368,9 @@ class StocksETL:
             self.logger.info(f"historical {stock} data sent to sql")
             stock_max_date = str(stock_history.date.max())
 
-            # set new dates to limit size of future uploads
-            f = open("last_update.txt", "w")
-            f.write(f"{stock}_date_max {stock_max_date}")
+            # Set new dates to limit size of future uploads
+            with open("last_update.txt", "w") as f:
+                f.write(f"{stock}_date_max {stock_max_date}")
 
         except Exception as e:
             self.logger.error("An exception occurred: %s", e)
