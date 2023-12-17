@@ -3,26 +3,13 @@ import os
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+from ..etlClass import StocksETL
 
 # set environment variables
 # os.environ['SQL_USERNAME'] = 
 # os.environ["SQL_PASSWORD"] = 
 # os.environ["SQL_SERVER"] = 
 # os.environ["SQL_DATABASE"] = 
-
-# Get the directory of the current script (dataExtract_DAG.py)
-current_script_dir = os.path.dirname(os.path.abspath(__file__))
-
-# Get the parent directory of the current script (airflow/dags)
-parent_dir = os.path.dirname(current_script_dir)
-
-# Get the parent of the parent directory (python_sql_tableau_project)
-package_dir = os.path.dirname(parent_dir)
-
-# Add the package directory to the Python path
-sys.path.append(package_dir)
-
-from etlClass import StocksETL
 
 def run_etl(stock_list, period, interval):
     x = StocksETL(stock_list)
