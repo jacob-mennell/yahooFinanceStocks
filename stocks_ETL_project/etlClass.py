@@ -89,7 +89,7 @@ class StocksETL:
 
         return engine, conn
 
-    def setup_azure_sql(self):
+    def setup_azure_sql(self, driver = "ODBC Driver 17 for SQL Server"):
         """
         Function to set up the SQL connection.
 
@@ -117,7 +117,6 @@ class StocksETL:
         sql_password = os.environ["SQL_PASSWORD"]
         sql_server = os.environ["SQL_SERVER"]
         sql_database = os.environ["SQL_DATABASE"]
-        driver = "ODBC Driver 17 for SQL Server"
 
         odbc_str = f"Driver={driver};Server={sql_server},1433;Database={sql_database};Uid={sql_username};Pwd={sql_password};Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
         connect_str = f"mssql+pyodbc:///?odbc_connect={odbc_str}"
