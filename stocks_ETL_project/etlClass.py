@@ -153,6 +153,7 @@ class StocksETL:
             dtype: Dictionary of column names and data types to be used when creating the table (default: None).
         
         Returns:
+            Returns:
             None. This function logs a note in the log file to confirm that data has been sent to the SQL database.
         """
         
@@ -289,7 +290,7 @@ class StocksETL:
             # companies: list of stocks that we want to return data for
 
         Return:
-            # returns note in log file to confirm data has been sent to SQL database
+            None.
         """
 
         try:
