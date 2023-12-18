@@ -124,26 +124,29 @@ class StocksETL:
 
         return create_engine(connect_str, fast_executemany=True)
 
-    def send_dataframe_to_sql(self, df, table_name):
+    def send_dataframe_to_sql(self, df, table_name, if_exists="append"):
         """
         Function to send a dataframe to SQL database.
-
+    
         Arguments:
-            # df: dataframe to be sent to SQL database.
-            # table_name: name of the table in SQL database.
-
+            df: dataframe to be sent to SQL database.
+            table_name: name of the table in SQL database.
+            if_exists: action to take if the table already exists in the SQL database.
+                       Options: "fail", "replace", "append" (default: "append")
+    
         Return:
-            # returns note in log file to confirm data has been sent to SQL database
+            Returns a note in the log file to confirm data has been sent to the SQL database.
         """
-
-        # send to SQL with SQL Alchemy
+    
+        # Send to SQL with SQL Alchemy
         df.to_sql(
             table_name,
             self.engine,
-            if_exists="append",
+            if_exists=if_exists,
             index=False,
         )
-        self.logger.info(f"{table_name} data sent to sql")
+        self.logger.info(f"{table_name} data sent to SQL")
+
 
     def get_stock_history(stock):
         """
