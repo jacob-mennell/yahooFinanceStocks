@@ -160,30 +160,6 @@ class StocksETL:
             dtype=dtype
         )
         
-    def send_dataframe_to_sql(self, df, table_name, if_exists="append", dtype=None):
-        """
-        Function to send a dataframe to SQL database.
-    
-        Arguments:
-            df: dataframe to be sent to SQL database.
-            table_name: name of the table in SQL database.
-            if_exists: action to take if the table already exists in the SQL database.
-                       Options: "fail", "replace", "append" (default: "append")
-            dtype: dictionary of column names and data types to be used when creating the table (default: None)
-    
-        Return:
-            Returns a note in the log file to confirm data has been sent to the SQL database.
-        """
-    
-        # Send to SQL with SQL Alchemy
-        df.to_sql(
-            table_name,
-            self.engine,
-            if_exists=if_exists,
-            index=False,
-            dtype=dtype
-        )
-
     def get_stock_history(self, stock):
         """
         Function to pull historical stock data for a given stock.
