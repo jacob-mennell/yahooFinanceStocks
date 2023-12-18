@@ -8,15 +8,20 @@ import sqlalchemy
 from sqlalchemy import create_engine, VARCHAR, DateTime, Float, String, Time
 from typing import List
 import sqlite3
-
+    
+    
 # util func
 def log_method_call(func):
     def wrapper(self, *args, **kwargs):
         method_name = func.__name__
         self.logger.info(f"Calling {method_name} with args: {args}, kwargs: {kwargs}")
-        result = func(self, *args, **kwargs)
-        self.logger.info(f"{method_name} executed successfully.")
-        return result
+        try:
+            result = func(self, *args, **kwargs)
+            self.logger.info(f"{method_name} executed successfully.")
+            return result
+        except Exception as e:
+            self.logger.exception(f"Exception in {method_name}: {e}")
+            raise  # Re-raise the exception after logging
     return wrapper
 
 
