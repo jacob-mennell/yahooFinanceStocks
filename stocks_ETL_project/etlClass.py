@@ -300,7 +300,6 @@ class StocksETL:
         )
 
         # get tables for each individual stock
-        # [stock_sql_send(item) for item in companies]
         list(map(self.combined_stock_sql_send, self.stock_list))
 
         return self.logger.info("SQL Updated with combined tables")
@@ -338,17 +337,7 @@ class StocksETL:
 
         # create ticker for the stock
         msft = yf.Ticker(stock)
-
-        # replaced with get_last_update_date(stock) func
-        # create dicts of dates from text file for date filtering prior to upload
-        # date_dict = {}
-        # with open("last_update.txt") as f:
-        #     for line in f:
-        #         k, v = line.split(' ', 1)
-        #         v = v[:-1]
-        #         date_dict[k] = v
-        # f.close
-
+        
         try:
             # return historical stock data and send to sql db
             today_date = date.today()
@@ -457,7 +446,6 @@ class StocksETL:
         date_df["year"] = currency_df["Date"].dt.year
         date_df["quarter"] = currency_df["Date"].dt.quarter
         date_df["month"] = currency_df["Date"].dt.month
-        # date_df['week_number_of_year'] = currency_df['Date'].dt.week
 
         date_df.to_sql("date_dimension", self.engine, if_exists="append", index=False)
 
@@ -488,18 +476,14 @@ class StocksETL:
         """
         Function to clear database prior to new batch import.
         To be replaced with drop() or drop_all() method.
-
+    
         Arguments:
             # empty
-
+    
         Return:
-            # returns note in log file to confirm data has been cleared in postgres SQL database
+            # returns note in log file to confirm data has been cleared in PostgreSQL database
         """
-
-        connection = self.engine.raw_connection()
-        cursor = connection.cursor()
-
-        # add in a sql statement that drops all tables.
+    
         table_list = [
             "earnings",
             "financials",
@@ -509,12 +493,13 @@ class StocksETL:
             "stock_history",
             "stocks_master",
         ]
-
-        for table in table_list:
-            cursor.execute(f"DROP TABLE IF EXISTS {table};")
-            connection.commit()
-            self.logger.info(f"{table} dropped from database")
-        cursor.close()
+    
+        with self.engine.raw_connection() as connection:
+            with connection.cursor() as cursor:
+                for table in table_list:
+                    cursor.execute(f"DROP TABLE IF EXISTS {table};")
+                    connection.commit()
+                    self.logger.info(f"{table} dropped from database")
 
     def sqlcol(self, dfparam):
         dtypedict = {}
