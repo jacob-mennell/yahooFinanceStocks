@@ -164,7 +164,8 @@ class StocksETL:
             index=False,
             dtype=dtype
         )
-        
+    
+    @log_method_call
     def get_stock_history(self, stock):
         """
         Function to pull historical stock data for a given stock.
@@ -184,6 +185,7 @@ class StocksETL:
         ]
         return stock_history
 
+    @log_method_call
     def get_major_shareholders(self, stock):
         """
         Function to pull major shareholders data for a given stock.
@@ -201,6 +203,7 @@ class StocksETL:
         major_share_holders["stock"] = stock
         return major_share_holders
 
+    @log_method_call
     def get_stock_financials(self, stock):
         """
         Function to pull financials data for a given stock.
@@ -216,6 +219,7 @@ class StocksETL:
         stock_financials["stock"] = stock
         return stock_financials
 
+    @log_method_call
     def get_news(self, stock):
         """
         Function to pull news data for a given stock.
@@ -245,6 +249,7 @@ class StocksETL:
         news_df["stock"] = stock
         return news_df
 
+    @log_method_call
     def combined_stock_sql_send(self, stock):
         """
         Function to pull stock information. Currently pulls historical stock data, major shareholders,
@@ -256,32 +261,24 @@ class StocksETL:
         Return:
             None.
         """
-        start = time.time()
+        
+        stock_history = self.get_stock_history(stock)
+        self.send_dataframe_to_sql(stock_history, "stock_history")
+        self.logger.info(f"historical {stock} data sent to sql")
+        stock_max_date = str(stock_history.date.max())
 
-        try:
-            stock_history = self.get_stock_history(stock)
-            self.send_dataframe_to_sql(stock_history, "stock_history")
-            self.logger.info(f"historical {stock} data sent to sql")
-            stock_max_date = str(stock_history.date.max())
+        # Open the file using the 'with' statement
+        with open("last_update.txt", "w") as f:
+            f.write(f"{stock}_date_max {stock_max_date}")
 
-            # Open the file using the 'with' statement
-            with open("last_update.txt", "w") as f:
-                f.write(f"{stock}_date_max {stock_max_date}")
+        major_share_holders = self.get_major_shareholders(stock)
+        self.send_dataframe_to_sql(major_share_holders, "major_share_holders")
 
-            major_share_holders = self.get_major_shareholders(stock)
-            self.send_dataframe_to_sql(major_share_holders, "major_share_holders")
+        stock_financials = self.get_stock_financials(stock)
+        self.send_dataframe_to_sql(stock_financials, "financials")
 
-            stock_financials = self.get_stock_financials(stock)
-            self.send_dataframe_to_sql(stock_financials, "financials")
-
-            news_df = self.get_news(stock)
-            self.send_dataframe_to_sql(news_df, "news")
-
-        except Exception as e:
-            self.logger.exception("An exception occurred: %s", e)
-
-        end = time.time()
-        self.logger.info(f'{stock} extracted in {"{:.2f}".format(end - start)} seconds')
+        news_df = self.get_news(stock)
+        self.send_dataframe_to_sql(news_df, "news")
 
     def combined_tables(self):
         """
