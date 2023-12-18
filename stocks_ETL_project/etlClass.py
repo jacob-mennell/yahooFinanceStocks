@@ -139,6 +139,30 @@ class StocksETL:
     def send_dataframe_to_sql(self, df, table_name, if_exists="append", dtype=None):
         """
         Function to send a dataframe to SQL database.
+        
+        Args:
+            df: DataFrame to be sent to the SQL database.
+            table_name: Name of the table in the SQL database.
+            if_exists: Action to take if the table already exists in the SQL database.
+                       Options: "fail", "replace", "append" (default: "append").
+            dtype: Dictionary of column names and data types to be used when creating the table (default: None).
+        
+        Returns:
+            None. This function logs a note in the log file to confirm that data has been sent to the SQL database.
+        """
+        
+        # Send to SQL with SQL Alchemy
+        df.to_sql(
+            table_name,
+            self.engine,
+            if_exists=if_exists,
+            index=False,
+            dtype=dtype
+        )
+        
+    def send_dataframe_to_sql(self, df, table_name, if_exists="append", dtype=None):
+        """
+        Function to send a dataframe to SQL database.
     
         Arguments:
             df: dataframe to be sent to SQL database.
