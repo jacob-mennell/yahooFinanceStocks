@@ -9,6 +9,16 @@ from sqlalchemy import create_engine, VARCHAR, DateTime, Float, String, Time
 from typing import List
 import sqlite3
 
+# util func
+def log_method_call(func):
+    def wrapper(self, *args, **kwargs):
+        method_name = func.__name__
+        self.logger.info(f"Calling {method_name} with args: {args}, kwargs: {kwargs}")
+        result = func(self, *args, **kwargs)
+        self.logger.info(f"{method_name} executed successfully.")
+        return result
+    return wrapper
+
 
 class StocksETL:
     def __init__(
@@ -125,6 +135,7 @@ class StocksETL:
 
         return create_engine(connect_str, fast_executemany=True)
 
+    @log_method_call
     def send_dataframe_to_sql(self, df, table_name, if_exists="append", dtype=None):
         """
         Function to send a dataframe to SQL database.
@@ -148,7 +159,6 @@ class StocksETL:
             index=False,
             dtype=dtype
         )
-        self.logger.info(f"{table_name} data sent to SQL")
 
     def get_stock_history(self, stock):
         """
