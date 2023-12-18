@@ -52,6 +52,8 @@ class StocksETL:
         elif database_type == "sqlite":
             self.engine, self.conn = self.setup_sqlite(db_name)
 
+        self.tickers = {stock: yf.Ticker(stock) for stock in stock_list}
+
     def _initialize_logging(self, filepath="stocks_ETL_project"):
         """
         Initializesself.logger for the class.
@@ -158,8 +160,7 @@ class StocksETL:
         Return:
             Pandas DataFrame with historical stock data.
         """
-        msft = yf.Ticker(stock)
-        stock_history = msft.history(period="max").reset_index()
+        stock_history = self.tickers[stock].history(period="max").reset_index()
         stock_history = stock_history.rename(str.lower, axis="columns")
         stock_history["stock"] = stock
         stock_history["date"] = pd.to_datetime(stock_history["date"])
@@ -178,8 +179,7 @@ class StocksETL:
         Return:
             Pandas DataFrame with major shareholders data.
         """
-        msft = yf.Ticker(stock)
-        major_share_holders = msft.major_holders
+        major_share_holders = self.tickers[stock].major_holders
         major_share_holders = major_share_holders.rename(
             columns={0: "percent", 1: "detail"}
         )
@@ -196,8 +196,7 @@ class StocksETL:
         Return:
             Pandas DataFrame with financials data.
         """
-        msft = yf.Ticker(stock)
-        stock_financials = msft.financials.transpose().reset_index()
+        stock_financials = self.tickers[stock].financials.transpose().reset_index()
         stock_financials.columns.values[0] = "date"
         stock_financials["stock"] = stock
         return stock_financials
@@ -212,8 +211,7 @@ class StocksETL:
         Return:
             Pandas DataFrame with news data.
         """
-        msft = yf.Ticker(stock)
-        news_list = msft.news
+        news_list = self.tickers[stock].news
         column_names = [
             "stock",
             "uuid",
@@ -331,7 +329,7 @@ class StocksETL:
         start = time.time()
 
         # create ticker for the stock
-        msft = yf.Ticker(stock)
+        msft = self.tickers[stock]
         
         try:
             # return historical stock data and send to sql db
@@ -373,7 +371,7 @@ class StocksETL:
         # loop to extract currency for each ticker using .info method
         for ticker in self.stock_list:
             try:
-                tick = yf.Ticker(ticker)
+                tick = self.tickers[ticker]
 
                 currency_code[ticker] = tick.info["currency"]
             except Exception as e:
