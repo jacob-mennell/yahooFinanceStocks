@@ -254,15 +254,12 @@ class StocksETL:
 
             major_share_holders = get_major_shareholders(stock)
             self.send_dataframe_to_sql(major_share_holders, "major_share_holders")
-            self.logger.info(f"major share holders {stock} data sent to sql")
 
             stock_financials = get_stock_financials(stock)
             self.send_dataframe_to_sql(stock_financials, "financials")
-            self.logger.info(f"stock financials {stock} data sent to sql")
 
             news_df = get_news(stock)
             self.send_dataframe_to_sql(news_df, "news")
-            self.logger.info(f"{stock} news sent to sql")
 
         except Exception as e:
             self.logger.exception("An exception occurred: %s", e)
