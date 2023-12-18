@@ -8,6 +8,21 @@ import sqlalchemy
 from sqlalchemy import create_engine, VARCHAR, DateTime, Float, String, Time
 from typing import List
 import sqlite3
+    
+    
+# util func
+def log_method_call(func):
+    def wrapper(self, *args, **kwargs):
+        method_name = func.__name__
+        self.logger.info(f"Calling {method_name} with args: {args}, kwargs: {kwargs}")
+        try:
+            result = func(self, *args, **kwargs)
+            self.logger.info(f"{method_name} executed successfully.")
+            return result
+        except Exception as e:
+            self.logger.exception(f"Exception in {method_name}: {e}")
+            raise  # Re-raise the exception after logging
+    return wrapper
 
 
 class StocksETL:
@@ -51,6 +66,8 @@ class StocksETL:
             self.engine = self.setup_azure_sql()
         elif database_type == "sqlite":
             self.engine, self.conn = self.setup_sqlite(db_name)
+
+        self.tickers = {stock: yf.Ticker(stock) for stock in stock_list}
 
     def _initialize_logging(self, filepath="stocks_ETL_project"):
         """
@@ -123,31 +140,33 @@ class StocksETL:
 
         return create_engine(connect_str, fast_executemany=True)
 
-    def send_dataframe_to_sql(self, df, table_name, if_exists="append"):
+    @log_method_call
+    def send_dataframe_to_sql(self, df, table_name, if_exists="append", dtype=None):
         """
         Function to send a dataframe to SQL database.
-    
-        Arguments:
-            df: dataframe to be sent to SQL database.
-            table_name: name of the table in SQL database.
-            if_exists: action to take if the table already exists in the SQL database.
-                       Options: "fail", "replace", "append" (default: "append")
-    
-        Return:
-            Returns a note in the log file to confirm data has been sent to the SQL database.
+        
+        Args:
+            df: DataFrame to be sent to the SQL database.
+            table_name: Name of the table in the SQL database.
+            if_exists: Action to take if the table already exists in the SQL database.
+                       Options: "fail", "replace", "append" (default: "append").
+            dtype: Dictionary of column names and data types to be used when creating the table (default: None).
+        
+        Returns:
+            None. This function logs a note in the log file to confirm that data has been sent to the SQL database.
         """
-    
+        
         # Send to SQL with SQL Alchemy
         df.to_sql(
             table_name,
             self.engine,
             if_exists=if_exists,
             index=False,
+            dtype=dtype
         )
-        self.logger.info(f"{table_name} data sent to SQL")
-
-
-    def get_stock_history(stock):
+    
+    @log_method_call
+    def get_stock_history(self, stock):
         """
         Function to pull historical stock data for a given stock.
 
@@ -157,8 +176,7 @@ class StocksETL:
         Return:
             Pandas DataFrame with historical stock data.
         """
-        msft = yf.Ticker(stock)
-        stock_history = msft.history(period="max").reset_index()
+        stock_history = self.tickers[stock].history(period="max").reset_index()
         stock_history = stock_history.rename(str.lower, axis="columns")
         stock_history["stock"] = stock
         stock_history["date"] = pd.to_datetime(stock_history["date"])
@@ -167,7 +185,8 @@ class StocksETL:
         ]
         return stock_history
 
-    def get_major_shareholders(stock):
+    @log_method_call
+    def get_major_shareholders(self, stock):
         """
         Function to pull major shareholders data for a given stock.
 
@@ -177,15 +196,15 @@ class StocksETL:
         Return:
             Pandas DataFrame with major shareholders data.
         """
-        msft = yf.Ticker(stock)
-        major_share_holders = msft.major_holders
+        major_share_holders = self.tickers[stock].major_holders
         major_share_holders = major_share_holders.rename(
             columns={0: "percent", 1: "detail"}
         )
         major_share_holders["stock"] = stock
         return major_share_holders
 
-    def get_stock_financials(stock):
+    @log_method_call
+    def get_stock_financials(self, stock):
         """
         Function to pull financials data for a given stock.
 
@@ -195,13 +214,13 @@ class StocksETL:
         Return:
             Pandas DataFrame with financials data.
         """
-        msft = yf.Ticker(stock)
-        stock_financials = msft.financials.transpose().reset_index()
+        stock_financials = self.tickers[stock].financials.transpose().reset_index()
         stock_financials.columns.values[0] = "date"
         stock_financials["stock"] = stock
         return stock_financials
 
-    def get_news(stock):
+    @log_method_call
+    def get_news(self, stock):
         """
         Function to pull news data for a given stock.
 
@@ -211,8 +230,7 @@ class StocksETL:
         Return:
             Pandas DataFrame with news data.
         """
-        msft = yf.Ticker(stock)
-        news_list = msft.news
+        news_list = self.tickers[stock].news
         column_names = [
             "stock",
             "uuid",
@@ -231,6 +249,7 @@ class StocksETL:
         news_df["stock"] = stock
         return news_df
 
+    @log_method_call
     def combined_stock_sql_send(self, stock):
         """
         Function to pull stock information. Currently pulls historical stock data, major shareholders,
@@ -242,34 +261,25 @@ class StocksETL:
         Return:
             None.
         """
-        start = time.time()
+        
+        stock_history = self.get_stock_history(stock)
+        self.send_dataframe_to_sql(stock_history, "stock_history")
+        self.logger.info(f"historical {stock} data sent to sql")
+        stock_max_date = str(stock_history.date.max())
 
-        try:
-            stock_history = get_stock_history(stock)
-            self.send_dataframe_to_sql(stock_history, "stock_history")
-            self.logger.info(f"historical {stock} data sent to sql")
-            stock_max_date = str(stock_history.date.max())
+        # Open the file using the 'with' statement
+        with open("last_update.txt", "w") as f:
+            f.write(f"{stock}_date_max {stock_max_date}")
 
-            # Open the file using the 'with' statement
-            with open("last_update.txt", "w") as f:
-                f.write(f"{stock}_date_max {stock_max_date}")
+        major_share_holders = self.get_major_shareholders(stock)
+        self.send_dataframe_to_sql(major_share_holders, "major_share_holders")
 
-            major_share_holders = get_major_shareholders(stock)
-            self.send_dataframe_to_sql(major_share_holders, "major_share_holders")
+        stock_financials = self.get_stock_financials(stock)
+        self.send_dataframe_to_sql(stock_financials, "financials")
 
-            stock_financials = get_stock_financials(stock)
-            self.send_dataframe_to_sql(stock_financials, "financials")
+        news_df = self.get_news(stock)
+        self.send_dataframe_to_sql(news_df, "news")
 
-            news_df = get_news(stock)
-            self.send_dataframe_to_sql(news_df, "news")
-
-        except Exception as e:
-            self.logger.exception("An exception occurred: %s", e)
-
-        end = time.time()
-        self.logger.info(f'{stock} extracted in {"{:.2f}".format(end - start)} seconds')
-
-    # function to extract data for multiple companies for comparison
     def combined_tables(self):
         """
         Function to pull stock information for multiple stocks. Currently pulls historical stock data, major shareholders,
@@ -290,13 +300,9 @@ class StocksETL:
         # create master table
         stock_df = pd.DataFrame(columns=["stock"])
         stock_df["stock"] = list(self.stock_list)
-        stock_df.to_sql(
-            "stocks_master",
-            self.engine,
-            dtype=self.sqlcol(stock_df),
-            if_exists="append",
-            index=False,
-        )
+        self.send_dataframe_to_sql(stock_df,
+                                   "stocks_master", 
+                                   dtype=self.sqlcol(stock_df))
 
         # get tables for each individual stock
         list(map(self.combined_stock_sql_send, self.stock_list))
@@ -335,13 +341,13 @@ class StocksETL:
         start = time.time()
 
         # create ticker for the stock
-        msft = yf.Ticker(stock)
+        msft = self.tickers[stock]
         
         try:
             # return historical stock data and send to sql db
             today_date = date.today()
             stock_history = msft.history(
-                start=get_last_update_date(stock), end=today_date, interval="1d"
+                start=self.get_last_update_date(stock), end=today_date, interval="1d"
             ).reset_index()
 
             # minor cleaning
@@ -350,10 +356,7 @@ class StocksETL:
             stock_history["date"] = pd.to_datetime(stock_history["date"])
 
             # send to SQL with SQL Alchemy
-            stock_history.to_sql(
-                f"stock_history", self.engine, if_exists="append", index=False
-            )
-            self.logger.info(f"historical {stock} data sent to sql")
+            self.send_dataframe_to_sql(stock_history, "stock_history")
             stock_max_date = str(stock_history.date.max())
 
             # Set new dates to limit size of future uploads
@@ -380,7 +383,7 @@ class StocksETL:
         # loop to extract currency for each ticker using .info method
         for ticker in self.stock_list:
             try:
-                tick = yf.Ticker(ticker)
+                tick = self.tickers[ticker]
 
                 currency_code[ticker] = tick.info["currency"]
             except Exception as e:
@@ -444,7 +447,7 @@ class StocksETL:
         date_df["quarter"] = currency_df["Date"].dt.quarter
         date_df["month"] = currency_df["Date"].dt.month
 
-        date_df.to_sql("date_dimension", self.engine, if_exists="append", index=False)
+        self.send_dataframe_to_sql(date_df, "date_dimension")
 
         # create unique id
         currency_df["exchange_id"] = currency_df["Date"].dt.strftime("%m%d%Y") + (
@@ -463,9 +466,7 @@ class StocksETL:
             left_on=["currency_code"],
             right_on=["FromCurrency"],
         )
-        exchange_df.to_sql(
-            "exhange_table", self.engine, if_exists="append", index=False
-        )
+        self.send_dataframe_to_sql(exchange_df, "exhange_table")
 
         return self.logger.info("Exchange rate table created in SQL database")
 
