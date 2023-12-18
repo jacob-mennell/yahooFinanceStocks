@@ -402,9 +402,7 @@ class StocksETL:
                 "YahooTickers": [f"{a}GBP=X" for a in currencylist],
             }
         )
-
-        print(meta_df["YahooTickers"])
-
+        
         currency_df = pd.DataFrame(
             yf.download(
                 tickers=meta_df["YahooTickers"].values[0],
