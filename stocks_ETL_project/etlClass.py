@@ -153,7 +153,6 @@ class StocksETL:
             dtype: Dictionary of column names and data types to be used when creating the table (default: None).
         
         Returns:
-            Returns:
             None. This function logs a note in the log file to confirm that data has been sent to the SQL database.
         """
         
