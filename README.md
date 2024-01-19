@@ -22,9 +22,9 @@ Data extracted from the Yahoo Finance module includes historical stock data, maj
 
 In addition to the Yahoo Finance ETL process, the project utilizes Apache Airflow for workflow automation and scheduling. By converting the data extraction tasks into an Airflow DAG (Directed Acyclic Graph), you have the ability to manage and monitor data pipelines easily.
 
-Docker provides thr ability to deploy and manage the entire project. Docker allows you to containerize the project, ensuring consistent execution across various environments. Docker Compose simplifies the deployment by defining services, networks, and volumes required for the application in a single `docker-compose.yml` file.
+Docker provides the ability to deploy and manage the entire project. Docker allows you to containerize the project, ensuring consistent execution across various environments. Docker Compose simplifies the deployment by defining services, networks, and volumes required for the application in a single `docker-compose.yml` file.
 
-The combination of Airflow and Docker provides a scalable and reliable solution for automated data extraction, processing, and storage. The project can be deployed to different environments with ease, allowing for efficient management and scaling of containers.
+The combination of Airflow and Docker provides a scalable and reliable solution for automating data extraction, processing, and storage. The project can be deployed to different environments with ease, allowing for efficient management and scaling of containers.
 
 #### Challenges and Solutions
 
