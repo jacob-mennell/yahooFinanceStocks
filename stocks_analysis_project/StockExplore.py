@@ -335,6 +335,7 @@ class ExploreStocks:
         # Log the completion of the data merging process
         self.logger.info("Data Retrieved - dataframe with exchange rates initialised")
 
+    @property
     def return_df(self):
         return self.stock_history
 
