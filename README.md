@@ -2,15 +2,15 @@
 
 ## Introduction
 
-This project consists of two main parts: Yahoo Finance ETL (Extract, Transform, Load) and Stock Analysis Module. The goal is to pull data from Yahoo Finance, perform data cleaning, and store it in a SQL database. Additionally, it includes tools for analyzing and visualizing stock data.
+This project is a toolkit for extracting, transforming, and analyzing stock data from Yahoo Finance. It is divided into two main components: the Yahoo Finance ETL (Extract, Transform, Load) process and the Stock Analysis Module. The ETL process retrieves data from Yahoo Finance, cleans it, and stores it in a SQL database. The Stock Analysis Module provides tools for in-depth analysis and visualization of stock data.
 
 ### Yahoo Finance ETL
 
 #### Folder: stocks_ETL_project
 
-The Yahoo Finance ETL process involves extracting historical stock data, major shareholders, earnings, quarterly earnings, and news related to specified stocks. The data is then cleaned in Python before being sent to a SQL Database.
+Located in the `stocks_ETL_project` folder, the ETL process extracts historical stock data, major shareholders, earnings, quarterly earnings, and news for specified stocks. The data is transformed and stored in a SQL database.
 
-##### Required Modules:
+#### Dependencies:
 
 - os
 - time
@@ -20,20 +20,20 @@ The Yahoo Finance ETL process involves extracting historical stock data, major s
 - pandas
 - apache-airflow
 
-### Airflow Integration and Docker
+## Airflow and Docker Integration
 
-In addition to the ETL process, the project integrates Apache Airflow for workflow automation and scheduling. Docker is used for containerization, providing consistency across various environments.
+The project utilizes Apache Airflow for workflow automation and scheduling, and Docker for containerization, ensuring consistent execution across different environments.
 
-#### Challenges and Solutions
+#### Key Challenges and Solutions
 
-##### Sharing Files and Using Volumes
+##### File Sharing with Docker Volumes
 
-**Issue:** Effective file sharing between the host machine and containers using Docker Compose.
+**Problem:** Efficient file sharing between the host machine and Docker containers.
 
 **Solution:**
-- **Volumes for Sharing:** Utilize Docker Compose volumes to share files between the host machine and containers.
-- **Automatic Mapping:** Docker Compose automatically maps host machine paths to corresponding container paths when defining volumes.
-- **Avoid Redundancy:** Do not include volume paths in both the Docker Compose file and the Dockerfile. It's unnecessary and can lead to confusion.
+- **Docker Volumes:** Docker Compose volumes are used to share files between the host machine and containers.
+- **Automatic Path Mapping:** Docker Compose automatically maps host machine paths to corresponding container paths when defining volumes.
+- **Avoiding Redundancy:** Volume paths are not included in both the Docker Compose file and the Dockerfile to prevent confusion.
 
 **Example with Volumes:**
 ```yaml
@@ -58,42 +58,34 @@ COPY ./airflow/dags/hello_world_dag.py ./dags
 
 Above allows for efficient file  sharing between the host machine and your containers using Docker Compose.
 
-##### Initializing Correct Database
+##### Database Initialization
 
-Ensure that the Airflow database is initialized correctly using the `airflow db init` command during image build. This prepares the database schema for use.
+The Airflow database is initialized using the `airflow db init` command during the image build process, preparing the database schema for use.
 
-##### Running Airflow Scheduler
+##### Airflow Scheduler
 
-After launching the Airflow webserver, you also need to start the Airflow scheduler using the `airflow scheduler` command. The scheduler manages task execution and scheduling.
+The Airflow scheduler, started with the `airflow scheduler` command, manages task execution and scheduling.
 
-##### Default SQLite Database
+##### Database Configuration
 
-By default, Airflow uses an SQLite database for its metadata storage. While SQLite is convenient for development, it may not be suitable for production setups. Consider configuring a more robust database backend, such as PostgreSQL or MySQL, for better performance and reliability in production environments.
-
-##### Additional Configuration
-
-When using a non-SQLite database backend, make sure to update your Airflow configuration to reflect the connection details of the chosen database. This configuration is typically done in the `airflow.cfg` file. Adjusting the database connection settings ensures that Airflow interacts with the correct database.
+By default, Airflow uses an SQLite database for metadata storage. For production environments, a more robust database backend like PostgreSQL or MySQL is recommended. When using a non-SQLite database, the Airflow configuration (`airflow.cfg` file) should be updated with the connection details of the chosen database.
 
 ## Stock Analysis Module
 
-### Folder: stocks_analysis_project
+Located in the `stocks_analysis_project` folder, the `StockExplore.py` file contains the `ExploreStocks` module. This module offers various methods for detailed analysis of a list of stocks:
 
-The `StockExplore.py` file contains the ExploreStocks module, offering various methods for in-depth analysis of a list of stocks:
-
-- **`plot_stock_price()`:** Visualizes the stock price for each stock over time.
-- **`plot_trade_volume()`:** Plots the trade volume of each stock over time.
-- **`plot_volatility()`:** Visualizes the volatility of each stock over time.
-- **`plot_rolling_average()`:** Plots the rolling average of each stock's price.
-- **`plot_cumulative_returns()`:** Visualizes the cumulative returns of each stock.
-- **`plot_future_trend(stock)`:** Utilizes the Facebook Prophet model to plot the future trend of a specified stock.
+- `plot_stock_price()`: Visualizes the stock price over time.
+- `plot_trade_volume()`: Plots the trade volume over time.
+- `plot_volatility()`: Visualizes the stock volatility over time.
+- `plot_rolling_average()`: Plots the rolling average of the stock price.
+- `plot_cumulative_returns()`: Visualizes the cumulative returns.
+- `plot_future_trend(stock)`: Uses the Facebook Prophet model to forecast the future trend of a specified stock.
 
 #### Facebook Prophet Model
 
-The project leverages the Facebook Prophet model for forecasting the future trend of a stock. Prophet is a modular regression model with interpretable parameters that can be adjusted intuitively by analysts with domain knowledge about the time series.
+The Facebook Prophet model, a modular regression model with interpretable parameters, is used for forecasting stock trends. For more information, refer to the [Prophet Documentation](https://facebook.github.io/prophet/).
 
-For more information about the Facebook Prophet model, visit the [Prophet Documentation](https://facebook.github.io/prophet/).
-
-#### Required Modules:
+#### Dependencies:
 
 - pandas
 - datetime
@@ -108,4 +100,4 @@ For more information about the Facebook Prophet model, visit the [Prophet Docume
 - dask.distributed
 - itertools
 
-The project provides valuable tools for extracting data from Yahoo Finance, performing comprehensive analyses on a list of stocks, and visualizing their trends over time. Ensure the required modules are installed before executing the scripts.
+This project offers a robust toolkit for extracting data from Yahoo Finance, performing detailed stock analyses, and visualizing trends over time. Please ensure all required modules are installed before executing the scripts.
