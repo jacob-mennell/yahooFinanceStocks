@@ -20,13 +20,13 @@ Located in the `stocks_ETL_project` folder, the ETL process extracts historical 
 - pandas
 - apache-airflow
 
-## Airflow and Docker Integration
+#### Airflow and Docker Integration
 
 The project utilizes Apache Airflow for workflow automation and scheduling, and Docker for containerization, ensuring consistent execution across different environments.
 
-#### Key Challenges and Solutions
+##### Key Challenges and Solutions
 
-##### File Sharing with Docker Volumes
+###### File Sharing with Docker Volumes
 
 **Problem:** Efficient file sharing between the host machine and Docker containers.
 
@@ -58,15 +58,15 @@ COPY ./airflow/dags/hello_world_dag.py ./dags
 
 Above allows for efficient file  sharing between the host machine and your containers using Docker Compose.
 
-##### Database Initialization
+###### Database Initialization
 
 The Airflow database is initialized using the `airflow db init` command during the image build process, preparing the database schema for use.
 
-##### Airflow Scheduler
+###### Airflow Scheduler
 
 The Airflow scheduler, started with the `airflow scheduler` command, manages task execution and scheduling.
 
-##### Database Configuration
+###### Database Configuration
 
 By default, Airflow uses an SQLite database for metadata storage. For production environments, a more robust database backend like PostgreSQL or MySQL is recommended. When using a non-SQLite database, the Airflow configuration (`airflow.cfg` file) should be updated with the connection details of the chosen database.
 
@@ -80,10 +80,6 @@ Located in the `stocks_analysis_project` folder, the `StockExplore.py` file cont
 - `plot_rolling_average()`: Plots the rolling average of the stock price.
 - `plot_cumulative_returns()`: Visualizes the cumulative returns.
 - `plot_future_trend(stock)`: Uses the Facebook Prophet model to forecast the future trend of a specified stock.
-
-#### Facebook Prophet Model
-
-The Facebook Prophet model, a modular regression model with interpretable parameters, is used for forecasting stock trends. For more information, refer to the [Prophet Documentation](https://facebook.github.io/prophet/).
 
 #### Dependencies:
 
@@ -99,5 +95,9 @@ The Facebook Prophet model, a modular regression model with interpretable parame
 - sklearn.metrics
 - dask.distributed
 - itertools
+
+#### Facebook Prophet Model
+
+The Facebook Prophet model, a modular regression model with interpretable parameters, is used for forecasting stock trends. For more information, refer to the [Prophet Documentation](https://facebook.github.io/prophet/).
 
 This project offers a robust toolkit for extracting data from Yahoo Finance, performing detailed stock analyses, and visualizing trends over time. Please ensure all required modules are installed before executing the scripts.
