@@ -110,4 +110,6 @@ Located in the `stocks_analysis_project` folder, the `StockExplore.py` file cont
 
 The Facebook Prophet model, a modular regression model with interpretable parameters, is used for forecasting stock trends. For more information, refer to the [Prophet Documentation](https://facebook.github.io/prophet/).
 
+## Summary
+
 This project offers a robust toolkit for extracting data from Yahoo Finance, performing detailed stock analyses, and visualizing trends over time. Please ensure all required modules are installed before executing the scripts.

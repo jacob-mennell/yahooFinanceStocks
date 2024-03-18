@@ -598,7 +598,7 @@ CREATE TABLE news (
 2023-08-17 08:46:32,566 | INFO | 1092: COMMIT
 2023-08-17 08:46:32,569 | INFO | 1032: BEGIN (implicit)
 2023-08-17 08:46:32,570 | INFO | 1863: INSERT INTO news (stock, uuid, title, publisher, link, provider_publish_time, type) VALUES (?, ?, ?, ?, ?, ?, ?)
-2023-08-17 08:46:32,570 | INFO | 1868: [generated in 0.00049s] (('IAG.L', 'c9cd9764-62de-3286-8d3d-197c2267c625', 'Where summer heat hits hard: Mideast and North Africa', 'AFP', 'https://finance.yahoo.com/m/c9cd9764-62de-3286-8d3d-197c2267c625/where-summer-heat-hits-hard%3A.html', None, 'STORY'), ('IAG.L', '6a419d11-3b00-313b-b219-901ae566b2f7', 'Here’s Why Greenlight Capital Exited Civitas Resources (CIVI)', 'Insider Monkey', 'https://finance.yahoo.com/news/why-greenlight-capital-exited-civitas-074057127.html', None, 'STORY'), ('IAG.L', 'f3fb887d-f581-341e-b20e-4ee2996bd6bc', 'Most markets drop as US rate, China fears dent global optimism', 'AFP', 'https://finance.yahoo.com/m/f3fb887d-f581-341e-b20e-4ee2996bd6bc/most-markets-drop-as-us-rate%2C.html', None, 'STORY'), ('IAG.L', '024afb59-a610-391f-adb3-884de000304d', "'Silent threat': Bahrain to build walls against rising sea", 'AFP', 'https://finance.yahoo.com/m/024afb59-a610-391f-adb3-884de000304d/%27silent-threat%27%3A-bahrain-to.html', None, 'STORY'), ('IAG.L', 'f8bc00ac-0154-3e1b-9145-b809797e29b4', 'Q2 2023 PAVmed Inc Earnings Call', 'Thomson Reuters StreetEvents', 'https://finance.yahoo.com/news/q2-2023-pavmed-inc-earnings-073909102.html', None, 'STORY'), ('IAG.L', 'b2d21b58-df34-3189-ab1f-f086a072f0a1', 'By 2031, the Global Market for Particle Size Analyzers is Expected to Surpass US$ 500 million, with a CAGR of over 5% from 2022 to 2031: TMR study', 'GlobeNewswire', 'https://finance.yahoo.com/news/2031-global-market-particle-size-073900118.html', None, 'STORY'), ('IAG.L', '88c29fea-8347-316c-bf98-5c80e6cccbca', "Explainer-Country Garden: How bad is China's property crisis?", 'Reuters', 'https://finance.yahoo.com/news/explainer-country-garden-bad-chinas-073859491.html', None, 'STORY'), ('IAG.L', '42abaa98-a66b-3199-a114-24e5b25375e7', 'Fukushima water discharge plan brings out concerned moms', 'Reuters Videos', 'https://finance.yahoo.com/m/42abaa98-a66b-3199-a114-24e5b25375e7/fukushima-water-discharge.html', None, 'VIDEO'))
+2023-08-17 08:46:32,570 | INFO | 1868: [generated in 0.00049s] (('IAG.L', 'c9cd9764-62de-3286-8d3d-197c2267c625', 'Where summer heat hits hard: Mideast and North Africa', 'AFP', 'https://finance.yahoo.com/m/c9cd9764-62de-3286-8d3d-197c2267c625/where-summer-heat-hits-hard%3A.html', None, 'STORY'), ('IAG.L', '6a419d11-3b00-313b-b219-901ae566b2f7', 'Hereï¿½s Why Greenlight Capital Exited Civitas Resources (CIVI)', 'Insider Monkey', 'https://finance.yahoo.com/news/why-greenlight-capital-exited-civitas-074057127.html', None, 'STORY'), ('IAG.L', 'f3fb887d-f581-341e-b20e-4ee2996bd6bc', 'Most markets drop as US rate, China fears dent global optimism', 'AFP', 'https://finance.yahoo.com/m/f3fb887d-f581-341e-b20e-4ee2996bd6bc/most-markets-drop-as-us-rate%2C.html', None, 'STORY'), ('IAG.L', '024afb59-a610-391f-adb3-884de000304d', "'Silent threat': Bahrain to build walls against rising sea", 'AFP', 'https://finance.yahoo.com/m/024afb59-a610-391f-adb3-884de000304d/%27silent-threat%27%3A-bahrain-to.html', None, 'STORY'), ('IAG.L', 'f8bc00ac-0154-3e1b-9145-b809797e29b4', 'Q2 2023 PAVmed Inc Earnings Call', 'Thomson Reuters StreetEvents', 'https://finance.yahoo.com/news/q2-2023-pavmed-inc-earnings-073909102.html', None, 'STORY'), ('IAG.L', 'b2d21b58-df34-3189-ab1f-f086a072f0a1', 'By 2031, the Global Market for Particle Size Analyzers is Expected to Surpass US$ 500 million, with a CAGR of over 5% from 2022 to 2031: TMR study', 'GlobeNewswire', 'https://finance.yahoo.com/news/2031-global-market-particle-size-073900118.html', None, 'STORY'), ('IAG.L', '88c29fea-8347-316c-bf98-5c80e6cccbca', "Explainer-Country Garden: How bad is China's property crisis?", 'Reuters', 'https://finance.yahoo.com/news/explainer-country-garden-bad-chinas-073859491.html', None, 'STORY'), ('IAG.L', '42abaa98-a66b-3199-a114-24e5b25375e7', 'Fukushima water discharge plan brings out concerned moms', 'Reuters Videos', 'https://finance.yahoo.com/m/42abaa98-a66b-3199-a114-24e5b25375e7/fukushima-water-discharge.html', None, 'VIDEO'))
 2023-08-17 08:46:32,574 | INFO | 1092: COMMIT
 2023-08-17 08:46:32,578 | INFO | 271: IAG.L news sent to sql
 2023-08-17 08:46:32,578 | INFO | 281: IAG.L extracted in 9.86 seconds
@@ -713,8 +713,316 @@ CREATE TABLE news (
 2023-08-17 08:47:50,880 | INFO | 1092: COMMIT
 2023-08-17 08:47:50,885 | INFO | 1032: BEGIN (implicit)
 2023-08-17 08:47:50,886 | INFO | 1863: INSERT INTO news (stock, uuid, title, publisher, link, provider_publish_time, type) VALUES (?, ?, ?, ?, ?, ?, ?)
-2023-08-17 08:47:50,886 | INFO | 1868: [generated in 0.00065s] (('IAG.L', 'c9cd9764-62de-3286-8d3d-197c2267c625', 'Where summer heat hits hard: Mideast and North Africa', 'AFP', 'https://finance.yahoo.com/m/c9cd9764-62de-3286-8d3d-197c2267c625/where-summer-heat-hits-hard%3A.html', None, 'STORY'), ('IAG.L', '6a419d11-3b00-313b-b219-901ae566b2f7', 'Here’s Why Greenlight Capital Exited Civitas Resources (CIVI)', 'Insider Monkey', 'https://finance.yahoo.com/news/why-greenlight-capital-exited-civitas-074057127.html', None, 'STORY'), ('IAG.L', 'f3fb887d-f581-341e-b20e-4ee2996bd6bc', 'Most markets drop as US rate, China fears dent global optimism', 'AFP', 'https://finance.yahoo.com/m/f3fb887d-f581-341e-b20e-4ee2996bd6bc/most-markets-drop-as-us-rate%2C.html', None, 'STORY'), ('IAG.L', '024afb59-a610-391f-adb3-884de000304d', "'Silent threat': Bahrain to build walls against rising sea", 'AFP', 'https://finance.yahoo.com/m/024afb59-a610-391f-adb3-884de000304d/%27silent-threat%27%3A-bahrain-to.html', None, 'STORY'), ('IAG.L', 'f8bc00ac-0154-3e1b-9145-b809797e29b4', 'Q2 2023 PAVmed Inc Earnings Call', 'Thomson Reuters StreetEvents', 'https://finance.yahoo.com/news/q2-2023-pavmed-inc-earnings-073909102.html', None, 'STORY'), ('IAG.L', 'b2d21b58-df34-3189-ab1f-f086a072f0a1', 'By 2031, the Global Market for Particle Size Analyzers is Expected to Surpass US$ 500 million, with a CAGR of over 5% from 2022 to 2031: TMR study', 'GlobeNewswire', 'https://finance.yahoo.com/news/2031-global-market-particle-size-073900118.html', None, 'STORY'), ('IAG.L', '88c29fea-8347-316c-bf98-5c80e6cccbca', "Explainer-Country Garden: How bad is China's property crisis?", 'Reuters', 'https://finance.yahoo.com/news/explainer-country-garden-bad-chinas-073859491.html', None, 'STORY'), ('IAG.L', '42abaa98-a66b-3199-a114-24e5b25375e7', 'Fukushima water discharge plan brings out concerned moms', 'Reuters Videos', 'https://finance.yahoo.com/m/42abaa98-a66b-3199-a114-24e5b25375e7/fukushima-water-discharge.html', None, 'VIDEO'))
+2023-08-17 08:47:50,886 | INFO | 1868: [generated in 0.00065s] (('IAG.L', 'c9cd9764-62de-3286-8d3d-197c2267c625', 'Where summer heat hits hard: Mideast and North Africa', 'AFP', 'https://finance.yahoo.com/m/c9cd9764-62de-3286-8d3d-197c2267c625/where-summer-heat-hits-hard%3A.html', None, 'STORY'), ('IAG.L', '6a419d11-3b00-313b-b219-901ae566b2f7', 'Hereï¿½s Why Greenlight Capital Exited Civitas Resources (CIVI)', 'Insider Monkey', 'https://finance.yahoo.com/news/why-greenlight-capital-exited-civitas-074057127.html', None, 'STORY'), ('IAG.L', 'f3fb887d-f581-341e-b20e-4ee2996bd6bc', 'Most markets drop as US rate, China fears dent global optimism', 'AFP', 'https://finance.yahoo.com/m/f3fb887d-f581-341e-b20e-4ee2996bd6bc/most-markets-drop-as-us-rate%2C.html', None, 'STORY'), ('IAG.L', '024afb59-a610-391f-adb3-884de000304d', "'Silent threat': Bahrain to build walls against rising sea", 'AFP', 'https://finance.yahoo.com/m/024afb59-a610-391f-adb3-884de000304d/%27silent-threat%27%3A-bahrain-to.html', None, 'STORY'), ('IAG.L', 'f8bc00ac-0154-3e1b-9145-b809797e29b4', 'Q2 2023 PAVmed Inc Earnings Call', 'Thomson Reuters StreetEvents', 'https://finance.yahoo.com/news/q2-2023-pavmed-inc-earnings-073909102.html', None, 'STORY'), ('IAG.L', 'b2d21b58-df34-3189-ab1f-f086a072f0a1', 'By 2031, the Global Market for Particle Size Analyzers is Expected to Surpass US$ 500 million, with a CAGR of over 5% from 2022 to 2031: TMR study', 'GlobeNewswire', 'https://finance.yahoo.com/news/2031-global-market-particle-size-073900118.html', None, 'STORY'), ('IAG.L', '88c29fea-8347-316c-bf98-5c80e6cccbca', "Explainer-Country Garden: How bad is China's property crisis?", 'Reuters', 'https://finance.yahoo.com/news/explainer-country-garden-bad-chinas-073859491.html', None, 'STORY'), ('IAG.L', '42abaa98-a66b-3199-a114-24e5b25375e7', 'Fukushima water discharge plan brings out concerned moms', 'Reuters Videos', 'https://finance.yahoo.com/m/42abaa98-a66b-3199-a114-24e5b25375e7/fukushima-water-discharge.html', None, 'VIDEO'))
 2023-08-17 08:47:50,890 | INFO | 1092: COMMIT
 2023-08-17 08:47:50,893 | INFO | 271: IAG.L news sent to sql
 2023-08-17 08:47:50,893 | INFO | 281: IAG.L extracted in 7.82 seconds
 2023-08-17 08:47:50,894 | INFO | 311: SQL Updated with combined tables
+2024-03-18 18:57:47,861 | ERROR | 297: An exception occurred clearing tables: '_ConnectionFairy' object does not support the context manager protocol
+Traceback (most recent call last):
+  File "c:\Users\jacob.mennell\yahooFinanceStocks-master\yahooFinanceStocks-master\stocks_ETL_project\etlClass.py", line 295, in combined_tables
+    self.blank_sql()
+  File "c:\Users\jacob.mennell\yahooFinanceStocks-master\yahooFinanceStocks-master\stocks_ETL_project\etlClass.py", line 494, in blank_sql
+    with self.engine.raw_connection() as connection:
+TypeError: '_ConnectionFairy' object does not support the context manager protocol
+2024-03-18 18:57:47,892 | INFO | 17: Calling send_dataframe_to_sql with args: (     stock
+0    IAG.L
+1  0293.HK
+2    AF.PA, 'stocks_master'), kwargs: {'dtype': {'stock': VARCHAR(length=7)}}
+2024-03-18 18:57:47,893 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:57:47,896 | INFO | 1839: PRAGMA main.table_info("stocks_master")
+2024-03-18 18:57:47,897 | INFO | 1839: [raw sql] ()
+2024-03-18 18:57:47,902 | INFO | 1839: PRAGMA temp.table_info("stocks_master")
+2024-03-18 18:57:47,903 | INFO | 1839: [raw sql] ()
+2024-03-18 18:57:47,904 | INFO | 1839: 
+CREATE TABLE stocks_master (
+	stock VARCHAR(7)
+)
+
+
+2024-03-18 18:57:47,906 | INFO | 1839: [no key 0.00149s] ()
+2024-03-18 18:57:47,918 | INFO | 1839: INSERT INTO stocks_master (stock) VALUES (?)
+2024-03-18 18:57:47,919 | INFO | 1839: [generated in 0.00093s] [('IAG.L',), ('0293.HK',), ('AF.PA',)]
+2024-03-18 18:57:47,923 | INFO | 2687: COMMIT
+2024-03-18 18:57:47,930 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:57:47,931 | INFO | 17: Calling combined_stock_sql_send with args: ('IAG.L',), kwargs: {}
+2024-03-18 18:57:47,931 | INFO | 17: Calling get_stock_history with args: ('IAG.L',), kwargs: {}
+2024-03-18 18:57:50,295 | INFO | 20: get_stock_history executed successfully.
+2024-03-18 18:57:50,308 | INFO | 17: Calling send_dataframe_to_sql with args: (           date        open        high         low       close    volume  dividends  stock
+0    2003-01-02  105.127261  110.538223  105.127261  110.538223   4645894        0.0  IAG.L
+1    2003-01-03  113.050449  114.982935  109.765222  112.084206   4085260        0.0  IAG.L
+2    2003-01-06  108.412500  111.697727  104.934024  111.504478   8031430        0.0  IAG.L
+3    2003-01-07  110.731478  111.311224  104.354272  106.673256   6085123        0.0  IAG.L
+4    2003-01-08  107.446254  108.219248  101.262297  105.320518   4450954        0.0  IAG.L
+...         ...         ...         ...         ...         ...       ...        ...    ...
+5371 2024-03-12  155.000000  155.550003  151.199997  154.050003  23045660        0.0  IAG.L
+5372 2024-03-13  154.199997  155.649994  153.274994  153.949997  17275504        0.0  IAG.L
+5373 2024-03-14  154.449997  154.899994  148.750000  148.949997  20631930        0.0  IAG.L
+5374 2024-03-15  153.500000  159.050003  151.904999  158.149994  86039952        0.0  IAG.L
+5375 2024-03-18  158.600006  162.250000  156.399994  156.449997  17261239        0.0  IAG.L
+
+[5376 rows x 8 columns], 'stock_history'), kwargs: {}
+2024-03-18 18:57:50,309 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:57:50,311 | INFO | 1839: PRAGMA main.table_info("stock_history")
+2024-03-18 18:57:50,312 | INFO | 1839: [raw sql] ()
+2024-03-18 18:57:50,313 | INFO | 1839: PRAGMA temp.table_info("stock_history")
+2024-03-18 18:57:50,315 | INFO | 1839: [raw sql] ()
+2024-03-18 18:57:50,317 | INFO | 1839: 
+CREATE TABLE stock_history (
+	date DATETIME, 
+	open FLOAT, 
+	high FLOAT, 
+	low FLOAT, 
+	close FLOAT, 
+	volume BIGINT, 
+	dividends FLOAT, 
+	stock TEXT
+)
+
+
+2024-03-18 18:57:50,320 | INFO | 1839: [no key 0.00315s] ()
+2024-03-18 18:57:50,380 | INFO | 1839: INSERT INTO stock_history (date, open, high, low, close, volume, dividends, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2024-03-18 18:57:50,381 | INFO | 1839: [generated in 0.04067s] [('2003-01-02 00:00:00.000000', 105.12726128851617, 110.53822326660156, 105.12726128851617, 110.53822326660156, 4645894, 0.0, 'IAG.L'), ('2003-01-03 00:00:00.000000', 113.0504487794021, 114.98293508332351, 109.76522206273572, 112.0842056274414, 4085260, 0.0, 'IAG.L'), ('2003-01-06 00:00:00.000000', 108.41249984926326, 111.69772711742276, 104.93402391827085, 111.50447845458984, 8031430, 0.0, 'IAG.L'), ('2003-01-07 00:00:00.000000', 110.73147761303446, 111.31122356912364, 104.3542720960534, 106.67325592041016, 6085123, 0.0, 'IAG.L'), ('2003-01-08 00:00:00.000000', 107.44625372930403, 108.21924836045011, 101.26229668013546, 105.32051849365234, 4450954, 0.0, 'IAG.L'), ('2003-01-09 00:00:00.000000', 102.80828306563065, 107.83274802748477, 102.22853710849363, 107.05975341796875, 5170888, 0.0, 'IAG.L'), ('2003-01-10 00:00:00.000000', 102.2285376548767, 108.99224052429199, 101.6487916946411, 108.21924591064453, 9729682, 0.0, 'IAG.L'), ('2003-01-13 00:00:00.000000', 106.71036127507304, 107.05975162449167, 103.00152999251635, 103.5812759399414, 5362024, 0.0, 'IAG.L')  ... displaying 10 of 5376 total bound parameter sets ...  ('2024-03-15 00:00:00.000000', 153.5, 159.0500030517578, 151.90499877929688, 158.14999389648438, 86039952, 0.0, 'IAG.L'), ('2024-03-18 00:00:00.000000', 158.60000610351562, 162.25, 156.39999389648438, 156.4499969482422, 17261239, 0.0, 'IAG.L')]
+2024-03-18 18:57:50,397 | INFO | 2687: COMMIT
+2024-03-18 18:57:50,420 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:57:50,421 | INFO | 266: historical IAG.L data sent to sql
+2024-03-18 18:57:50,424 | INFO | 17: Calling get_major_shareholders with args: ('IAG.L',), kwargs: {}
+2024-03-18 18:58:05,779 | INFO | 20: get_major_shareholders executed successfully.
+2024-03-18 18:58:05,783 | INFO | 17: Calling send_dataframe_to_sql with args: (  percent                                 detail  stock
+0  25.64%        % of Shares Held by All Insider  IAG.L
+1  13.84%       % of Shares Held by Institutions  IAG.L
+2  18.62%        % of Float Held by Institutions  IAG.L
+3     168  Number of Institutions Holding Shares  IAG.L, 'major_share_holders'), kwargs: {}
+2024-03-18 18:58:05,784 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:58:05,785 | INFO | 1839: PRAGMA main.table_info("major_share_holders")
+2024-03-18 18:58:05,785 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:05,786 | INFO | 1839: PRAGMA temp.table_info("major_share_holders")
+2024-03-18 18:58:05,786 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:05,788 | INFO | 1839: 
+CREATE TABLE major_share_holders (
+	percent TEXT, 
+	detail TEXT, 
+	stock TEXT
+)
+
+
+2024-03-18 18:58:05,790 | INFO | 1839: [no key 0.00193s] ()
+2024-03-18 18:58:05,796 | INFO | 1839: INSERT INTO major_share_holders (percent, detail, stock) VALUES (?, ?, ?)
+2024-03-18 18:58:05,797 | INFO | 1839: [generated in 0.00079s] [('25.64%', '% of Shares Held by All Insider', 'IAG.L'), ('13.84%', '% of Shares Held by Institutions', 'IAG.L'), ('18.62%', '% of Float Held by Institutions', 'IAG.L'), ('168', 'Number of Institutions Holding Shares', 'IAG.L')]
+2024-03-18 18:58:05,800 | INFO | 2687: COMMIT
+2024-03-18 18:58:05,804 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:58:05,804 | INFO | 17: Calling get_stock_financials with args: ('IAG.L',), kwargs: {}
+2024-03-18 18:58:05,805 | INFO | 20: get_stock_financials executed successfully.
+2024-03-18 18:58:05,809 | INFO | 17: Calling send_dataframe_to_sql with args: (Date       date  stock
+0          Open  IAG.L
+1          High  IAG.L
+2           Low  IAG.L
+3         Close  IAG.L
+4     Adj Close  IAG.L
+5        Volume  IAG.L, 'financials'), kwargs: {}
+2024-03-18 18:58:05,809 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:58:05,810 | INFO | 1839: PRAGMA main.table_info("financials")
+2024-03-18 18:58:05,811 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:05,812 | INFO | 1839: PRAGMA temp.table_info("financials")
+2024-03-18 18:58:05,812 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:05,813 | INFO | 1839: 
+CREATE TABLE financials (
+	date TEXT, 
+	stock TEXT
+)
+
+
+2024-03-18 18:58:05,814 | INFO | 1839: [no key 0.00108s] ()
+2024-03-18 18:58:05,821 | INFO | 1839: INSERT INTO financials (date, stock) VALUES (?, ?)
+2024-03-18 18:58:05,822 | INFO | 1839: [generated in 0.00108s] [('Open', 'IAG.L'), ('High', 'IAG.L'), ('Low', 'IAG.L'), ('Close', 'IAG.L'), ('Adj Close', 'IAG.L'), ('Volume', 'IAG.L')]
+2024-03-18 18:58:05,824 | INFO | 2687: COMMIT
+2024-03-18 18:58:05,830 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:58:05,830 | INFO | 17: Calling get_news with args: ('IAG.L',), kwargs: {}
+2024-03-18 18:58:06,903 | INFO | 20: get_news executed successfully.
+2024-03-18 18:58:06,920 | INFO | 17: Calling send_dataframe_to_sql with args: (   stock                                  uuid  ... provider_publish_time   type
+0  IAG.L  4ced2307-0f37-3795-a4ce-6c1ec0e7dccf  ...                   NaN  STORY
+1  IAG.L  a453981b-efb7-3d36-8486-b02f47f63c4e  ...                   NaN  STORY
+2  IAG.L  ba7fe43e-e680-3ffd-ba34-d7e19b3cd50d  ...                   NaN  STORY
+3  IAG.L  e9a7f48c-93cf-3bc4-8768-9717c2429b91  ...                   NaN  STORY
+4  IAG.L  a19bd253-d7b8-3aaf-a844-da2cfec5da3c  ...                   NaN  STORY
+5  IAG.L  c8f1d542-ae04-376d-9006-643933ddcfaa  ...                   NaN  STORY
+6  IAG.L  dc1eb0fc-f418-3412-8a7a-ab72413ba170  ...                   NaN  STORY
+7  IAG.L  2f2382ff-cb0b-3a28-8279-f0ce5a2e668e  ...                   NaN  STORY
+
+[8 rows x 7 columns], 'news'), kwargs: {}
+2024-03-18 18:58:06,921 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:58:06,923 | INFO | 1839: PRAGMA main.table_info("news")
+2024-03-18 18:58:06,924 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:06,925 | INFO | 1839: PRAGMA temp.table_info("news")
+2024-03-18 18:58:06,925 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:06,927 | INFO | 1839: 
+CREATE TABLE news (
+	stock TEXT, 
+	uuid TEXT, 
+	title TEXT, 
+	publisher TEXT, 
+	link TEXT, 
+	provider_publish_time TEXT, 
+	type TEXT
+)
+
+
+2024-03-18 18:58:06,930 | INFO | 1839: [no key 0.00358s] ()
+2024-03-18 18:58:06,939 | INFO | 1839: INSERT INTO news (stock, uuid, title, publisher, link, provider_publish_time, type) VALUES (?, ?, ?, ?, ?, ?, ?)
+2024-03-18 18:58:06,940 | INFO | 1839: [generated in 0.00102s] [('IAG.L', '4ced2307-0f37-3795-a4ce-6c1ec0e7dccf', 'Berkshire Hathaway speeds up stock buybacks', 'Reuters', 'https://finance.yahoo.com/news/berkshire-hathaway-speeds-stock-buybacks-185257424.html', None, 'STORY'), ('IAG.L', 'a453981b-efb7-3d36-8486-b02f47f63c4e', 'Supreme Court Hears Oral Argument in Pivotal NCLA Case Against Govï¿½t Social Media Censorship', 'GlobeNewswire', 'https://finance.yahoo.com/news/supreme-court-hears-oral-argument-185200173.html', None, 'STORY'), ('IAG.L', 'ba7fe43e-e680-3ffd-ba34-d7e19b3cd50d', 'Bodies found in Haitian suburb as gang violence rages for third week', 'AFP', 'https://finance.yahoo.com/m/ba7fe43e-e680-3ffd-ba34-d7e19b3cd50d/bodies-found-in-haitian.html', None, 'STORY'), ('IAG.L', 'e9a7f48c-93cf-3bc4-8768-9717c2429b91', 'Dow Jones Media Giant Disney, AI Stock Arista In Or Near Buy Zones', "Investor's Business Daily", 'https://finance.yahoo.com/m/e9a7f48c-93cf-3bc4-8768-9717c2429b91/dow-jones-media-giant-disney%2C.html', None, 'STORY'), ('IAG.L', 'a19bd253-d7b8-3aaf-a844-da2cfec5da3c', '[Latest] Global Parental Control Software Market Size/Share Worth USD 4.6 Billion by 2032 at a 8.6% CAGR: Custom Market Insights (Analysis, Outlook, Leaders, Report, Trends, Forecast, Segmentation, Growth, Growth Rate, Value)', 'GlobeNewswire', 'https://finance.yahoo.com/news/latest-global-parental-control-software-185000548.html', None, 'STORY'), ('IAG.L', 'c8f1d542-ae04-376d-9006-643933ddcfaa', 'Ontario Lottery and Gaming Corporation - MidDay lottery winning numbers - March 18, 2024', 'CNW Group', 'https://finance.yahoo.com/news/ontario-lottery-gaming-corporation-midday-185000463.html', None, 'STORY'), ('IAG.L', 'dc1eb0fc-f418-3412-8a7a-ab72413ba170', "Feed the Children Joins Forces with FOX's\xa0MasterChef Junior\xa0to Fight Childhood Hunger During National Nutrition Month", 'ACCESSWIRE', 'https://finance.yahoo.com/news/feed-children-joins-forces-foxs-185000881.html', None, 'STORY'), ('IAG.L', '2f2382ff-cb0b-3a28-8279-f0ce5a2e668e', 'Can Fortinet Stock Overcome This Resistance Level?', "Schaeffer's Investment Research", 'https://finance.yahoo.com/news/fortinet-stock-overcome-resistance-level-184853262.html', None, 'STORY')]
+2024-03-18 18:58:06,944 | INFO | 2687: COMMIT
+2024-03-18 18:58:06,948 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:58:06,949 | INFO | 20: combined_stock_sql_send executed successfully.
+2024-03-18 18:58:06,949 | INFO | 17: Calling combined_stock_sql_send with args: ('0293.HK',), kwargs: {}
+2024-03-18 18:58:06,949 | INFO | 17: Calling get_stock_history with args: ('0293.HK',), kwargs: {}
+2024-03-18 18:58:08,566 | INFO | 20: get_stock_history executed successfully.
+2024-03-18 18:58:08,580 | INFO | 17: Calling send_dataframe_to_sql with args: (           date      open      high       low     close    volume  dividends    stock
+0    2000-01-04  6.609405  6.758489  6.510015  6.510015   6170279        0.0  0293.HK
+1    2000-01-05  6.435475  6.609407  5.963375  6.112459  10142631        0.0  0293.HK
+2    2000-01-06  6.162153  6.534864  6.062764  6.435475  11326681        0.0  0293.HK
+3    2000-01-07  6.510016  6.783337  6.510016  6.708795  15382650        0.0  0293.HK
+4    2000-01-10  6.857880  7.205744  6.808185  7.106354   9775294        0.0  0293.HK
+...         ...       ...       ...       ...       ...       ...        ...      ...
+6038 2024-03-12  8.400000  8.720000  8.360000  8.680000  13298225        0.0  0293.HK
+6039 2024-03-13  8.660000  9.350000  8.660000  9.180000  66358309        0.0  0293.HK
+6040 2024-03-14  9.100000  9.100000  8.770000  8.870000  37597444        0.0  0293.HK
+6041 2024-03-15  8.800000  8.900000  8.700000  8.750000  16348989        0.0  0293.HK
+6042 2024-03-18  8.730000  8.930000  8.720000  8.830000   9918620        0.0  0293.HK
+
+[6043 rows x 8 columns], 'stock_history'), kwargs: {}
+2024-03-18 18:58:08,581 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:58:08,583 | INFO | 1839: PRAGMA main.table_info("stock_history")
+2024-03-18 18:58:08,584 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:08,647 | INFO | 1839: INSERT INTO stock_history (date, open, high, low, close, volume, dividends, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2024-03-18 18:58:08,648 | INFO | 1839: [generated in 0.04887s] [('2000-01-04 00:00:00.000000', 6.60940489174466, 6.758489269879289, 6.510015487670898, 6.510015487670898, 6170279, 0.0, '0293.HK'), ('2000-01-05 00:00:00.000000', 6.435475252065136, 6.609406898002435, 5.963374759350677, 6.112459182739258, 10142631, 0.0, '0293.HK'), ('2000-01-06 00:00:00.000000', 6.162153264477426, 6.534864300971494, 6.062763836095043, 6.435474872589111, 11326681, 0.0, '0293.HK'), ('2000-01-07 00:00:00.000000', 6.510016239542784, 6.783337268324731, 6.510016239542784, 6.708795070648193, 15382650, 0.0, '0293.HK'), ('2000-01-10 00:00:00.000000', 6.857879931976684, 7.2057437261196595, 6.808185492847739, 7.106353759765625, 9775294, 0.0, '0293.HK'), ('2000-01-11 00:00:00.000000', 7.106354076135983, 7.28028570892676, 7.081506855465329, 7.180896282196045, 4318621, 0.0, '0293.HK'), ('2000-01-12 00:00:00.000000', 7.006964337459663, 7.106353759765625, 6.758490509670722, 7.106353759765625, 4898341, 0.0, '0293.HK'), ('2000-01-13 00:00:00.000000', 6.957267761230469, 7.056657160778574, 6.758488962134257, 6.957267761230469, 7253551, 0.0, '0293.HK')  ... displaying 10 of 6043 total bound parameter sets ...  ('2024-03-15 00:00:00.000000', 8.800000190734863, 8.899999618530273, 8.699999809265137, 8.75, 16348989, 0.0, '0293.HK'), ('2024-03-18 00:00:00.000000', 8.729999542236328, 8.930000305175781, 8.720000267028809, 8.829999923706055, 9918620, 0.0, '0293.HK')]
+2024-03-18 18:58:08,667 | INFO | 2687: COMMIT
+2024-03-18 18:58:08,692 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:58:08,692 | INFO | 266: historical 0293.HK data sent to sql
+2024-03-18 18:58:08,694 | INFO | 17: Calling get_major_shareholders with args: ('0293.HK',), kwargs: {}
+2024-03-18 18:58:24,192 | INFO | 20: get_major_shareholders executed successfully.
+2024-03-18 18:58:24,196 | INFO | 17: Calling send_dataframe_to_sql with args: (  percent                                 detail    stock
+0  92.31%        % of Shares Held by All Insider  0293.HK
+1   3.75%       % of Shares Held by Institutions  0293.HK
+2  48.74%        % of Float Held by Institutions  0293.HK
+3      96  Number of Institutions Holding Shares  0293.HK, 'major_share_holders'), kwargs: {}
+2024-03-18 18:58:24,197 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:58:24,198 | INFO | 1839: PRAGMA main.table_info("major_share_holders")
+2024-03-18 18:58:24,199 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:24,200 | INFO | 1839: INSERT INTO major_share_holders (percent, detail, stock) VALUES (?, ?, ?)
+2024-03-18 18:58:24,201 | INFO | 1839: [generated in 0.00069s] [('92.31%', '% of Shares Held by All Insider', '0293.HK'), ('3.75%', '% of Shares Held by Institutions', '0293.HK'), ('48.74%', '% of Float Held by Institutions', '0293.HK'), ('96', 'Number of Institutions Holding Shares', '0293.HK')]
+2024-03-18 18:58:24,205 | INFO | 2687: COMMIT
+2024-03-18 18:58:24,208 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:58:24,208 | INFO | 17: Calling get_stock_financials with args: ('0293.HK',), kwargs: {}
+2024-03-18 18:58:24,208 | INFO | 20: get_stock_financials executed successfully.
+2024-03-18 18:58:24,211 | INFO | 17: Calling send_dataframe_to_sql with args: (Date       date    stock
+0          Open  0293.HK
+1          High  0293.HK
+2           Low  0293.HK
+3         Close  0293.HK
+4     Adj Close  0293.HK
+5        Volume  0293.HK, 'financials'), kwargs: {}
+2024-03-18 18:58:24,212 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:58:24,213 | INFO | 1839: PRAGMA main.table_info("financials")
+2024-03-18 18:58:24,213 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:24,215 | INFO | 1839: INSERT INTO financials (date, stock) VALUES (?, ?)
+2024-03-18 18:58:24,216 | INFO | 1839: [generated in 0.00136s] [('Open', '0293.HK'), ('High', '0293.HK'), ('Low', '0293.HK'), ('Close', '0293.HK'), ('Adj Close', '0293.HK'), ('Volume', '0293.HK')]
+2024-03-18 18:58:24,218 | INFO | 2687: COMMIT
+2024-03-18 18:58:24,222 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:58:24,222 | INFO | 17: Calling get_news with args: ('0293.HK',), kwargs: {}
+2024-03-18 18:58:25,300 | INFO | 20: get_news executed successfully.
+2024-03-18 18:58:25,306 | INFO | 17: Calling send_dataframe_to_sql with args: (     stock                                  uuid  ... provider_publish_time   type
+0  0293.HK  4ced2307-0f37-3795-a4ce-6c1ec0e7dccf  ...                   NaN  STORY
+1  0293.HK  a453981b-efb7-3d36-8486-b02f47f63c4e  ...                   NaN  STORY
+2  0293.HK  ba7fe43e-e680-3ffd-ba34-d7e19b3cd50d  ...                   NaN  STORY
+3  0293.HK  e9a7f48c-93cf-3bc4-8768-9717c2429b91  ...                   NaN  STORY
+4  0293.HK  a19bd253-d7b8-3aaf-a844-da2cfec5da3c  ...                   NaN  STORY
+5  0293.HK  c8f1d542-ae04-376d-9006-643933ddcfaa  ...                   NaN  STORY
+6  0293.HK  dc1eb0fc-f418-3412-8a7a-ab72413ba170  ...                   NaN  STORY
+7  0293.HK  2f2382ff-cb0b-3a28-8279-f0ce5a2e668e  ...                   NaN  STORY
+
+[8 rows x 7 columns], 'news'), kwargs: {}
+2024-03-18 18:58:25,306 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:58:25,308 | INFO | 1839: PRAGMA main.table_info("news")
+2024-03-18 18:58:25,308 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:25,311 | INFO | 1839: INSERT INTO news (stock, uuid, title, publisher, link, provider_publish_time, type) VALUES (?, ?, ?, ?, ?, ?, ?)
+2024-03-18 18:58:25,311 | INFO | 1839: [generated in 0.00076s] [('0293.HK', '4ced2307-0f37-3795-a4ce-6c1ec0e7dccf', 'Berkshire Hathaway speeds up stock buybacks', 'Reuters', 'https://finance.yahoo.com/news/berkshire-hathaway-speeds-stock-buybacks-185257424.html', None, 'STORY'), ('0293.HK', 'a453981b-efb7-3d36-8486-b02f47f63c4e', 'Supreme Court Hears Oral Argument in Pivotal NCLA Case Against Govï¿½t Social Media Censorship', 'GlobeNewswire', 'https://finance.yahoo.com/news/supreme-court-hears-oral-argument-185200173.html', None, 'STORY'), ('0293.HK', 'ba7fe43e-e680-3ffd-ba34-d7e19b3cd50d', 'Bodies found in Haitian suburb as gang violence rages for third week', 'AFP', 'https://finance.yahoo.com/m/ba7fe43e-e680-3ffd-ba34-d7e19b3cd50d/bodies-found-in-haitian.html', None, 'STORY'), ('0293.HK', 'e9a7f48c-93cf-3bc4-8768-9717c2429b91', 'Dow Jones Media Giant Disney, AI Stock Arista In Or Near Buy Zones', "Investor's Business Daily", 'https://finance.yahoo.com/m/e9a7f48c-93cf-3bc4-8768-9717c2429b91/dow-jones-media-giant-disney%2C.html', None, 'STORY'), ('0293.HK', 'a19bd253-d7b8-3aaf-a844-da2cfec5da3c', '[Latest] Global Parental Control Software Market Size/Share Worth USD 4.6 Billion by 2032 at a 8.6% CAGR: Custom Market Insights (Analysis, Outlook, Leaders, Report, Trends, Forecast, Segmentation, Growth, Growth Rate, Value)', 'GlobeNewswire', 'https://finance.yahoo.com/news/latest-global-parental-control-software-185000548.html', None, 'STORY'), ('0293.HK', 'c8f1d542-ae04-376d-9006-643933ddcfaa', 'Ontario Lottery and Gaming Corporation - MidDay lottery winning numbers - March 18, 2024', 'CNW Group', 'https://finance.yahoo.com/news/ontario-lottery-gaming-corporation-midday-185000463.html', None, 'STORY'), ('0293.HK', 'dc1eb0fc-f418-3412-8a7a-ab72413ba170', "Feed the Children Joins Forces with FOX's\xa0MasterChef Junior\xa0to Fight Childhood Hunger During National Nutrition Month", 'ACCESSWIRE', 'https://finance.yahoo.com/news/feed-children-joins-forces-foxs-185000881.html', None, 'STORY'), ('0293.HK', '2f2382ff-cb0b-3a28-8279-f0ce5a2e668e', 'Can Fortinet Stock Overcome This Resistance Level?', "Schaeffer's Investment Research", 'https://finance.yahoo.com/news/fortinet-stock-overcome-resistance-level-184853262.html', None, 'STORY')]
+2024-03-18 18:58:25,319 | INFO | 2687: COMMIT
+2024-03-18 18:58:25,323 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:58:25,323 | INFO | 20: combined_stock_sql_send executed successfully.
+2024-03-18 18:58:25,324 | INFO | 17: Calling combined_stock_sql_send with args: ('AF.PA',), kwargs: {}
+2024-03-18 18:58:25,324 | INFO | 17: Calling get_stock_history with args: ('AF.PA',), kwargs: {}
+2024-03-18 18:58:27,008 | INFO | 20: get_stock_history executed successfully.
+2024-03-18 18:58:27,020 | INFO | 17: Calling send_dataframe_to_sql with args: (           date        open        high         low       close   volume  dividends  stock
+0    2000-01-03  104.955270  112.081183  103.298086  108.766808   323270        0.0  AF.PA
+1    2000-01-04  109.319209  113.738379  106.115311  113.683136   287471        0.0  AF.PA
+2    2000-01-05  108.269659  113.241219  107.717262  113.241219   209141        0.0  AF.PA
+3    2000-01-06  110.203034  116.003197  110.203034  116.003197   185816        0.0  AF.PA
+4    2000-01-07  114.898415  117.881357  114.456495  115.395569   142092        0.0  AF.PA
+...         ...         ...         ...         ...         ...      ...        ...    ...
+6220 2024-03-12   10.070000   10.314000    9.947000   10.136000  2325706        0.0  AF.PA
+6221 2024-03-13   10.206000   10.248000    9.970000   10.028000  1471008        0.0  AF.PA
+6222 2024-03-14   10.052000   10.066000    9.647000    9.647000  2057992        0.0  AF.PA
+6223 2024-03-15    9.600000    9.740000    9.567000    9.628000  2959689        0.0  AF.PA
+6224 2024-03-18    9.657000    9.808000    9.586000    9.608000  1657764        0.0  AF.PA
+
+[6225 rows x 8 columns], 'stock_history'), kwargs: {}
+2024-03-18 18:58:27,020 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:58:27,023 | INFO | 1839: PRAGMA main.table_info("stock_history")
+2024-03-18 18:58:27,024 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:27,111 | INFO | 1839: INSERT INTO stock_history (date, open, high, low, close, volume, dividends, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+2024-03-18 18:58:27,111 | INFO | 1839: [generated in 0.04056s] [('2000-01-03 00:00:00.000000', 104.95526953597867, 112.08118299354112, 103.298085995402, 108.76680755615234, 323270, 0.0, 'AF.PA'), ('2000-01-04 00:00:00.000000', 109.31920886344258, 113.7383790607416, 106.11531109711846, 113.68313598632812, 287471, 0.0, 'AF.PA'), ('2000-01-05 00:00:00.000000', 108.26965931412974, 113.24121856689453, 107.71726198465902, 113.24121856689453, 209141, 0.0, 'AF.PA'), ('2000-01-06 00:00:00.000000', 110.20303353799906, 116.0031967163086, 110.20303353799906, 116.0031967163086, 185816, 0.0, 'AF.PA'), ('2000-01-07 00:00:00.000000', 114.8984145762288, 117.8813569172658, 114.45649502593987, 115.39556884765625, 142092, 0.0, 'AF.PA'), ('2000-01-10 00:00:00.000000', 116.00318579595486, 118.87564140088637, 115.50602326891193, 117.38417053222656, 118138, 0.0, 'AF.PA'), ('2000-01-11 00:00:00.000000', 116.00319953731167, 118.10230260158633, 111.63926419054847, 112.30213928222656, 107079, 0.0, 'AF.PA'), ('2000-01-12 00:00:00.000000', 110.75543003401916, 112.13642324664221, 109.4849229633941, 109.92683410644531, 58266, 0.0, 'AF.PA')  ... displaying 10 of 6225 total bound parameter sets ...  ('2024-03-15 00:00:00.000000', 9.600000381469727, 9.739999771118164, 9.567000389099121, 9.628000259399414, 2959689, 0.0, 'AF.PA'), ('2024-03-18 00:00:00.000000', 9.656999588012695, 9.807999610900879, 9.586000442504883, 9.607999801635742, 1657764, 0.0, 'AF.PA')]
+2024-03-18 18:58:27,130 | INFO | 2687: COMMIT
+2024-03-18 18:58:27,162 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:58:27,162 | INFO | 266: historical AF.PA data sent to sql
+2024-03-18 18:58:27,166 | INFO | 17: Calling get_major_shareholders with args: ('AF.PA',), kwargs: {}
+2024-03-18 18:58:44,654 | INFO | 20: get_major_shareholders executed successfully.
+2024-03-18 18:58:44,662 | INFO | 17: Calling send_dataframe_to_sql with args: (  percent                                 detail  stock
+0  51.66%        % of Shares Held by All Insider  AF.PA
+1   8.84%       % of Shares Held by Institutions  AF.PA
+2  18.29%        % of Float Held by Institutions  AF.PA
+3      89  Number of Institutions Holding Shares  AF.PA, 'major_share_holders'), kwargs: {}
+2024-03-18 18:58:44,662 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:58:44,664 | INFO | 1839: PRAGMA main.table_info("major_share_holders")
+2024-03-18 18:58:44,666 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:44,668 | INFO | 1839: INSERT INTO major_share_holders (percent, detail, stock) VALUES (?, ?, ?)
+2024-03-18 18:58:44,671 | INFO | 1839: [generated in 0.00263s] [('51.66%', '% of Shares Held by All Insider', 'AF.PA'), ('8.84%', '% of Shares Held by Institutions', 'AF.PA'), ('18.29%', '% of Float Held by Institutions', 'AF.PA'), ('89', 'Number of Institutions Holding Shares', 'AF.PA')]
+2024-03-18 18:58:44,676 | INFO | 2687: COMMIT
+2024-03-18 18:58:44,684 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:58:44,684 | INFO | 17: Calling get_stock_financials with args: ('AF.PA',), kwargs: {}
+2024-03-18 18:58:44,685 | INFO | 20: get_stock_financials executed successfully.
+2024-03-18 18:58:44,691 | INFO | 17: Calling send_dataframe_to_sql with args: (Date       date  stock
+0          Open  AF.PA
+1          High  AF.PA
+2           Low  AF.PA
+3         Close  AF.PA
+4     Adj Close  AF.PA
+5        Volume  AF.PA, 'financials'), kwargs: {}
+2024-03-18 18:58:44,692 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:58:44,693 | INFO | 1839: PRAGMA main.table_info("financials")
+2024-03-18 18:58:44,694 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:44,695 | INFO | 1839: INSERT INTO financials (date, stock) VALUES (?, ?)
+2024-03-18 18:58:44,696 | INFO | 1839: [generated in 0.00062s] [('Open', 'AF.PA'), ('High', 'AF.PA'), ('Low', 'AF.PA'), ('Close', 'AF.PA'), ('Adj Close', 'AF.PA'), ('Volume', 'AF.PA')]
+2024-03-18 18:58:44,698 | INFO | 2687: COMMIT
+2024-03-18 18:58:44,702 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:58:44,702 | INFO | 17: Calling get_news with args: ('AF.PA',), kwargs: {}
+2024-03-18 18:58:45,986 | INFO | 20: get_news executed successfully.
+2024-03-18 18:58:45,994 | INFO | 17: Calling send_dataframe_to_sql with args: (   stock                                  uuid  ... provider_publish_time   type
+0  AF.PA  4ced2307-0f37-3795-a4ce-6c1ec0e7dccf  ...                   NaN  STORY
+1  AF.PA  a453981b-efb7-3d36-8486-b02f47f63c4e  ...                   NaN  STORY
+2  AF.PA  ba7fe43e-e680-3ffd-ba34-d7e19b3cd50d  ...                   NaN  STORY
+3  AF.PA  e9a7f48c-93cf-3bc4-8768-9717c2429b91  ...                   NaN  STORY
+4  AF.PA  a19bd253-d7b8-3aaf-a844-da2cfec5da3c  ...                   NaN  STORY
+5  AF.PA  c8f1d542-ae04-376d-9006-643933ddcfaa  ...                   NaN  STORY
+6  AF.PA  dc1eb0fc-f418-3412-8a7a-ab72413ba170  ...                   NaN  STORY
+7  AF.PA  2f2382ff-cb0b-3a28-8279-f0ce5a2e668e  ...                   NaN  STORY
+
+[8 rows x 7 columns], 'news'), kwargs: {}
+2024-03-18 18:58:45,994 | INFO | 2681: BEGIN (implicit)
+2024-03-18 18:58:45,996 | INFO | 1839: PRAGMA main.table_info("news")
+2024-03-18 18:58:45,997 | INFO | 1839: [raw sql] ()
+2024-03-18 18:58:45,999 | INFO | 1839: INSERT INTO news (stock, uuid, title, publisher, link, provider_publish_time, type) VALUES (?, ?, ?, ?, ?, ?, ?)
+2024-03-18 18:58:46,000 | INFO | 1839: [generated in 0.00096s] [('AF.PA', '4ced2307-0f37-3795-a4ce-6c1ec0e7dccf', 'Berkshire Hathaway speeds up stock buybacks', 'Reuters', 'https://finance.yahoo.com/news/berkshire-hathaway-speeds-stock-buybacks-185257424.html', None, 'STORY'), ('AF.PA', 'a453981b-efb7-3d36-8486-b02f47f63c4e', 'Supreme Court Hears Oral Argument in Pivotal NCLA Case Against Govï¿½t Social Media Censorship', 'GlobeNewswire', 'https://finance.yahoo.com/news/supreme-court-hears-oral-argument-185200173.html', None, 'STORY'), ('AF.PA', 'ba7fe43e-e680-3ffd-ba34-d7e19b3cd50d', 'Bodies found in Haitian suburb as gang violence rages for third week', 'AFP', 'https://finance.yahoo.com/m/ba7fe43e-e680-3ffd-ba34-d7e19b3cd50d/bodies-found-in-haitian.html', None, 'STORY'), ('AF.PA', 'e9a7f48c-93cf-3bc4-8768-9717c2429b91', 'Dow Jones Media Giant Disney, AI Stock Arista In Or Near Buy Zones', "Investor's Business Daily", 'https://finance.yahoo.com/m/e9a7f48c-93cf-3bc4-8768-9717c2429b91/dow-jones-media-giant-disney%2C.html', None, 'STORY'), ('AF.PA', 'a19bd253-d7b8-3aaf-a844-da2cfec5da3c', '[Latest] Global Parental Control Software Market Size/Share Worth USD 4.6 Billion by 2032 at a 8.6% CAGR: Custom Market Insights (Analysis, Outlook, Leaders, Report, Trends, Forecast, Segmentation, Growth, Growth Rate, Value)', 'GlobeNewswire', 'https://finance.yahoo.com/news/latest-global-parental-control-software-185000548.html', None, 'STORY'), ('AF.PA', 'c8f1d542-ae04-376d-9006-643933ddcfaa', 'Ontario Lottery and Gaming Corporation - MidDay lottery winning numbers - March 18, 2024', 'CNW Group', 'https://finance.yahoo.com/news/ontario-lottery-gaming-corporation-midday-185000463.html', None, 'STORY'), ('AF.PA', 'dc1eb0fc-f418-3412-8a7a-ab72413ba170', "Feed the Children Joins Forces with FOX's\xa0MasterChef Junior\xa0to Fight Childhood Hunger During National Nutrition Month", 'ACCESSWIRE', 'https://finance.yahoo.com/news/feed-children-joins-forces-foxs-185000881.html', None, 'STORY'), ('AF.PA', '2f2382ff-cb0b-3a28-8279-f0ce5a2e668e', 'Can Fortinet Stock Overcome This Resistance Level?', "Schaeffer's Investment Research", 'https://finance.yahoo.com/news/fortinet-stock-overcome-resistance-level-184853262.html', None, 'STORY')]
+2024-03-18 18:58:46,006 | INFO | 2687: COMMIT
+2024-03-18 18:58:46,010 | INFO | 20: send_dataframe_to_sql executed successfully.
+2024-03-18 18:58:46,010 | INFO | 20: combined_stock_sql_send executed successfully.
+2024-03-18 18:58:46,010 | INFO | 309: SQL Updated with combined tables
