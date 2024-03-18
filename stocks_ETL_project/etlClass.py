@@ -336,9 +336,6 @@ class StocksETL:
             # returns note in log file to confirm data has been sent to SQL database
         """
 
-        # start of time function
-        start = time.time()
-
         # create ticker for the stock
         msft = self.tickers[stock]
 
