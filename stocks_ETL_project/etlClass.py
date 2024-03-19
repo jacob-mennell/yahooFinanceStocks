@@ -8,8 +8,8 @@ import sqlalchemy
 from sqlalchemy import create_engine, VARCHAR, DateTime, Float, String, Time
 from typing import List
 import sqlite3
-    
-    
+
+
 # util func
 def log_method_call(func):
     def wrapper(self, *args, **kwargs):
@@ -22,6 +22,7 @@ def log_method_call(func):
         except Exception as e:
             self.logger.exception(f"Exception in {method_name}: {e}")
             raise  # Re-raise the exception after logging
+
     return wrapper
 
 
@@ -81,7 +82,7 @@ class StocksETL:
         self.logger.addHandler(console)
 
         # Set upself.logger to file
-        file_handler = logging.FileHandler(f"{filepath}/dataExtract.log")
+        file_handler = logging.FileHandler(f"{filepath}/log/dataExtract.log")
         file_handler.setLevel(logging.INFO)
         file_handler_format = "%(asctime)s | %(levelname)s | %(lineno)d: %(message)s"
         file_handler.setFormatter(logging.Formatter(file_handler_format))
@@ -100,13 +101,15 @@ class StocksETL:
             engine: SQLAlchemy engine for database connection.
             conn: SQLite connection object.
         """
-        conn = sqlite3.connect(f"stocks_ETL_project/{db_name}.db")
+        conn = sqlite3.connect(f"stocks_ETL_project/database/{db_name}.db")
 
-        engine = create_engine(f"sqlite:///stocks_ETL_project/{db_name}.db", echo=True)
+        engine = create_engine(
+            f"sqlite:///stocks_ETL_project/database/{db_name}.db", echo=True
+        )
 
         return engine, conn
 
-    def setup_azure_sql(self, driver = "ODBC Driver 17 for SQL Server"):
+    def setup_azure_sql(self, driver="ODBC Driver 17 for SQL Server"):
         """
         Function to set up the SQL connection.
 
@@ -144,27 +147,23 @@ class StocksETL:
     def send_dataframe_to_sql(self, df, table_name, if_exists="append", dtype=None):
         """
         Function to send a dataframe to SQL database.
-        
+
         Args:
             df: DataFrame to be sent to the SQL database.
             table_name: Name of the table in the SQL database.
             if_exists: Action to take if the table already exists in the SQL database.
                        Options: "fail", "replace", "append" (default: "append").
             dtype: Dictionary of column names and data types to be used when creating the table (default: None).
-        
+
         Returns:
             None. This function logs a note in the log file to confirm that data has been sent to the SQL database.
         """
-        
+
         # Send to SQL with SQL Alchemy
         df.to_sql(
-            table_name,
-            self.engine,
-            if_exists=if_exists,
-            index=False,
-            dtype=dtype
+            table_name, self.engine, if_exists=if_exists, index=False, dtype=dtype
         )
-    
+
     @log_method_call
     def get_stock_history(self, stock):
         """
@@ -261,7 +260,7 @@ class StocksETL:
         Return:
             None.
         """
-        
+
         stock_history = self.get_stock_history(stock)
         self.send_dataframe_to_sql(stock_history, "stock_history")
         self.logger.info(f"historical {stock} data sent to sql")
@@ -300,9 +299,9 @@ class StocksETL:
         # create master table
         stock_df = pd.DataFrame(columns=["stock"])
         stock_df["stock"] = list(self.stock_list)
-        self.send_dataframe_to_sql(stock_df,
-                                   "stocks_master", 
-                                   dtype=self.sqlcol(stock_df))
+        self.send_dataframe_to_sql(
+            stock_df, "stocks_master", dtype=self.sqlcol(stock_df)
+        )
 
         # get tables for each individual stock
         list(map(self.combined_stock_sql_send, self.stock_list))
@@ -337,12 +336,9 @@ class StocksETL:
             # returns note in log file to confirm data has been sent to SQL database
         """
 
-        # start of time function
-        start = time.time()
-
         # create ticker for the stock
         msft = self.tickers[stock]
-        
+
         try:
             # return historical stock data and send to sql db
             today_date = date.today()
@@ -407,7 +403,7 @@ class StocksETL:
                 "YahooTickers": [f"{a}GBP=X" for a in currencylist],
             }
         )
-        
+
         currency_df = pd.DataFrame(
             yf.download(
                 tickers=meta_df["YahooTickers"].values[0],
@@ -474,14 +470,14 @@ class StocksETL:
         """
         Function to clear database prior to new batch import.
         To be replaced with drop() or drop_all() method.
-    
+
         Arguments:
             # empty
-    
+
         Return:
             # returns note in log file to confirm data has been cleared in PostgreSQL database
         """
-    
+
         table_list = [
             "earnings",
             "financials",
@@ -491,7 +487,7 @@ class StocksETL:
             "stock_history",
             "stocks_master",
         ]
-    
+
         with self.engine.raw_connection() as connection:
             with connection.cursor() as cursor:
                 for table in table_list:
@@ -533,14 +529,11 @@ if __name__ == "__main__":
     # 0293.HK = Cathay Pacific Airways Ltd
     # AF.PA = Air France-KLM SA
 
-    # send individual tables to sql for each stock
-    # individualTables(['IAG.L', '0293.HK', 'AF.PA'])
-
     # combine tables and send to sql
-    stock_list = ["AAPL"]
+    stock_list = ["IAG.L", "0293.HK", "AF.PA"]
     x = StocksETL(stock_list)
 
-    # x.combined_tables()
+    x.combined_tables()
 
     # send exchange rate table to sql
     # x.exchange_rate_table(period='1y', interval='1d')

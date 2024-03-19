@@ -118,7 +118,7 @@ class ExploreStocks:
         self.logger.addHandler(console)
 
         # Set upself.logger to file
-        file_handler = logging.FileHandler("ExploreStocks.log")
+        file_handler = logging.FileHandler("log/ExploreStocks.log")
         file_handler.setLevel(logging.INFO)
         file_handler_format = "%(asctime)s | %(levelname)s | %(lineno)d: %(message)s"
         file_handler.setFormatter(logging.Formatter(file_handler_format))
@@ -132,7 +132,7 @@ class ExploreStocks:
         """
         self._download_initial_stock_info()
 
-        self._extract_currency_data()  # - error here
+        self._extract_currency_data()  # TODO: FIX ERROR HERE
 
         self._download_exchange_rates()
 
