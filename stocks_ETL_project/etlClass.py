@@ -268,7 +268,7 @@ class StocksETL:
         stock_max_date = str(stock_history.date.max())
 
         # Open the file using the 'with' statement
-        with open("last_update.txt", "w") as f:
+        with open("stocks_ETL_project/log/last_update.txt", "w") as f:
             f.write(f"{stock}_date_max {stock_max_date}")
 
         major_share_holders = self.get_major_shareholders(stock)
@@ -318,7 +318,7 @@ class StocksETL:
             last_update_date: the last update date for the specified stock
         """
         try:
-            with open("last_update.txt", "r") as f:
+            with open("stocks_ETL_project/log/last_update.txt", "r") as f:
                 lines = f.readlines()
                 for line in lines:
                     if f"{stock}_date_max" in line:
@@ -360,7 +360,7 @@ class StocksETL:
             stock_max_date = str(stock_history.date.max())
 
             # Set new dates to limit size of future uploads
-            with open("last_update.txt", "w") as f:
+            with open("stocks_ETL_project/log/last_update.txt", "w") as f:
                 f.write(f"{stock}_date_max {stock_max_date}")
 
         except Exception as e:
